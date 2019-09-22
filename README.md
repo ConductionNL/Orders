@@ -1,6 +1,6 @@
 # About this application
 
-Het "orders" component is ontwikkeld voor de gemeente Utrecht en heeft als doel het verwerken van bestellingen. Dit component gaat vaak hand in hand met de componenten betalen, producten en diensten maar dit is niet altijd noodzakelijk. 
+Het "orders" component is ontwikkeld voor de gemeente Utrecht en heeft als doel het verwerken van bestellingen. Dit component gaat vaak hand in hand met de componenten betalen en producten en diensten maar dit is niet altijd noodzakelijk.
 
 ## Documentation
 
