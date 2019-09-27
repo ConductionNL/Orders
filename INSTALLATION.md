@@ -25,13 +25,13 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:dashboard-kub
 ## Deploying trough helm
 
 If you want to create a new instance
-$ helm install ./api/helm --name commonground --kubeconfig="api/helm/kubeconfig.yaml"
+$ helm install ./api/helm --name orderregistratiecomponent --kubeconfig="api/helm/kubeconfig.yaml"
 
 Or update if you want to update an existing one
-$ helm upgrade commonground  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" 
+$ helm upgrade orderregistratiecomponent  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" 
 
 Or del if you want to delete an existing  one
-$ helm del commonground  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
+$ helm del orderregistratiecomponent  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
 
 Note that you can replace commonground with the namespace that you want to use (normally the name of your component).
 

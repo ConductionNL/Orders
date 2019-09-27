@@ -1,9 +1,9 @@
 openapi: 3.0.2
 info:
-  title: 'Common Ground Component'
+  title: 'Order Registratie Component (ORC)'
   version: 0.0.1
   description: |
-    Dit is een commonground voorbeeld applicatie 
+    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar. 
           
     Word lid van het slackkanaal [https://zaakonline.slack.com](https://zaakonline.slack.com) voor ondersteuning door het ontwikkel team. En krijg regelmatig updates over de ontwikkelingen op het gebied van de zaakonline componenten.
             
@@ -27,69 +27,57 @@ info:
     Let er bij het meegeven van JWT tokens op dat deze moet worden voorafgegaan door een Bearer en een spatie, onder de header Authorization. De volledig naam wordt daarmee: 'Authorization: Bearer [TOKEN]'.
     
 paths:
-  /example_entities:
+  /orders:
     get:
       tags:
-        - ExampleEntity
-      operationId: getExampleEntityCollection
-      summary: 'Retrieves the collection of ExampleEntity resources.'
+        - Order
+      operationId: getOrderCollection
+      summary: 'Retrieves the collection of Order resources.'
       responses:
         200:
-          description: 'ExampleEntity collection response'
+          description: 'Order collection response'
           content:
             application/hal+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             application/ld+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             application/x-yaml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             text/csv:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
             text/html:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity'
+                  $ref: '#/components/schemas/Order'
       parameters:
-        -
-          name: like_name
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: like_description
-          in: query
-          required: false
-          schema:
-            type: string
         -
           name: page
           in: query
@@ -99,43 +87,43 @@ paths:
             type: integer
     post:
       tags:
-        - ExampleEntity
-      operationId: postExampleEntityCollection
-      summary: 'Creates a ExampleEntity resource.'
+        - Order
+      operationId: postOrderCollection
+      summary: 'Creates a Order resource.'
       responses:
         201:
-          description: 'ExampleEntity resource created'
+          description: 'Order resource created'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
           links:
-            GetExampleEntityItem:
+            GetOrderItem:
               parameters:
                 id: '$response.body#/id'
-              operationId: getExampleEntityItem
-              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /example_entities/{id}`.'
+              operationId: getOrderItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /orders/{id}`.'
         400:
           description: 'Invalid input'
         404:
@@ -144,35 +132,35 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           text/html:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
-        description: 'The new ExampleEntity resource'
-  '/example_entities/{id}':
+              $ref: '#/components/schemas/Order'
+        description: 'The new Order resource'
+  '/orders/{id}':
     get:
       tags:
-        - ExampleEntity
-      operationId: getExampleEntityItem
-      summary: 'Retrieves a ExampleEntity resource.'
+        - Order
+      operationId: getOrderItem
+      summary: 'Retrieves a Order resource.'
       parameters:
         -
           name: id
@@ -182,42 +170,42 @@ paths:
             type: string
       responses:
         200:
-          description: 'ExampleEntity resource response'
+          description: 'Order resource response'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
         404:
           description: 'Resource not found'
     delete:
       tags:
-        - ExampleEntity
-      operationId: deleteExampleEntityItem
-      summary: 'Removes the ExampleEntity resource.'
+        - Order
+      operationId: deleteOrderItem
+      summary: 'Removes the Order resource.'
       responses:
         204:
-          description: 'ExampleEntity resource deleted'
+          description: 'Order resource deleted'
         404:
           description: 'Resource not found'
       parameters:
@@ -229,9 +217,9 @@ paths:
             type: string
     put:
       tags:
-        - ExampleEntity
-      operationId: putExampleEntityItem
-      summary: 'Replaces the ExampleEntity resource.'
+        - Order
+      operationId: putOrderItem
+      summary: 'Replaces the Order resource.'
       parameters:
         -
           name: id
@@ -241,32 +229,32 @@ paths:
             type: string
       responses:
         200:
-          description: 'ExampleEntity resource updated'
+          description: 'Order resource updated'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
         400:
           description: 'Invalid input'
         404:
@@ -275,34 +263,34 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           text/html:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
-        description: 'The updated ExampleEntity resource'
+              $ref: '#/components/schemas/Order'
+        description: 'The updated Order resource'
     patch:
       tags:
-        - ExampleEntity
-      operationId: patchExampleEntityItem
-      summary: 'Updates the ExampleEntity resource.'
+        - Order
+      operationId: patchOrderItem
+      summary: 'Updates the Order resource.'
       parameters:
         -
           name: id
@@ -312,32 +300,32 @@ paths:
             type: string
       responses:
         200:
-          description: 'ExampleEntity resource updated'
+          description: 'Order resource updated'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity'
+                $ref: '#/components/schemas/Order'
         400:
           description: 'Invalid input'
         404:
@@ -346,52 +334,48 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
+              $ref: '#/components/schemas/Order'
           text/html:
             schema:
-              $ref: '#/components/schemas/ExampleEntity'
-        description: 'The updated ExampleEntity resource'
+              $ref: '#/components/schemas/Order'
+        description: 'The updated Order resource'
 components:
   schemas:
-    ExampleEntity:
+    Order:
       type: object
       description: ''
       properties:
         id:
           readOnly: true
           type: integer
-        name:
+        reference:
           type: string
-        description:
-          type: string
-        in_onderzoek: {  }
-        ingangs_datum: {  }
 servers:
   -
     description: 'Demo Omgeving'
-    url: 'http://proto.demo.common-ground.dev'
+    url: 'http://orc.zaakonline.nl'
 externalDocs:
   -
     description: 'OAS Documentatie'
-    url: 'http://proto.demo.common-ground.dev'
+    url: 'http://orc.zaakonline.nl'
 x-commonground:
   type: tool
   developers:
