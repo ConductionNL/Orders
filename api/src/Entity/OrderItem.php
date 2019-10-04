@@ -4,17 +4,22 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"read"}},
- *     denormalizationContext={"groups"={"write"}}
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
- * @ORM\Entity(repositoryClass="App\Repository\OrderLineRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderLineItem")
  */
-class OrderLine
+class OrderItem
 {
     /**
      * @ORM\Id()
@@ -33,7 +38,7 @@ class OrderLine
      * @Groups({"read","write"})
      * @ORM\Column(type="integer")
      */
-    private $amount;
+    private $quantity;
 
     /**
      * @Groups({"read","write"})
@@ -43,10 +48,20 @@ class OrderLine
 
     /**
      * @Groups({"read","write"})
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="orderLines")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="order")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $parentOrder;
+    private $order;
+    
+    /**
+     * @var Datetime $createdAt The moment this request was created by the submitter
+     *
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
 
     public function getId(): ?int
     {
@@ -65,14 +80,14 @@ class OrderLine
         return $this;
     }
 
-    public function getAmount(): ?int
+    public function getQuantity(): ?int
     {
-        return $this->amount;
+        return $this->quantity;
     }
 
-    public function setAmount(int $amount): self
+    public function setQuantity(int $quantity): self
     {
-        $this->amount = $amount;
+        $this->quantity = $quantity;
 
         return $this;
     }
@@ -89,14 +104,14 @@ class OrderLine
         return $this;
     }
 
-    public function getParentOrder(): ?Order
+    public function geOrder(): ?Order
     {
-        return $this->parentOrder;
+        return $this->order;
     }
 
-    public function setParentOrder(?Order $parentOrder): self
+    public function setOrder(?Order $order): self
     {
-        $this->parentOrder = $parentOrder;
+        $this->order = $order;
 
         return $this;
     }

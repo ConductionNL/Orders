@@ -27,6 +27,336 @@ info:
     Let er bij het meegeven van JWT tokens op dat deze moet worden voorafgegaan door een Bearer en een spatie, onder de header Authorization. De volledig naam wordt daarmee: 'Authorization: Bearer [TOKEN]'.
     
 paths:
+  /order_items:
+    get:
+      tags:
+        - OrderItem
+      operationId: getOrderItemCollection
+      summary: 'Retrieves the collection of OrderItem resources.'
+      responses:
+        200:
+          description: 'OrderItem collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/ld+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+    post:
+      tags:
+        - OrderItem
+      operationId: postOrderItemCollection
+      summary: 'Creates a OrderItem resource.'
+      responses:
+        201:
+          description: 'OrderItem resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+          links:
+            GetOrderItemItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getOrderItemItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /order_items/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+        description: 'The new OrderItem resource'
+  '/order_items/{id}':
+    get:
+      tags:
+        - OrderItem
+      operationId: getOrderItemItem
+      summary: 'Retrieves a OrderItem resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OrderItem resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+        404:
+          description: 'Resource not found'
+    delete:
+      tags:
+        - OrderItem
+      operationId: deleteOrderItemItem
+      summary: 'Removes the OrderItem resource.'
+      responses:
+        204:
+          description: 'OrderItem resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - OrderItem
+      operationId: putOrderItemItem
+      summary: 'Replaces the OrderItem resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OrderItem resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+        description: 'The updated OrderItem resource'
+    patch:
+      tags:
+        - OrderItem
+      operationId: patchOrderItemItem
+      summary: 'Updates the OrderItem resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'OrderItem resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+        description: 'The updated OrderItem resource'
   /orders:
     get:
       tags:
@@ -41,43 +371,91 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             application/x-yaml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             text/csv:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
             text/html:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/Order-read'
       parameters:
+        -
+          name: reference
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'reference[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: rsin
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'rsin[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: submitter
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'submitter[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
         -
           name: page
           in: query
@@ -96,28 +474,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
           links:
             GetOrderItem:
               parameters:
@@ -132,28 +510,28 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
         description: 'The new Order resource'
   '/orders/{id}':
     get:
@@ -174,28 +552,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
         404:
           description: 'Resource not found'
     delete:
@@ -233,28 +611,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
         400:
           description: 'Invalid input'
         404:
@@ -263,28 +641,28 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
         description: 'The updated Order resource'
     patch:
       tags:
@@ -304,28 +682,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/Order-read'
         400:
           description: 'Invalid input'
         404:
@@ -334,40 +712,103 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/Order-write'
         description: 'The updated Order resource'
 components:
   schemas:
-    Order:
+    Order-read:
       type: object
       description: ''
       properties:
-        id:
-          readOnly: true
-          type: integer
         reference:
+          readOnly: true
           type: string
+        rsin:
+          description: 'The RSIN of the organisation where this order was placed'
+          type: string
+        submitter:
+          description: 'The BSN (if person) or RSIN (if organisation) that submited this request'
+          type: string
+        submitter_person:
+          description: 'True if the submitters is a person'
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem-read'
+        price: {  }
+        created_at:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+      required:
+        - rsin
+        - submitter
+    Order-write:
+      type: object
+      description: ''
+      required:
+        - rsin
+        - submitter
+      properties:
+        rsin:
+          description: 'The RSIN of the organisation where this order was placed'
+          type: string
+        submitter:
+          description: 'The BSN (if person) or RSIN (if organisation) that submited this request'
+          type: string
+        submitter_person:
+          description: 'True if the submitters is a person'
+          type: boolean
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem-write'
+        price: {  }
+    OrderItem-read:
+      type: object
+      description: ''
+      properties:
+        product:
+          type: string
+        quantity:
+          type: integer
+        price: {  }
+        order:
+          $ref: '#/components/schemas/Order-read'
+    OrderItem-write:
+      type: object
+      description: ''
+      properties:
+        product:
+          type: string
+        quantity:
+          type: integer
+        price: {  }
+        order:
+          $ref: '#/components/schemas/Order-write'
 servers:
   -
     description: 'Demo Omgeving'
