@@ -23,7 +23,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Order
 {
-    /**
+	/**
 	 * @var \Ramsey\Uuid\UuidInterface $id The UUID identifier of this object
 	 * @example e2984465-190a-4562-829e-a8cca81aa35d
 	 *
@@ -48,19 +48,18 @@ class Order
 	private $id;
 	
 	/**
-	 * @param string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organisations 
-	 * @example 6666-2019-0000000012
+	 * @param string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
 	 *
 	 * @ApiProperty(
 	 *     attributes={
 	 *         "swagger_context"={
-	 *         	   "description" = "The human readable reference for this order",
+	 *         	   "description" = "The human readable reference for this request",
 	 *             "type"="string",
 	 *             "example"="6666-2019-0000000012",
 	 *             "maxLength"="255"
 	 *         }
 	 *     }
-	 * )	 
+	 * )
 	 *
 	 * @Groups({"read"})
 	 * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
@@ -69,86 +68,34 @@ class Order
 	private $reference;
 	
 	/**
-	 * @var string $referenceId The autoincrementing id part of the reference, unique on a organisation-year-id basis
+	 * @param string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
 	 *
 	 * @ORM\Column(type="integer", length=11, nullable=true)
 	 */
 	private $referenceId;
-	
-	/**
-	 * @var string $rsin The RSIN of the organisation where this order was placed
-	 * @example 002851234
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The RSIN of the organisation where this order was placed",
-	 *             "type"="string",
-	 *             "example"="002851234",
-	 *              "maxLength"="255"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Assert\NotNull
-	 * @Assert\Length(
-	 *      min = 8,
-	 *      max = 11
-	 * )
-	 * @Groups({"read", "write"})
-	 * @ORM\Column(type="string", length=255)
-	 * @ApiFilter(SearchFilter::class, strategy="exact")
-	 */
-	private $rsin;
-	
-	/**
-	 * @var string $submitter The BSN (if person) or RSIN (if organisation) that submited this request
-	 * @example 002851234
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The BSN (if person) or RSIN (if organisation) that submited this request",
-	 *             "type"="string",
-	 *             "example"="002851234",
-	 *             "maxLength"="255",
-	 *             "required"=true
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Assert\NotNull
-	 * @Groups({"read", "write"})
-	 * @ORM\Column(type="string", length=255)
-	 * @ApiFilter(SearchFilter::class, strategy="exact")
-	 */
-	private $submitter;
-	
-	/**
-	 * @var boolean $submitterPerson True if the submitters is a person
-	 * @example true
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "True if the submitters is a person",
-	 *             "type"="boolean",
-	 *             "example"=true,
-	 *             "default"=true
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Groups({"read", "write"})
-	 * @ORM\Column(type="boolean")
-	 */
-	private $submitterPerson = true;
-	
-	/**
-     * @Groups({"read","write"})
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="parentOrder", orphanRemoval=true)
+    
+    /**
+     * @var string $targetOrganization The RSIN of the organization that ownes this proces
+     * @example 002851234
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The RSIN of the organization that ownes this proces",
+     *             "type"="string",
+     *             "example"="002851234",
+     *              "maxLength"="255",
+     *             "required"=true
+     *         }
+     *     }
+     * )
+     *
+     * @Assert\NotNull
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      */
-    private $items;
+    private $targetOrganization;
 
     /**
      * @Groups({"read","write"})
@@ -173,16 +120,16 @@ class Order
     
     public function getId()
     {
-        return $this->id;
+    	return $this->id;
     }
     
-    public function setId($id): self
+    public function setId(string $id): self
     {
-        $this->id = $id;
-        
-        return $this;
+    	$this->id = $id;
+    	
+    	return $this;
     }
-    
+
     public function getReference(): ?string
     {
         return $this->reference;
