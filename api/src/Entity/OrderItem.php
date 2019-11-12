@@ -87,7 +87,7 @@ class OrderItem
      */
     private $createdAt;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
