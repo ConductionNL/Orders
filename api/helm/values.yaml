@@ -2,13 +2,16 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-php:
-  repository: docker.io/conduction/orderregistratiecomponent-php
-  tag: latest
-  pullPolicy: Always
+settings:
+  registryBase: docker.io/conduction
+  projectName: orc
+  env: dev
+  debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
+  pullPolicy: Always
+  # You will need these proxies on kubernetes
   trustedProxies:
     - 10.0.0.0/8
     - 172.16.0.0/12
@@ -29,15 +32,15 @@ php:
   secret: ""
 
 nginx:
-  repository: docker.io/conduction/orderregistratiecomponent-nginx
+  repository: docker.io/conduction/irc-nginx
   tag: latest
   pullPolicy: Always
   replicaCount: 1
 
 varnish:
   enabled: true
-  #url: https://example.com
-  repository: docker.io/conduction/orderregistratiecomponent-varnish
+  url: https://irc-varnish
+  repository: docker.io/conduction/irc-varnish
   tag: latest
   pullPolicy: Always
   replicaCount: 1
