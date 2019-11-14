@@ -7,6 +7,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -24,7 +25,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 class Order
 {
 	/**
-	 * @var \Ramsey\Uuid\UuidInterface $id The UUID identifier of this object
+	 * @var UuidInterface $id The UUID identifier of this object
 	 * @example e2984465-190a-4562-829e-a8cca81aa35d
 	 *
 	 * @ApiProperty(
@@ -46,7 +47,7 @@ class Order
 	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
 	 */
 	private $id;
-	
+
 	/**
 	 * @param string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
 	 *
@@ -64,16 +65,22 @@ class Order
 	 * @Groups({"read"})
 	 * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
 	 * @ApiFilter(SearchFilter::class, strategy="exact")
+     * @Assert\Length(
+     *     max = 255
+     * )
 	 */
 	private $reference;
-	
+
 	/**
 	 * @param string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
 	 *
 	 * @ORM\Column(type="integer", length=11, nullable=true)
+     * @Assert\Length(
+     *     max = 11
+     * )
 	 */
 	private $referenceId;
-    
+
     /**
      * @var string $targetOrganization The RSIN of the organization that ownes this proces
      * @example 002851234
@@ -91,6 +98,9 @@ class Order
      * )
      *
      * @Assert\NotNull
+     * @Assert\Length(
+     *     max = 255
+     * )
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      * @ApiFilter(SearchFilter::class, strategy="exact")
@@ -100,9 +110,10 @@ class Order
     /**
      * @Groups({"read","write"})
      * @ORM\Column(type="money")
+     * @Assert\NotBlank
      */
     private $price;
-    
+
     /**
      * @var Datetime $createdAt The moment this request was created by the submitter
      *
@@ -117,16 +128,16 @@ class Order
     {
         $this->orderLines = new ArrayCollection();
     }
-    
+
     public function getId()
     {
     	return $this->id;
     }
-    
+
     public function setId(string $id): self
     {
     	$this->id = $id;
-    	
+
     	return $this;
     }
 
@@ -134,59 +145,59 @@ class Order
     {
         return $this->reference;
     }
-    
+
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
-        
+
         return $this;
     }
-    
+
     public function getReferenceId(): ?int
     {
         return $this->reference;
     }
-    
+
     public function setReferenceId(int $referenceId): self
     {
         $this->referenceId = $referenceId;
-        
+
         return $this;
     }
-    
+
     public function getRsin(): ?string
     {
         return $this->rsin;
     }
-    
+
     public function setRsin(string $rsin): self
     {
         $this->rsin = $rsin;
-        
+
         return $this;
     }
-    
+
     public function getSubmitter(): ?string
     {
         return $this->submitter;
     }
-    
+
     public function setSubmitter(string $submitter): self
     {
         $this->submitter = $submitter;
-        
+
         return $this;
     }
-    
+
     public function getSubmitterPerson(): ?bool
     {
         return $this->submitterPerson;
     }
-    
+
     public function setSubmitterPerson(bool $submitterPerson): self
     {
         $this->submitterPerson = $submitterPerson;
-        
+
         return $this;
     }
 
@@ -232,16 +243,16 @@ class Order
 
         return $this;
     }
-    
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
-    
+
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
-        
+
         return $this;
     }
 }
