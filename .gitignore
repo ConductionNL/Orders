@@ -4,3 +4,4 @@
 api/helm/kubeconfig.yaml
 
 !/api/public/bundle/*
+.idea/
