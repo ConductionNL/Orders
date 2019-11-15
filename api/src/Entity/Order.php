@@ -167,12 +167,12 @@ class Order
 
     public function getRsin(): ?string
     {
-        return $this->rsin;
+        return $this->targetOrganization;
     }
 
     public function setRsin(string $rsin): self
     {
-        $this->rsin = $rsin;
+        $this->targetOrganization = $rsin;
 
         return $this;
     }
@@ -219,7 +219,7 @@ class Order
         return $this;
     }
 
-    public function removeItem(OrderItem $orderLine): self
+    public function removeItem(OrderItem $item): self
     {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
