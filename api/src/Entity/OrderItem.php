@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTime;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -44,7 +45,16 @@ class OrderItem
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
-
+    /**
+     * @Groups({"read","write"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="order")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
+     * @Assert\Length(
+     *     max = 255
+     * )
+     */
+    private $order;
     /**
      * @Groups({"read","write"})
      * @ORM\Column(type="string", length=255)
@@ -52,6 +62,7 @@ class OrderItem
      * @Assert\Length(
      *     max = 255
      * )
+     * @deprecated
      */
     private $product;
 
@@ -69,15 +80,10 @@ class OrderItem
      */
     private $price;
 
-    /**
-     * @Groups({"read","write"})
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="order")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $order;
+
 
     /**
-     * @var Datetime $createdAt The moment this request was created by the submitter
+     * @var DateTime $createdAt The moment this request was created by the submitter
      *
      *
      * @Groups({"read"})
@@ -86,16 +92,30 @@ class OrderItem
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $offer;
+
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @deprecated
+     */
     public function getProduct(): ?string
     {
-        return $this->product;
+        if($this->product)
+            return $this->product;
+        else
+            return $this->getOffer();
     }
 
+    /**
+     * @deprecated
+     */
     public function setProduct(string $product): self
     {
         $this->product = $product;
@@ -135,6 +155,18 @@ class OrderItem
     public function setOrder(?Order $order): self
     {
         $this->order = $order;
+
+        return $this;
+    }
+
+    public function getOffer(): ?string
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(string $offer): self
+    {
+        $this->offer = $offer;
 
         return $this;
     }
