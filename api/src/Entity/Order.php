@@ -21,7 +21,9 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Table(name="orderTable")
  */
+
 class Order
 {
 	/**
