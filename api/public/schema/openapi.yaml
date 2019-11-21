@@ -1,11 +1,11 @@
 openapi: 3.0.2
 info:
-  title: 'Order Registratie Component (ORC)'
-  version: 0.0.1
+  title: 'Order Registratie Component'
+  version: V.0.1
   description: |
     API Details
-    - Component: Proto Component
-    - Reference: pc
+    - Component: Order Registratie Component
+    - Reference: orc
     - Enviroment: dev
     - Version: V.0.1
     - Repository: []() / [zip](/archive/master.zip)
@@ -76,6 +76,73 @@ paths:
           description: 'The collection page number'
           schema:
             type: integer
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
     post:
       tags:
         - OrderItem
@@ -146,6 +213,36 @@ paths:
             schema:
               $ref: '#/components/schemas/OrderItem-write'
         description: 'The new OrderItem resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
   '/order_items/{id}':
     get:
       tags:
@@ -159,6 +256,73 @@ paths:
           required: true
           schema:
             type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
           description: 'OrderItem resource response'
@@ -206,6 +370,35 @@ paths:
           required: true
           schema:
             type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
     put:
       tags:
         - OrderItem
@@ -218,6 +411,35 @@ paths:
           required: true
           schema:
             type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
       responses:
         200:
           description: 'OrderItem resource updated'
@@ -289,6 +511,35 @@ paths:
           required: true
           schema:
             type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
       responses:
         200:
           description: 'OrderItem resource updated'
@@ -416,29 +667,13 @@ paths:
           style: form
           explode: true
         -
-          name: rsin
+          name: targetOrganization
           in: query
           required: false
           schema:
             type: string
         -
-          name: 'rsin[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: submitter
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'submitter[]'
+          name: 'targetOrganization[]'
           in: query
           required: false
           schema:
@@ -483,6 +718,44 @@ paths:
           name: X-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
     post:
       tags:
         - Order
@@ -553,6 +826,36 @@ paths:
             schema:
               $ref: '#/components/schemas/Order-write'
         description: 'The new Order resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
   '/orders/{id}':
     get:
       tags:
@@ -595,6 +898,44 @@ paths:
           name: X-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
           description: 'Order resource response'
@@ -875,76 +1216,308 @@ components:
   schemas:
     Order-read:
       type: object
-      description: ''
+      description: 'An entity representing an order'
       properties:
         reference:
           readOnly: true
+          description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
-        rsin:
-          description: 'The RSIN of the organisation where this order was placed'
+        price:
+          example: '50.00'
+          default: '50.00'
+          description: |
+            The price of this product
+            
+             @example 50.00
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                        "iri"="https://schema.org/price",
+                    	   "description" = "The price of this product",
+                        "type"="string",
+                        "example"="50.00",
+                        "maxLength"="9",
+                        "required" = true
+                    },
+                    "openapi_context"={
+                        "example"="50.00",
+                        "default"="50.00"
+                    }
+                }
+            )
           type: string
-        submitter:
-          description: 'The BSN (if person) or RSIN (if organisation) that submited this request'
-          type: string
-        submitter_person:
-          description: 'True if the submitters is a person'
-          type: boolean
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem-read'
-        price: {  }
         created_at:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
           format: date-time
+        price_currency:
+          example: EUR
+          default: EUR
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          type: string
+        tax:
+          example: '21.00'
+          default: '21.00'
+          description: 'The total tax over the order'
+          type: string
+        items:
+          description: 'The items in this order'
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem-read'
       required:
-        - rsin
-        - submitter
+        - price
     Order-write:
       type: object
-      description: ''
+      description: 'An entity representing an order'
       required:
-        - rsin
-        - submitter
+        - price
       properties:
-        rsin:
-          description: 'The RSIN of the organisation where this order was placed'
+        price:
+          example: '50.00'
+          default: '50.00'
+          description: |
+            The price of this product
+            
+             @example 50.00
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                        "iri"="https://schema.org/price",
+                    	   "description" = "The price of this product",
+                        "type"="string",
+                        "example"="50.00",
+                        "maxLength"="9",
+                        "required" = true
+                    },
+                    "openapi_context"={
+                        "example"="50.00",
+                        "default"="50.00"
+                    }
+                }
+            )
           type: string
-        submitter:
-          description: 'The BSN (if person) or RSIN (if organisation) that submited this request'
+        price_currency:
+          example: EUR
+          default: EUR
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           type: string
-        submitter_person:
-          description: 'True if the submitters is a person'
-          type: boolean
+        tax:
+          example: '21.00'
+          default: '21.00'
+          description: 'The total tax over the order'
+          type: string
         items:
+          description: 'The items in this order'
           type: array
           items:
             $ref: '#/components/schemas/OrderItem-write'
-        price: {  }
     OrderItem-read:
       type: object
-      description: ''
+      description: 'An entity representing an item of an order'
       properties:
+        id:
+          description: 'The UUID identifier of this object'
+          type: string
+          format: uuid
+          example: e2984465-190a-4562-829e-a8cca81aa35d
+          readOnly: true
+        order:
+          description: 'The order that contains this item'
+          $ref: '#/components/schemas/Order-read'
         product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
+          example: 1
+          default: 1
+          description: 'The quantity of the items that are ordered'
           type: integer
-        price: {  }
-        order:
-          $ref: '#/components/schemas/Order-read'
+        price:
+          example: '50.00'
+          default: '50.00'
+          description: |
+            The price of this product
+             @example 50.00
+            
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                        "iri"="https://schema.org/price",
+                    	   "description" = "The price of this product",
+                        "type"="string",
+                        "example"="50.00",
+                        "maxLength"="9",
+                        "required" = true
+                    },
+                    "openapi_context"={
+                        "example"="50.00",
+                        "default"="50.00"
+                    }
+                }
+            )
+          type: string
+        price_currency:
+          example: EUR
+          default: EUR
+          description: |
+            The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+             @example EUR
+            
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                        "iri"="https://schema.org/priceCurrency",
+                    	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
+                        "type"="string",
+                        "example"="EUR",
+                        "default"="EUR",
+                        "maxLength"="3",
+                        "minLength"="3"
+                    },
+                    "openapi_context"={
+                        "example"="EUR",
+                        "default"="EUR"
+                    }
+                }
+            )
+          type: string
+        tax_percentage:
+          example: 9
+          default: 9
+          description: |
+            The tax percentage for this offer as an integer e.g. 9% makes 9
+             @example 9
+            
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                    	   "description" = "The tax percentage for this offer as an integer e.g. 9% makes 9",
+                        "type"="integer",
+                        "example"="9",
+                        "maxLength"="3",
+                        "minLength"="1",
+                        "required" = true
+                    },
+                    "openapi_context"={
+                        "example"=9,
+                        "default"=9
+                    }
+                }
+            )
+          type: integer
+        offer:
+          example: 'http://example.org/offers/1'
+          default: 'http://example.org/offers/1'
+          description: 'The offer this item represents'
+          type: string
+      required:
+        - order
+        - quantity
+        - price
+        - tax_percentage
+        - offer
     OrderItem-write:
       type: object
-      description: ''
+      description: 'An entity representing an item of an order'
+      required:
+        - order
+        - quantity
+        - price
+        - tax_percentage
+        - offer
       properties:
+        order:
+          description: 'The order that contains this item'
+          $ref: '#/components/schemas/Order-write'
         product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
+          example: 1
+          default: 1
+          description: 'The quantity of the items that are ordered'
           type: integer
-        price: {  }
-        order:
-          $ref: '#/components/schemas/Order-write'
+        price:
+          example: '50.00'
+          default: '50.00'
+          description: |
+            The price of this product
+             @example 50.00
+            
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                        "iri"="https://schema.org/price",
+                    	   "description" = "The price of this product",
+                        "type"="string",
+                        "example"="50.00",
+                        "maxLength"="9",
+                        "required" = true
+                    },
+                    "openapi_context"={
+                        "example"="50.00",
+                        "default"="50.00"
+                    }
+                }
+            )
+          type: string
+        price_currency:
+          example: EUR
+          default: EUR
+          description: |
+            The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+             @example EUR
+            
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                        "iri"="https://schema.org/priceCurrency",
+                    	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
+                        "type"="string",
+                        "example"="EUR",
+                        "default"="EUR",
+                        "maxLength"="3",
+                        "minLength"="3"
+                    },
+                    "openapi_context"={
+                        "example"="EUR",
+                        "default"="EUR"
+                    }
+                }
+            )
+          type: string
+        tax_percentage:
+          example: 9
+          default: 9
+          description: |
+            The tax percentage for this offer as an integer e.g. 9% makes 9
+             @example 9
+            
+             @ApiProperty(
+                attributes={
+                    "swagger_context"={
+                    	   "description" = "The tax percentage for this offer as an integer e.g. 9% makes 9",
+                        "type"="integer",
+                        "example"="9",
+                        "maxLength"="3",
+                        "minLength"="1",
+                        "required" = true
+                    },
+                    "openapi_context"={
+                        "example"=9,
+                        "default"=9
+                    }
+                }
+            )
+          type: integer
+        offer:
+          example: 'http://example.org/offers/1'
+          default: 'http://example.org/offers/1'
+          description: 'The offer this item represents'
+          type: string
+host: irc.zaakonline.nl
 servers:
   -
     description: 'Demo Omgeving'
