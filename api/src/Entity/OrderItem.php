@@ -67,6 +67,25 @@ class OrderItem
      */
     private $order;
     /**
+     * @var string $offer The offer this item represents
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "openapi_context"={
+     *             "example"="http://example.org/offers/1",
+     *             "default"="http://example.org/offers/1"
+     *         }
+     *     }
+     * )
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read","write"})
+     * @Assert\Url
+     * @Assert\NotNull
+     * @MaxDepth(1)
+     */
+    private $offer;
+
+    /**
      * @var string $product The product this item represents. DEPRECATED: REPLACED BY OFFER
      *
      * @Groups({"read","write"})
@@ -187,25 +206,6 @@ class OrderItem
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
-
-    /**
-     * @var string $offer The offer this item represents
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "example"="http://example.org/offers/1",
-     *             "default"="http://example.org/offers/1"
-     *         }
-     *     }
-     * )
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"read","write"})
-     * @Assert\Url
-     * @Assert\NotNull
-     * @MaxDepth(1)
-     */
-    private $offer;
 
     public function getId()
     {

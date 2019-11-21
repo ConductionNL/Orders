@@ -149,16 +149,6 @@ class Order
     private $price;
 
     /**
-     * @var \DateTime $createdAt The moment this request was created by the submitter
-     *
-     * @example 20190101
-     * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $createdAt;
-
-    /**
      *  @var string $priceCurrency The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
      *
      * @example EUR
@@ -202,6 +192,16 @@ class Order
      * @ORM\Column(type="string", length=255)
      */
     private $tax;
+
+    /**
+     * @var \DateTime $createdAt The moment this request was created by the submitter
+     *
+     * @example 20190101
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
     /**
      * @var ArrayCollection $items The items in this order
      *
