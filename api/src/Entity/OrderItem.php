@@ -71,7 +71,7 @@ class OrderItem
      *
      * @Groups({"read","write"})
      * @ORM\Column(type="string", length=255, nullable=true)
-     *
+     * @MaxDepth(1)
      * @Assert\Length(
      *     max = 255
      * )
@@ -203,7 +203,7 @@ class OrderItem
      * @Groups({"read","write"})
      * @Assert\Url
      * @Assert\NotNull
-     *
+     * @MaxDepth(1)
      */
     private $offer;
 

@@ -207,6 +207,7 @@ class Order
      *
      * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
+     * @MaxDepth(1)
      */
     private $items;
 
