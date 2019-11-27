@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -194,7 +195,7 @@ class Order
     private $tax;
 
     /**
-     * @var \DateTime $createdAt The moment this request was created by the submitter
+     * @var DateTime $createdAt The moment this request was created by the submitter
      *
      * @example 20190101
      * @Groups({"read"})
@@ -210,6 +211,23 @@ class Order
      * @MaxDepth(1)
      */
     private $items;
+
+    /**
+     * @var string The customer that placed this order
+     *
+     * @example https://example.org/people/1
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read","write"})
+     * @Assert\Url
+     */
+    private $customer;
+
+    /**
+     * @var boolean Property to determine if customer is a human or an organisation
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $humanCustomer;
 
     public function __construct()
     {
@@ -331,12 +349,12 @@ class Order
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -363,6 +381,30 @@ class Order
     public function setTax(string $tax): self
     {
         $this->tax = $tax;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?string
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(string $customer): self
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getHumanCustomer(): ?bool
+    {
+        return $this->humanCustomer;
+    }
+
+    public function setHumanCustomer(bool $humanCustomer): self
+    {
+        $this->humanCustomer = $humanCustomer;
 
         return $this;
     }

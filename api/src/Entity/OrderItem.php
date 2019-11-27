@@ -112,6 +112,7 @@ class OrderItem
      * @Groups({"read","write"})
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
+     * @Assert\PositiveOrZero
      */
     private $quantity;
 
