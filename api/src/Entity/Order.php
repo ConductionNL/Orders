@@ -2,20 +2,19 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * An entity representing an order
@@ -106,8 +105,8 @@ class Order
      * @Assert\Length(
      *     max = 255
      * )
-	 */
-	private $reference;
+     */
+    private $reference;
 
     /**
 	 * @var string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
@@ -116,8 +115,8 @@ class Order
      * @Assert\Length(
      *     max = 11
      * )
-	 */
-	private $referenceId;
+     */
+    private $referenceId;
 
     /**
      * @var string $targetOrganization The RSIN of the organization that ownes this proces
@@ -261,14 +260,14 @@ class Order
 
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
 
     public function setId(string $id): self
     {
-    	$this->id = $id;
+        $this->id = $id;
 
-    	return $this;
+        return $this;
     }
 
     public function getReference(): ?string
