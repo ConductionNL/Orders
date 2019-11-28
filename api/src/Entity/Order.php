@@ -2,18 +2,17 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(
@@ -24,65 +23,67 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Order
 {
-	/**
-	 * @var UuidInterface $id The UUID identifier of this object
-	 * @example e2984465-190a-4562-829e-a8cca81aa35d
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The UUID identifier of this object",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Assert\Uuid
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid", unique=true)
-	 * @ORM\GeneratedValue(strategy="CUSTOM")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
-	private $id;
+    /**
+     * @var UuidInterface The UUID identifier of this object
+     *
+     * @example e2984465-190a-4562-829e-a8cca81aa35d
+     *
+     * @ApiProperty(
+     * 	   identifier=true,
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The UUID identifier of this object",
+     *             "type"="string",
+     *             "format"="uuid",
+     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
+     *         }
+     *     }
+     * )
+     *
+     * @Assert\Uuid
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     */
+    private $id;
 
-	/**
-	 * @param string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The human readable reference for this request",
-	 *             "type"="string",
-	 *             "example"="6666-2019-0000000012",
-	 *             "maxLength"="255"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Groups({"read"})
-	 * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
-	 * @ApiFilter(SearchFilter::class, strategy="exact")
+    /**
+     * @param string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The human readable reference for this request",
+     *             "type"="string",
+     *             "example"="6666-2019-0000000012",
+     *             "maxLength"="255"
+     *         }
+     *     }
+     * )
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
      * )
-	 */
-	private $reference;
+     */
+    private $reference;
 
-	/**
-	 * @param string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
-	 *
-	 * @ORM\Column(type="integer", length=11, nullable=true)
+    /**
+     * @param string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
+     *
+     * @ORM\Column(type="integer", length=11, nullable=true)
      * @Assert\Length(
      *     max = 11
      * )
-	 */
-	private $referenceId;
+     */
+    private $referenceId;
 
     /**
-     * @var string $targetOrganization The RSIN of the organization that ownes this proces
+     * @var string The RSIN of the organization that ownes this proces
+     *
      * @example 002851234
      *
      * @ApiProperty(
@@ -115,7 +116,7 @@ class Order
     private $price;
 
     /**
-     * @var Datetime $createdAt The moment this request was created by the submitter
+     * @var Datetime The moment this request was created by the submitter
      *
      *
      * @Groups({"read"})
@@ -131,14 +132,14 @@ class Order
 
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
 
     public function setId(string $id): self
     {
-    	$this->id = $id;
+        $this->id = $id;
 
-    	return $this;
+        return $this;
     }
 
     public function getReference(): ?string
