@@ -55,6 +55,30 @@ class OrderItem
      */
     private $id;
     /**
+     * @var string The name of the object
+     *
+     * @example my OrderItem
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @Assert\NotNull
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+    /**
+     * @var string The description of the order item
+     *
+     * @example This is the best order item ever
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @ORM\Column(type="string", length=2550, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var Order $order The order that contains this item
      *
      * @Groups({"read","write"})
@@ -66,6 +90,7 @@ class OrderItem
      * )
      */
     private $order;
+
     /**
      * @var string $offer The offer this item represents
      *
@@ -302,6 +327,30 @@ class OrderItem
     public function setTaxPercentage(int $taxPercentage): self
     {
         $this->taxPercentage = $taxPercentage;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

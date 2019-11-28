@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\UuidInterface;
@@ -36,7 +37,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 class Order
 {
-	/**
+    /**
 	 * @var UuidInterface $id The UUID identifier of this object
 	 * @example e2984465-190a-4562-829e-a8cca81aa35d
 	 *
@@ -60,7 +61,32 @@ class Order
 	 */
 	private $id;
 
-	/**
+    /**
+     * @var string The name of the order
+     *
+     * @example my Order
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @Assert\NotNull
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string The description of the order
+     *
+     * @example This is the best order ever
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @ORM\Column(type="string", length=2550, nullable=true)
+     */
+    private $description;
+
+    /**
 	 * @var string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
 	 *
 	 * @ApiProperty(
@@ -83,7 +109,7 @@ class Order
 	 */
 	private $reference;
 
-	/**
+    /**
 	 * @var string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
 	 *
 	 * @ORM\Column(type="integer", length=11, nullable=true)
@@ -176,7 +202,6 @@ class Order
      * @ORM\Column(type="string")
      */
     private $priceCurrency;
-
     /**
      * @var string $tax The total tax over the order
      *
@@ -203,6 +228,7 @@ class Order
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
+
     /**
      * @var ArrayCollection $items The items in this order
      *
@@ -221,7 +247,6 @@ class Order
      * @Assert\Url
      */
     private $customer;
-
     /**
      * @var boolean Property to determine if customer is a human or an organisation
      *
@@ -405,6 +430,30 @@ class Order
     public function setHumanCustomer(bool $humanCustomer): self
     {
         $this->humanCustomer = $humanCustomer;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
