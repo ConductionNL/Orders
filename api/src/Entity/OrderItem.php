@@ -3,22 +3,21 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTime;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * An entity representing an item of an order
+ * An entity representing an item of an order.
  *
  * This entity represents an item that is placed on the order
  *
  * @author Robert Zondervan <robert@conduction.nl>
+ *
  * @category entity
+ *
  * @license EUPL <https://github.com/ConductionNL/orderregistratiecomponent/blob/master/LICENSE.md>
- * @package orderregistratiecomponent
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
@@ -75,7 +74,7 @@ class OrderItem
     private $description;
 
     /**
-     * @var Order $order The order that contains this item
+     * @var Order The order that contains this item
      *
      * @Groups({"read","write"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
@@ -88,7 +87,7 @@ class OrderItem
     private $order;
 
     /**
-     * @var string $offer The offer this item represents
+     * @var string The offer this item represents
      *
      * @ApiProperty(
      *     attributes={
@@ -107,7 +106,7 @@ class OrderItem
     private $offer;
 
     /**
-     * @var string $product The product this item represents. DEPRECATED: REPLACED BY OFFER
+     * @var string The product this item represents. DEPRECATED: REPLACED BY OFFER
      *
      * @Groups({"read","write"})
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -115,12 +114,13 @@ class OrderItem
      * @Assert\Length(
      *     max = 255
      * )
+     *
      * @deprecated
      */
     private $product;
 
     /**
-     * @var int $quantity The quantity of the items that are ordered
+     * @var int The quantity of the items that are ordered
      *
      * @ApiProperty(
      *     attributes={
@@ -138,7 +138,8 @@ class OrderItem
     private $quantity;
 
     /**
-     *  @var string $price The price of this product
+     *  @var string The price of this product
+     *
      *  @example 50.00
      *
      *  @ApiProperty(
@@ -164,7 +165,8 @@ class OrderItem
     private $price;
 
     /**
-     *  @var string $priceCurrency The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     *  @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     *
      *  @example EUR
      *
      *  @ApiProperty(
@@ -192,7 +194,8 @@ class OrderItem
     private $priceCurrency;
 
     /**
-     *  @var integer $taxPercentage The tax percentage for this offer as an integer e.g. 9% makes 9
+     *  @var int The tax percentage for this offer as an integer e.g. 9% makes 9
+     *
      *  @example 9
      *
      *  @ApiProperty(
@@ -220,9 +223,9 @@ class OrderItem
     private $taxPercentage;
 
     /**
-     * @var DateTime $createdAt The moment this request was created by the submitter
+     * @var DateTime The moment this request was created by the submitter
      *
-
+     *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
@@ -239,10 +242,11 @@ class OrderItem
      */
     public function getProduct(): ?string
     {
-        if($this->product)
+        if ($this->product) {
             return $this->product;
-        else
+        } else {
             return $this->getOffer();
+        }
     }
 
     /**

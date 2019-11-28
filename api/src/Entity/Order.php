@@ -17,14 +17,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * An entity representing an order
+ * An entity representing an order.
  *
  * This entity represents an order for sales
  *
  * @author Robert Zondervan <robert@conduction.nl>
+ *
  * @category entity
+ *
  * @license EUPL <https://github.com/ConductionNL/productenendienstencatalogus/blob/master/LICENSE.md>
- * @package orderregistratiecomponent
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
@@ -33,32 +34,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  * @ORM\Table(name="orderTable")
  */
-
 class Order
 {
     /**
-	 * @var UuidInterface $id The UUID identifier of this object
-	 * @example e2984465-190a-4562-829e-a8cca81aa35d
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The UUID identifier of this object",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Assert\Uuid
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid", unique=true)
-	 * @ORM\GeneratedValue(strategy="CUSTOM")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
-	private $id;
+     * @var UuidInterface The UUID identifier of this object
+     *
+     * @example e2984465-190a-4562-829e-a8cca81aa35d
+     *
+     * @ApiProperty(
+     * 	   identifier=true,
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The UUID identifier of this object",
+     *             "type"="string",
+     *             "format"="uuid",
+     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
+     *         }
+     *     }
+     * )
+     *
+     * @Assert\Uuid
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     */
+    private $id;
 
     /**
      * @var string The name of the order
@@ -86,22 +87,22 @@ class Order
     private $description;
 
     /**
-	 * @var string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The human readable reference for this request",
-	 *             "type"="string",
-	 *             "example"="6666-2019-0000000012",
-	 *             "maxLength"="255"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Groups({"read"})
-	 * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
-	 * @ApiFilter(SearchFilter::class, strategy="exact")
+     * @var string The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The human readable reference for this request",
+     *             "type"="string",
+     *             "example"="6666-2019-0000000012",
+     *             "maxLength"="255"
+     *         }
+     *     }
+     * )
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
      * )
@@ -109,9 +110,9 @@ class Order
     private $reference;
 
     /**
-	 * @var string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
-	 *
-	 * @ORM\Column(type="integer", length=11, nullable=true)
+     * @var string The autoincrementing id part of the reference, unique on a organization-year-id basis
+     *
+     * @ORM\Column(type="integer", length=11, nullable=true)
      * @Assert\Length(
      *     max = 11
      * )
@@ -119,7 +120,7 @@ class Order
     private $referenceId;
 
     /**
-     * @var string $targetOrganization The RSIN of the organization that ownes this proces
+     * @var string The RSIN of the organization that ownes this proces
      *
      * @example 002851234
      * @ApiProperty(
@@ -149,7 +150,7 @@ class Order
     private $targetOrganization;
 
     /**
-     *  @var string $price The price of this product
+     *  @var string The price of this product
      *
      *  @example 50.00
      *  @ApiProperty(
@@ -175,7 +176,7 @@ class Order
     private $price;
 
     /**
-     *  @var string $priceCurrency The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     *  @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
      *
      * @example EUR
      *  @ApiProperty(
@@ -202,7 +203,7 @@ class Order
      */
     private $priceCurrency;
     /**
-     * @var string $tax The total tax over the order
+     * @var string The total tax over the order
      *
      * @example 21.00
      * @ApiProperty(
@@ -219,7 +220,7 @@ class Order
     private $tax;
 
     /**
-     * @var DateTime $createdAt The moment this request was created by the submitter
+     * @var DateTime The moment this request was created by the submitter
      *
      * @example 20190101
      * @Groups({"read"})
@@ -229,7 +230,7 @@ class Order
     private $createdAt;
 
     /**
-     * @var ArrayCollection $items The items in this order
+     * @var ArrayCollection The items in this order
      *
      * @Groups({"read", "write"})
      * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
@@ -247,7 +248,7 @@ class Order
      */
     private $customer;
     /**
-     * @var boolean Property to determine if customer is a human or an organisation
+     * @var bool Property to determine if customer is a human or an organisation
      *
      * @ORM\Column(type="boolean", nullable=true)
      */
