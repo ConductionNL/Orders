@@ -2,89 +2,127 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Doctrine\Common\Collections\Collection;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
+ * An entity representing an order.
+ *
+ * This entity represents an order for sales
+ *
+ * @author Robert Zondervan <robert@conduction.nl>
+ *
+ * @category entity
+ *
+ * @license EUPL <https://github.com/ConductionNL/productenendienstencatalogus/blob/master/LICENSE.md>
+ *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @ORM\Table(name="orderTable")
  */
 class Order
 {
-	/**
-	 * @var UuidInterface $id The UUID identifier of this object
-	 * @example e2984465-190a-4562-829e-a8cca81aa35d
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The UUID identifier of this object",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Assert\Uuid
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid", unique=true)
-	 * @ORM\GeneratedValue(strategy="CUSTOM")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
-	private $id;
+    /**
+     * @var UuidInterface The UUID identifier of this object
+     *
+     * @example e2984465-190a-4562-829e-a8cca81aa35d
+     *
+     * @ApiProperty(
+     * 	   identifier=true,
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The UUID identifier of this object",
+     *             "type"="string",
+     *             "format"="uuid",
+     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
+     *         }
+     *     }
+     * )
+     *
+     * @Assert\Uuid
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     */
+    private $id;
 
-	/**
-	 * @param string $reference The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
-	 *
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The human readable reference for this request",
-	 *             "type"="string",
-	 *             "example"="6666-2019-0000000012",
-	 *             "maxLength"="255"
-	 *         }
-	 *     }
-	 * )
-	 *
-	 * @Groups({"read"})
-	 * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
-	 * @ApiFilter(SearchFilter::class, strategy="exact")
+    /**
+     * @var string The name of the order
+     *
+     * @example my Order
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @Assert\NotNull
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string The description of the order
+     *
+     * @example This is the best order ever
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @ORM\Column(type="string", length=2550, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The human readable reference for this request",
+     *             "type"="string",
+     *             "example"="6666-2019-0000000012",
+     *             "maxLength"="255"
+     *         }
+     *     }
+     * )
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
+     * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
      * )
-	 */
-	private $reference;
+     */
+    private $reference;
 
-	/**
-	 * @param string $referenceId The autoincrementing id part of the reference, unique on a organization-year-id basis
-	 *
-	 * @ORM\Column(type="integer", length=11, nullable=true)
+    /**
+     * @var string The autoincrementing id part of the reference, unique on a organization-year-id basis
+     *
+     * @ORM\Column(type="integer", length=11, nullable=true)
      * @Assert\Length(
      *     max = 11
      * )
-	 */
-	private $referenceId;
+     */
+    private $referenceId;
 
     /**
-     * @var string $targetOrganization The RSIN of the organization that ownes this proces
-     * @example 002851234
+     * @var string The RSIN of the organization that ownes this proces
      *
+     * @example 002851234
      * @ApiProperty(
      *     attributes={
      *         "swagger_context"={
@@ -93,6 +131,10 @@ class Order
      *             "example"="002851234",
      *              "maxLength"="255",
      *             "required"=true
+     *         },
+     *         "openapi_context"={
+     *             "example"="002851234",
+     *             "default"="002851234"
      *         }
      *     }
      * )
@@ -108,37 +150,125 @@ class Order
     private $targetOrganization;
 
     /**
+     *  @var string The price of this product
+     *
+     *  @example 50.00
+     *  @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *             "iri"="https://schema.org/price",
+     *         	   "description" = "The price of this product",
+     *             "type"="string",
+     *             "example"="50.00",
+     *             "maxLength"="9",
+     *             "required" = true
+     *         },
+     *         "openapi_context"={
+     *             "example"="50.00",
+     *             "default"="50.00"
+     *         }
+     *     }
+     * )
      * @Groups({"read","write"})
-     * @ORM\Column(type="money")
-     * @Assert\NotBlank
+     * @Assert\NotNull
+     * @ORM\Column(type="decimal", precision=8, scale=2)
      */
     private $price;
 
     /**
-     * @var Datetime $createdAt The moment this request was created by the submitter
+     *  @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
      *
+     * @example EUR
+     *  @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *             "iri"="https://schema.org/priceCurrency",
+     *         	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
+     *             "type"="string",
+     *             "example"="EUR",
+     *             "default"="EUR",
+     *             "maxLength"="3",
+     *             "minLength"="3"
+     *         },
+     *         "openapi_context"={
+     *             "example"="EUR",
+     *             "default"="EUR"
+     *         }
+     *     }
+     * )
      *
+     * @Assert\Currency
+     * @Groups({"read","write"})
+     * @ORM\Column(type="string")
+     */
+    private $priceCurrency;
+    /**
+     * @var string The total tax over the order
+     *
+     * @example 21.00
+     * @ApiProperty(
+     *     attributes={
+     *         "openapi_context"={
+     *             "example"="21.00",
+     *             "default"="21.00"
+     *         }
+     *     }
+     * )
+     * @Groups({"read","write"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $tax;
+
+    /**
+     * @var DateTime The moment this request was created by the submitter
+     *
+     * @example 20190101
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $createdAt;
 
+    /**
+     * @var ArrayCollection The items in this order
+     *
+     * @Groups({"read", "write"})
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
+     * @MaxDepth(1)
+     */
+    private $items;
+
+    /**
+     * @var string The customer that placed this order
+     *
+     * @example https://example.org/people/1
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read","write"})
+     * @Assert\Url
+     */
+    private $customer;
+    /**
+     * @var bool Property to determine if customer is a human or an organisation
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $humanCustomer;
+
     public function __construct()
     {
-        $this->orderLines = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     public function getId()
     {
-    	return $this->id;
+        return $this->id;
     }
 
     public function setId(string $id): self
     {
-    	$this->id = $id;
+        $this->id = $id;
 
-    	return $this;
+        return $this;
     }
 
     public function getReference(): ?string
@@ -167,12 +297,12 @@ class Order
 
     public function getRsin(): ?string
     {
-        return $this->rsin;
+        return $this->targetOrganization;
     }
 
     public function setRsin(string $rsin): self
     {
-        $this->rsin = $rsin;
+        $this->targetOrganization = $rsin;
 
         return $this;
     }
@@ -219,7 +349,7 @@ class Order
         return $this;
     }
 
-    public function removeItem(OrderItem $orderLine): self
+    public function removeItem(OrderItem $item): self
     {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
@@ -244,14 +374,86 @@ class Order
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getPriceCurrency(): ?string
+    {
+        return $this->priceCurrency;
+    }
+
+    public function setPriceCurrency(string $priceCurrency): self
+    {
+        $this->priceCurrency = $priceCurrency;
+
+        return $this;
+    }
+
+    public function getTax(): ?string
+    {
+        return $this->tax;
+    }
+
+    public function setTax(string $tax): self
+    {
+        $this->tax = $tax;
+
+        return $this;
+    }
+
+    public function getCustomer(): ?string
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(string $customer): self
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getHumanCustomer(): ?bool
+    {
+        return $this->humanCustomer;
+    }
+
+    public function setHumanCustomer(bool $humanCustomer): self
+    {
+        $this->humanCustomer = $humanCustomer;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
