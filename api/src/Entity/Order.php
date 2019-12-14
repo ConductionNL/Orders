@@ -32,7 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
- * @ORM\Table(name="orderTable")
+ * @Table(name="orders")
  */
 class Order
 {

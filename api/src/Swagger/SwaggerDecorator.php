@@ -113,7 +113,10 @@ final class SwaggerDecorator implements NormalizerInterface
 
                     //$additionalEntityDocs = $this->getAdditionalEntityDocs($entity);
                     $entityDocs = $this->getAdditionalEntityDocs($entity);
-                    $additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
+                    // Only run if we have aditional docs
+                    if(array_key_exists('properties',$entityDocs)){
+                    	$additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
+                    }
 
                     // Security
                     $docs['securityDefinitions']['JWT-Oauth']['scopes'] = array_merge($docs['securityDefinitions']['JWT-Oauth']['scopes'], $entityDocs['security']);
@@ -127,6 +130,12 @@ final class SwaggerDecorator implements NormalizerInterface
         // Oke dit is echt but lelijk
         $schemas = (array) $docs['definitions'];
         foreach ($schemas as $schemaName => $schema) {
+
+            // We can only merge if we actually have content
+            if (!in_array($schemaName, $additionalDocs)) {
+                continue;
+            }
+
             $additionalDocs[$schemaName] = array_merge((array) $schema, $additionalDocs[$schemaName]);
 
             $properties = (array) $schema['properties'];
@@ -407,6 +416,7 @@ final class SwaggerDecorator implements NormalizerInterface
             $docblock = $factory->create($property->getDocComment());
             $tags = $docblock->getTags();
             $atributes = [];
+            $groups = [];
 
             foreach ($tags as $tag) {
                 $name = $tag->getName();
