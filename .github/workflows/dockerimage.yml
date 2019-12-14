@@ -63,6 +63,10 @@ jobs:
         run: docker-compose logs
       - name: Security Checks
         run: docker-compose exec -T php composer req sensiolabs/security-checker
+      - name: Database Update
+        run: docker-compose exec -T php bin/console doctrine:schema:update --force
+      - name: Database Check
+        run: docker-compose exec -T php bin/console doctrine:schema:validate
       - name: Chores
         run: docker-compose down
       - name: Login to DockerHub Registry
@@ -95,7 +99,7 @@ jobs:
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
         run: helm upgrade $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
       - name: Install through helm
-        if: failure()
+        if: failure() && (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
         run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
       - name: Rollout new containers
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && success()
@@ -107,8 +111,13 @@ jobs:
         if: (success() || failure())
         id: releasecode
         run: |
-            echo "##[set-output name=releasename]$APP_BUILD-$GITHUB_SHA"
-
+            export RELEASE=$APP_BUILD-$(git rev-parse --short $GITHUB_SHA)
+            echo "##[set-output name=releasename]$RELEASE"
+      - name: Print release name
+        if: (success() || failure())
+        run: echo $RELEASENAME
+        env:
+            RELEASENAME: ${{ steps.releasecode.outputs.releasename }}
       - name: Create Release
         if: contains( github.ref, 'master' ) && steps.kubeconfig.outputs.success == 'true' && ( success() || failure() )
         id: create_release
@@ -117,7 +126,7 @@ jobs:
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-            tag_name: ${{ steps.releasecode.releasename }}
-            release_name: ${{ steps.releasecode.releasename }}
+            tag_name: ${{ steps.releasecode.outputs.releasename }}
+            release_name: ${{ steps.releasecode.outputs.releasename }}
             draft: false
             prerelease: false
