@@ -73,6 +73,7 @@ class OrderItem
      * @Groups({"read","write"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="order")
      * @ORM\JoinColumn(nullable=false)
+     * @MaxDepth(1)
      */
     private $order;
 
