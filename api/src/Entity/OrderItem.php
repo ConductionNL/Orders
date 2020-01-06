@@ -27,7 +27,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
- * @ORM\Entity(repositoryClass="App\Repository\OrderLineItem")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
  */
 class OrderItem
 {
@@ -35,6 +35,7 @@ class OrderItem
      * @var UuidInterface
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
+     * @Assert\Uuid
      * @Groups({"read"})
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
@@ -73,9 +74,6 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull
-     * @Assert\Length(
-     *     max = 255
-     * )
      */
     private $order;
 
@@ -279,12 +277,12 @@ class OrderItem
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(?DateTimeInterface $createdAt): self
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 

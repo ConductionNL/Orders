@@ -41,6 +41,8 @@ class Order
      * @var UuidInterface The UUID identifier of this object
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
+     *
+     * @Groups({"read"})
      * @Assert\Uuid
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
@@ -227,14 +229,14 @@ class Order
         return $this;
     }
 
-    public function getSubmitter(): ?string
+    public function getTargetOrganization(): ?string
     {
-        return $this->submitter;
+        return $this->targetOrganization;
     }
 
-    public function setSubmitter(string $submitter): self
+    public function setTargetOrganization(string $targetOrganization): self
     {
-        $this->submitter = $submitter;
+        $this->targetOrganization = $targetOrganization;
 
         return $this;
     }

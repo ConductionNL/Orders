@@ -1208,10 +1208,13 @@ components:
     Order-read:
       type: object
       description: 'An entity representing an order.'
-      required:
-        - name
-        - price
       properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
         name:
           description: 'The name of the order'
           type: string
@@ -1221,6 +1224,9 @@ components:
         reference:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1248,11 +1254,16 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+      required:
+        - name
+        - targetOrganization
+        - price
     Order-write:
       type: object
       description: 'An entity representing an order.'
       required:
         - name
+        - targetOrganization
         - price
       properties:
         name:
@@ -1260,6 +1271,9 @@ components:
           type: string
         description:
           description: 'The description of the order'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1285,9 +1299,6 @@ components:
     'Order:jsonld-read':
       type: object
       description: 'An entity representing an order.'
-      required:
-        - name
-        - price
       properties:
         '@context':
           readOnly: true
@@ -1298,6 +1309,12 @@ components:
         '@type':
           readOnly: true
           type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
         name:
           description: 'The name of the order'
           type: string
@@ -1307,6 +1324,9 @@ components:
         reference:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1334,11 +1354,16 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+      required:
+        - name
+        - targetOrganization
+        - price
     'Order:jsonld-write':
       type: object
       description: 'An entity representing an order.'
       required:
         - name
+        - targetOrganization
         - price
       properties:
         '@context':
@@ -1355,6 +1380,9 @@ components:
           type: string
         description:
           description: 'The description of the order'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1383,6 +1411,8 @@ components:
       properties:
         id:
           readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         name:
           description: 'The name of the object'
@@ -1484,6 +1514,8 @@ components:
           type: string
         id:
           readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         name:
           description: 'The name of the object'
@@ -1582,6 +1614,9 @@ components:
 definitions:
   Order-read:
     properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
       name:
         example: 'my Order'
         maxLength: 255
@@ -1639,6 +1674,7 @@ definitions:
     properties:
       id:
         example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
       name:
         example: 'my OrderItem'
         maxLength: 255
@@ -1659,8 +1695,7 @@ definitions:
       taxPercentage:
         example: '9'
       createdAt: []
-      order:
-        maxLength: 255
+      order: []
     required:
       - name
       - offer
@@ -1687,8 +1722,7 @@ definitions:
         example: EUR
       taxPercentage:
         example: '9'
-      order:
-        maxLength: 255
+      order: []
     required:
       - name
       - offer

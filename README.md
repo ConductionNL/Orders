@@ -9,6 +9,7 @@ Het "orders" component is ontwikkeld voor de gemeente Utrecht en heeft als doel 
 - [codebase](https://github.com/ConductionNL/orderscomponent) on github.
 - [codebase](https://github.com/ConductionNL/orderscomponent/archive/master.zip) as a download.
 - [Datamodel of this component](api/public/schema/datamodel.pdf)
+- [Postman tests of this component](api/public/schema/orc.postman_collection.json)
 
 Getting started
 -------
