@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * An entity representing an order.
@@ -32,26 +33,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
- * @Table(name="orders")
+ * @ORM\Table(name="orders")
  */
 class Order
 {
     /**
      * @var UuidInterface The UUID identifier of this object
-     *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
-     *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
      *
      * @Assert\Uuid
      * @ORM\Id
@@ -88,17 +76,7 @@ class Order
 
     /**
      * @var string The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
-     *
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The human readable reference for this request",
-     *             "type"="string",
-     *             "example"="6666-2019-0000000012",
-     *             "maxLength"="255"
-     *         }
-     *     }
-     * )
+     * @example 6666-2019-0000000012
      *
      * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
@@ -121,23 +99,7 @@ class Order
 
     /**
      * @var string The RSIN of the organization that ownes this proces
-     *
      * @example 002851234
-     * @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The RSIN of the organization that ownes this proces",
-     *             "type"="string",
-     *             "example"="002851234",
-     *              "maxLength"="255",
-     *             "required"=true
-     *         },
-     *         "openapi_context"={
-     *             "example"="002851234",
-     *             "default"="002851234"
-     *         }
-     *     }
-     * )
      *
      * @Assert\NotNull
      * @Assert\Length(
@@ -150,25 +112,9 @@ class Order
     private $targetOrganization;
 
     /**
-     *  @var string The price of this product
+     * @var string The price of this product
+     * @example 50.00
      *
-     *  @example 50.00
-     *  @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "iri"="https://schema.org/price",
-     *         	   "description" = "The price of this product",
-     *             "type"="string",
-     *             "example"="50.00",
-     *             "maxLength"="9",
-     *             "required" = true
-     *         },
-     *         "openapi_context"={
-     *             "example"="50.00",
-     *             "default"="50.00"
-     *         }
-     *     }
-     * )
      * @Groups({"read","write"})
      * @Assert\NotNull
      * @ORM\Column(type="decimal", precision=8, scale=2)
@@ -176,26 +122,8 @@ class Order
     private $price;
 
     /**
-     *  @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
-     *
+     * @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
      * @example EUR
-     *  @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "iri"="https://schema.org/priceCurrency",
-     *         	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
-     *             "type"="string",
-     *             "example"="EUR",
-     *             "default"="EUR",
-     *             "maxLength"="3",
-     *             "minLength"="3"
-     *         },
-     *         "openapi_context"={
-     *             "example"="EUR",
-     *             "default"="EUR"
-     *         }
-     *     }
-     * )
      *
      * @Assert\Currency
      * @Groups({"read","write"})
@@ -204,16 +132,8 @@ class Order
     private $priceCurrency;
     /**
      * @var string The total tax over the order
-     *
      * @example 21.00
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "example"="21.00",
-     *             "default"="21.00"
-     *         }
-     *     }
-     * )
+     *
      * @Groups({"read","write"})
      * @ORM\Column(type="string", length=255)
      */
@@ -221,8 +141,8 @@ class Order
 
     /**
      * @var DateTime The moment this request was created by the submitter
-     *
      * @example 20190101
+     *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
@@ -240,8 +160,8 @@ class Order
 
     /**
      * @var string The customer that placed this order
-     *
      * @example https://example.org/people/1
+     *
      * @ORM\Column(type="string", length=255)
      * @Groups({"read","write"})
      * @Assert\Url

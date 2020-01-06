@@ -9,7 +9,7 @@ info:
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -99,8 +99,12 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
           in: header
         -
           name: 'extend[]'
@@ -140,6 +144,8 @@ paths:
             type: string
             format: date-time
           in: query
+      produces:
+        - application/health+json
     post:
       tags:
         - OrderItem
@@ -237,7 +243,7 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
   '/order_items/{id}':
@@ -279,8 +285,12 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
           in: header
         -
           name: 'extend[]'
@@ -350,6 +360,8 @@ paths:
                 $ref: '#/components/schemas/OrderItem-read'
         404:
           description: 'Resource not found'
+      produces:
+        - application/health+json
     delete:
       tags:
         - OrderItem
@@ -393,7 +405,7 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
     put:
@@ -434,7 +446,7 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
       responses:
@@ -534,7 +546,7 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
       responses:
@@ -716,6 +728,10 @@ paths:
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
         -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
           name: 'extend[]'
           required: false
           description: 'An array of nested objects to include in the return object'
@@ -753,6 +769,8 @@ paths:
             type: string
             format: date-time
           in: query
+      produces:
+        - application/health+json
     post:
       tags:
         - Order
@@ -850,7 +868,7 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
   '/orders/{id}':
@@ -894,6 +912,10 @@ paths:
         -
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
           in: header
         -
           name: 'extend[]'
@@ -963,6 +985,8 @@ paths:
                 $ref: '#/components/schemas/Order-read'
         404:
           description: 'Resource not found'
+      produces:
+        - application/health+json
     delete:
       tags:
         - Order
@@ -1006,7 +1030,7 @@ paths:
           description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
           in: header
         -
-          name: X-Audit-Clarification
+          name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
     put:
@@ -1213,96 +1237,63 @@ components:
   schemas:
     Order-read:
       type: object
-      description: 'An entity representing an order'
+      description: 'An entity representing an order.'
+      required:
+        - name
+        - price
       properties:
+        name:
+          description: 'The name of the order'
+          type: string
+        description:
+          description: 'The description of the order'
+          type: string
         reference:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
         price:
-          example: '50.00'
-          default: '50.00'
-          description: |
-            The price of this product
-            
-             @example 50.00
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                        "iri"="https://schema.org/price",
-                    	   "description" = "The price of this product",
-                        "type"="string",
-                        "example"="50.00",
-                        "maxLength"="9",
-                        "required" = true
-                    },
-                    "openapi_context"={
-                        "example"="50.00",
-                        "default"="50.00"
-                    }
-                }
-            )
+          description: 'The price of this product'
           type: string
-        created_at:
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          type: string
+        tax:
+          description: 'The total tax over the order'
+          type: string
+        createdAt:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
           format: date-time
-        price_currency:
-          example: EUR
-          default: EUR
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          type: string
-        tax:
-          example: '21.00'
-          default: '21.00'
-          description: 'The total tax over the order'
-          type: string
         items:
           description: 'The items in this order'
           type: array
           items:
             $ref: '#/components/schemas/OrderItem-read'
-      required:
-        - price
+        customer:
+          description: 'The customer that placed this order'
+          type: string
     Order-write:
       type: object
-      description: 'An entity representing an order'
+      description: 'An entity representing an order.'
       required:
+        - name
         - price
       properties:
-        price:
-          example: '50.00'
-          default: '50.00'
-          description: |
-            The price of this product
-            
-             @example 50.00
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                        "iri"="https://schema.org/price",
-                    	   "description" = "The price of this product",
-                        "type"="string",
-                        "example"="50.00",
-                        "maxLength"="9",
-                        "required" = true
-                    },
-                    "openapi_context"={
-                        "example"="50.00",
-                        "default"="50.00"
-                    }
-                }
-            )
+        name:
+          description: 'The name of the order'
           type: string
-        price_currency:
-          example: EUR
-          default: EUR
+        description:
+          description: 'The description of the order'
+          type: string
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           type: string
         tax:
-          example: '21.00'
-          default: '21.00'
           description: 'The total tax over the order'
           type: string
         items:
@@ -1310,210 +1301,236 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem-write'
+        customer:
+          description: 'The customer that placed this order'
+          type: string
     OrderItem-read:
       type: object
-      description: 'An entity representing an item of an order'
+      description: 'An entity representing an item of an order.'
       properties:
         id:
-          description: 'The UUID identifier of this object'
-          type: string
-          format: uuid
-          example: e2984465-190a-4562-829e-a8cca81aa35d
           readOnly: true
+          type: string
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the order item'
+          type: string
         order:
           description: 'The order that contains this item'
           $ref: '#/components/schemas/Order-read'
+        offer:
+          description: 'The offer this item represents'
+          type: string
         product:
           description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
-          example: 1
-          default: 1
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          example: '50.00'
-          default: '50.00'
-          description: |
-            The price of this product
-             @example 50.00
-            
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                        "iri"="https://schema.org/price",
-                    	   "description" = "The price of this product",
-                        "type"="string",
-                        "example"="50.00",
-                        "maxLength"="9",
-                        "required" = true
-                    },
-                    "openapi_context"={
-                        "example"="50.00",
-                        "default"="50.00"
-                    }
-                }
-            )
+          description: 'The price of this product'
           type: string
-        price_currency:
-          example: EUR
-          default: EUR
-          description: |
-            The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
-             @example EUR
-            
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                        "iri"="https://schema.org/priceCurrency",
-                    	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
-                        "type"="string",
-                        "example"="EUR",
-                        "default"="EUR",
-                        "maxLength"="3",
-                        "minLength"="3"
-                    },
-                    "openapi_context"={
-                        "example"="EUR",
-                        "default"="EUR"
-                    }
-                }
-            )
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           type: string
-        tax_percentage:
-          example: 9
-          default: 9
-          description: |
-            The tax percentage for this offer as an integer e.g. 9% makes 9
-             @example 9
-            
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                    	   "description" = "The tax percentage for this offer as an integer e.g. 9% makes 9",
-                        "type"="integer",
-                        "example"="9",
-                        "maxLength"="3",
-                        "minLength"="1",
-                        "required" = true
-                    },
-                    "openapi_context"={
-                        "example"=9,
-                        "default"=9
-                    }
-                }
-            )
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
-        offer:
-          example: 'http://example.org/offers/1'
-          default: 'http://example.org/offers/1'
-          description: 'The offer this item represents'
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
           type: string
+          format: date-time
       required:
+        - name
         - order
+        - offer
         - quantity
         - price
-        - tax_percentage
-        - offer
+        - taxPercentage
     OrderItem-write:
       type: object
-      description: 'An entity representing an item of an order'
+      description: 'An entity representing an item of an order.'
       required:
+        - name
         - order
+        - offer
         - quantity
         - price
-        - tax_percentage
-        - offer
+        - taxPercentage
       properties:
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the order item'
+          type: string
         order:
           description: 'The order that contains this item'
           $ref: '#/components/schemas/Order-write'
+        offer:
+          description: 'The offer this item represents'
+          type: string
         product:
           description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
-          example: 1
-          default: 1
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          example: '50.00'
-          default: '50.00'
-          description: |
-            The price of this product
-             @example 50.00
-            
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                        "iri"="https://schema.org/price",
-                    	   "description" = "The price of this product",
-                        "type"="string",
-                        "example"="50.00",
-                        "maxLength"="9",
-                        "required" = true
-                    },
-                    "openapi_context"={
-                        "example"="50.00",
-                        "default"="50.00"
-                    }
-                }
-            )
+          description: 'The price of this product'
           type: string
-        price_currency:
-          example: EUR
-          default: EUR
-          description: |
-            The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
-             @example EUR
-            
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                        "iri"="https://schema.org/priceCurrency",
-                    	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
-                        "type"="string",
-                        "example"="EUR",
-                        "default"="EUR",
-                        "maxLength"="3",
-                        "minLength"="3"
-                    },
-                    "openapi_context"={
-                        "example"="EUR",
-                        "default"="EUR"
-                    }
-                }
-            )
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           type: string
-        tax_percentage:
-          example: 9
-          default: 9
-          description: |
-            The tax percentage for this offer as an integer e.g. 9% makes 9
-             @example 9
-            
-             @ApiProperty(
-                attributes={
-                    "swagger_context"={
-                    	   "description" = "The tax percentage for this offer as an integer e.g. 9% makes 9",
-                        "type"="integer",
-                        "example"="9",
-                        "maxLength"="3",
-                        "minLength"="1",
-                        "required" = true
-                    },
-                    "openapi_context"={
-                        "example"=9,
-                        "default"=9
-                    }
-                }
-            )
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
-        offer:
-          example: 'http://example.org/offers/1'
-          default: 'http://example.org/offers/1'
-          description: 'The offer this item represents'
-          type: string
+definitions:
+  Order-read:
+    properties:
+      name:
+        example: 'my Order'
+        maxLength: 255
+      description:
+        example: 'This is the best order ever'
+        maxLength: 255
+      reference:
+        example: 6666-2019-0000000012
+        maxLength: 255
+      targetOrganization:
+        example: '002851234'
+        maxLength: 255
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      tax:
+        example: '21.00'
+      createdAt:
+        example: '20190101'
+      customer:
+        example: 'https://example.org/people/1'
+        format: url
+      items: []
+    required:
+      - name
+      - targetOrganization
+      - price
+  Order-write:
+    properties:
+      name:
+        example: 'my Order'
+        maxLength: 255
+      description:
+        example: 'This is the best order ever'
+        maxLength: 255
+      targetOrganization:
+        example: '002851234'
+        maxLength: 255
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      tax:
+        example: '21.00'
+      customer:
+        example: 'https://example.org/people/1'
+        format: url
+      items: []
+    required:
+      - name
+      - targetOrganization
+      - price
+  OrderItem-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+      name:
+        example: 'my OrderItem'
+        maxLength: 255
+      description:
+        example: 'This is the best order item ever'
+        maxLength: 255
+      offer:
+        example: 'http://example.org/offers/1'
+        format: url
+      product:
+        maxLength: 255
+      quantity:
+        example: '1'
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      taxPercentage:
+        example: '9'
+      createdAt: []
+      order:
+        maxLength: 255
+    required:
+      - name
+      - offer
+      - price
+      - order
+  OrderItem-write:
+    properties:
+      name:
+        example: 'my OrderItem'
+        maxLength: 255
+      description:
+        example: 'This is the best order item ever'
+        maxLength: 255
+      offer:
+        example: 'http://example.org/offers/1'
+        format: url
+      product:
+        maxLength: 255
+      quantity:
+        example: '1'
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      taxPercentage:
+        example: '9'
+      order:
+        maxLength: 255
+    required:
+      - name
+      - offer
+      - price
+      - order
+tags:
+  -
+    name: Order
+    description: |
+      An entity representing an order.
+      
+      This entity represents an order for sales
+  -
+    name: OrderItem
+    description: |
+      An entity representing an item of an order.
+      
+      This entity represents an item that is placed on the order
+securityDefinitions:
+  JWT-Oauth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
+    flow: implicit
+    scopes:
+      read: 'read right to the OrderItem resource'
+      write: 'write right to the OrderItem resource'
+  JWT-Token:
+    type: apiKey
+    in: header
+    name: Authorization
+    scopes:
+      read: 'read right to the OrderItem resource'
+      write: 'write right to the OrderItem resource'
 host: irc.zaakonline.nl
 servers:
   -

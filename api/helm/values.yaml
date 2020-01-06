@@ -5,14 +5,15 @@
 settings:
   registryBase: docker.io/conduction
   projectName: orc
-  name: pc
-  title: Proto Component
+  name: orc
+  title: Order Registratie Component
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/Proto-component-commonground'
   domain: conduction.nl  
   domains:
     - conduction.nl
+    - vng.cloud
     - zaakonline.nl
     - larping.eu
     - common-ground.dev
@@ -24,12 +25,12 @@ settings:
   state: Noord-Holland
   locality: Amsterdam
   unit: Common-Ground  
-  demo: pc.zaakonline.nl
+  demo: orc.zaakonline.nl
   env: dev
   debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?vng\.cloud$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
@@ -57,15 +58,15 @@ php:
   secret: ""
 
 nginx:
-  repository: docker.io/conduction/irc-nginx
+  repository: docker.io/conduction/protocomponent-nginx
   tag: latest
   pullPolicy: Always
   replicaCount: 1
 
 varnish:
   enabled: true
-  url: https://irc-varnish
-  repository: docker.io/conduction/irc-varnish
+  #url: https://example.com
+  repository: docker.io/conduction/protocomponent-varnish
   tag: latest
   pullPolicy: Always
   replicaCount: 1
