@@ -2,18 +2,23 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use DateTime;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
+ * An entity representing an item of an order.
+ *
+ * This entity represents an item that is placed on the order
+ *
+ * @author Robert Zondervan <robert@conduction.nl>
+ *
+ * @category entity
+ *
+ * @license EUPL <https://github.com/ConductionNL/orderregistratiecomponent/blob/master/LICENSE.md>
+ *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
@@ -44,41 +49,181 @@ class OrderItem
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
+    /**
+     * @var string The name of the object
+     *
+     * @example my OrderItem
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @Assert\NotNull
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+    /**
+     * @var string The description of the order item
+     *
+     * @example This is the best order item ever
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @ORM\Column(type="string", length=2550, nullable=true)
+     */
+    private $description;
 
     /**
+     * @var Order The order that contains this item
+     *
      * @Groups({"read","write"})
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
      * @Assert\Length(
      *     max = 255
      * )
      */
+    private $order;
+
+    /**
+     * @var string The offer this item represents
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "openapi_context"={
+     *             "example"="http://example.org/offers/1",
+     *             "default"="http://example.org/offers/1"
+     *         }
+     *     }
+     * )
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read","write"})
+     * @Assert\Url
+     * @Assert\NotNull
+     * @MaxDepth(1)
+     */
+    private $offer;
+
+    /**
+     * @var string The product this item represents. DEPRECATED: REPLACED BY OFFER
+     *
+     * @Groups({"read","write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @MaxDepth(1)
+     * @Assert\Length(
+     *     max = 255
+     * )
+     *
+     * @deprecated
+     */
     private $product;
 
     /**
+     * @var int The quantity of the items that are ordered
+     *
+     * @ApiProperty(
+     *     attributes={
+     *         "openapi_context"={
+     *             "example"=1,
+     *             "default"=1
+     *         }
+     *     }
+     * )
      * @Groups({"read","write"})
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
+     * @Assert\PositiveOrZero
      */
     private $quantity;
 
     /**
+     *  @var string The price of this product
+     *
+     *  @example 50.00
+     *
+     *  @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *             "iri"="https://schema.org/price",
+     *         	   "description" = "The price of this product",
+     *             "type"="string",
+     *             "example"="50.00",
+     *             "maxLength"="9",
+     *             "required" = true
+     *         },
+     *         "openapi_context"={
+     *             "example"="50.00",
+     *             "default"="50.00"
+     *         }
+     *     }
+     * )
      * @Groups({"read","write"})
-     * @ORM\Column(type="money")
-     * @Assert\NotBlank
+     * @Assert\NotNull
+     * @ORM\Column(type="decimal", precision=8, scale=2)
      */
     private $price;
 
     /**
+     *  @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     *
+     *  @example EUR
+     *
+     *  @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *             "iri"="https://schema.org/priceCurrency",
+     *         	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
+     *             "type"="string",
+     *             "example"="EUR",
+     *             "default"="EUR",
+     *             "maxLength"="3",
+     *             "minLength"="3"
+     *         },
+     *         "openapi_context"={
+     *             "example"="EUR",
+     *             "default"="EUR"
+     *         }
+     *     }
+     * )
+     *
+     * @Assert\Currency
      * @Groups({"read","write"})
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="order")
-     * @ORM\JoinColumn(nullable=false)
-     * @MaxDepth(1)
+     * @ORM\Column(type="string")
      */
-    private $order;
+    private $priceCurrency;
 
     /**
-     * @var Datetime $createdAt The moment this request was created by the submitter
+     *  @var int The tax percentage for this offer as an integer e.g. 9% makes 9
+     *
+     *  @example 9
+     *
+     *  @ApiProperty(
+     *     attributes={
+     *         "swagger_context"={
+     *         	   "description" = "The tax percentage for this offer as an integer e.g. 9% makes 9",
+     *             "type"="integer",
+     *             "example"="9",
+     *             "maxLength"="3",
+     *             "minLength"="1",
+     *             "required" = true
+     *         },
+     *         "openapi_context"={
+     *             "example"=9,
+     *             "default"=9
+     *         }
+     *     }
+     * )
+     *
+     * @Assert\NotBlank
+     * @Assert\PositiveOrZero
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="integer")
+     */
+    private $taxPercentage;
+
+    /**
+     * @var DateTime The moment this request was created by the submitter
      *
      *
      * @Groups({"read"})
@@ -92,11 +237,21 @@ class OrderItem
         return $this->id;
     }
 
+    /**
+     * @deprecated
+     */
     public function getProduct(): ?string
     {
-        return $this->product;
+        if ($this->product) {
+            return $this->product;
+        } else {
+            return $this->getOffer();
+        }
     }
 
+    /**
+     * @deprecated
+     */
     public function setProduct(string $product): self
     {
         $this->product = $product;
@@ -128,7 +283,7 @@ class OrderItem
         return $this;
     }
 
-    public function geOrder(): ?Order
+    public function getOrder(): ?Order
     {
         return $this->order;
     }
@@ -136,6 +291,66 @@ class OrderItem
     public function setOrder(?Order $order): self
     {
         $this->order = $order;
+
+        return $this;
+    }
+
+    public function getOffer(): ?string
+    {
+        return $this->offer;
+    }
+
+    public function setOffer(string $offer): self
+    {
+        $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getPriceCurrency(): ?string
+    {
+        return $this->priceCurrency;
+    }
+
+    public function setPriceCurrency(string $priceCurrency): self
+    {
+        $this->priceCurrency = $priceCurrency;
+
+        return $this;
+    }
+
+    public function getTaxPercentage(): ?int
+    {
+        return $this->taxPercentage;
+    }
+
+    public function setTaxPercentage(int $taxPercentage): self
+    {
+        $this->taxPercentage = $taxPercentage;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
