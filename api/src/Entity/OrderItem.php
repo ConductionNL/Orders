@@ -3,10 +3,15 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Ramsey\Uuid\UuidInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * An entity representing an item of an order.
@@ -23,25 +28,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
  * )
- * @ORM\Entity(repositoryClass="App\Repository\OrderLineItem")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
  */
 class OrderItem
 {
     /**
      * @var UuidInterface
+     * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
-     *
+     * @Assert\Uuid
      * @Groups({"read"})
      * @ORM\Id
      * @ORM\Column(type="uuid", unique=true)
@@ -80,23 +75,13 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull
-     * @Assert\Length(
-     *     max = 255
-     * )
      */
     private $order;
 
     /**
      * @var string The offer this item represents
+     * @example http://example.org/offers/1
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "example"="http://example.org/offers/1",
-     *             "default"="http://example.org/offers/1"
-     *         }
-     *     }
-     * )
      * @ORM\Column(type="string", length=255)
      * @Groups({"read","write"})
      * @Assert\Url
@@ -121,15 +106,8 @@ class OrderItem
 
     /**
      * @var int The quantity of the items that are ordered
+     * @example 1
      *
-     * @ApiProperty(
-     *     attributes={
-     *         "openapi_context"={
-     *             "example"=1,
-     *             "default"=1
-     *         }
-     *     }
-     * )
      * @Groups({"read","write"})
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
@@ -138,26 +116,9 @@ class OrderItem
     private $quantity;
 
     /**
-     *  @var string The price of this product
+     * @var string The price of this product
+     * @example 50.00
      *
-     *  @example 50.00
-     *
-     *  @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "iri"="https://schema.org/price",
-     *         	   "description" = "The price of this product",
-     *             "type"="string",
-     *             "example"="50.00",
-     *             "maxLength"="9",
-     *             "required" = true
-     *         },
-     *         "openapi_context"={
-     *             "example"="50.00",
-     *             "default"="50.00"
-     *         }
-     *     }
-     * )
      * @Groups({"read","write"})
      * @Assert\NotNull
      * @ORM\Column(type="decimal", precision=8, scale=2)
@@ -165,27 +126,8 @@ class OrderItem
     private $price;
 
     /**
-     *  @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
-     *
-     *  @example EUR
-     *
-     *  @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *             "iri"="https://schema.org/priceCurrency",
-     *         	   "description" = "The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format",
-     *             "type"="string",
-     *             "example"="EUR",
-     *             "default"="EUR",
-     *             "maxLength"="3",
-     *             "minLength"="3"
-     *         },
-     *         "openapi_context"={
-     *             "example"="EUR",
-     *             "default"="EUR"
-     *         }
-     *     }
-     * )
+     * @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     * @example EUR
      *
      * @Assert\Currency
      * @Groups({"read","write"})
@@ -194,26 +136,8 @@ class OrderItem
     private $priceCurrency;
 
     /**
-     *  @var int The tax percentage for this offer as an integer e.g. 9% makes 9
-     *
-     *  @example 9
-     *
-     *  @ApiProperty(
-     *     attributes={
-     *         "swagger_context"={
-     *         	   "description" = "The tax percentage for this offer as an integer e.g. 9% makes 9",
-     *             "type"="integer",
-     *             "example"="9",
-     *             "maxLength"="3",
-     *             "minLength"="1",
-     *             "required" = true
-     *         },
-     *         "openapi_context"={
-     *             "example"=9,
-     *             "default"=9
-     *         }
-     *     }
-     * )
+     * @var int The tax percentage for this offer as an integer e.g. 9% makes 9
+     * @example 9
      *
      * @Assert\NotBlank
      * @Assert\PositiveOrZero
@@ -224,7 +148,6 @@ class OrderItem
 
     /**
      * @var DateTime The moment this request was created by the submitter
-     *
      *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
@@ -351,6 +274,18 @@ class OrderItem
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
