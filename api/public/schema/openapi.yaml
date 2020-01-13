@@ -1229,14 +1229,17 @@ components:
           description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
+          readOnly: true
           description: 'The price of this product'
           type: string
         priceCurrency:
+          readOnly: true
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
         tax:
+          readOnly: true
           description: 'The total tax over the order'
           type: string
         createdAt:
@@ -1257,14 +1260,12 @@ components:
       required:
         - name
         - targetOrganization
-        - price
     Order-write:
       type: object
       description: 'An entity representing an order.'
       required:
         - name
         - targetOrganization
-        - price
       properties:
         name:
           description: 'The name of the order'
@@ -1274,17 +1275,6 @@ components:
           type: string
         targetOrganization:
           description: 'The RSIN of the organization that ownes this proces'
-          type: string
-        price:
-          description: 'The price of this product'
-          type: string
-        priceCurrency:
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
-          type: string
-        tax:
-          description: 'The total tax over the order'
           type: string
         items:
           description: 'The items in this order'
@@ -1329,14 +1319,17 @@ components:
           description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
+          readOnly: true
           description: 'The price of this product'
           type: string
         priceCurrency:
+          readOnly: true
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
         tax:
+          readOnly: true
           description: 'The total tax over the order'
           type: string
         createdAt:
@@ -1357,14 +1350,12 @@ components:
       required:
         - name
         - targetOrganization
-        - price
     'Order:jsonld-write':
       type: object
       description: 'An entity representing an order.'
       required:
         - name
         - targetOrganization
-        - price
       properties:
         '@context':
           readOnly: true
@@ -1383,17 +1374,6 @@ components:
           type: string
         targetOrganization:
           description: 'The RSIN of the organization that ownes this proces'
-          type: string
-        price:
-          description: 'The price of this product'
-          type: string
-        priceCurrency:
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
-          type: string
-        tax:
-          description: 'The total tax over the order'
           type: string
         items:
           description: 'The items in this order'
@@ -1451,22 +1431,13 @@ components:
           type: string
           format: date-time
       required:
-        - name
         - order
         - offer
         - quantity
-        - price
         - taxPercentage
     OrderItem-write:
       type: object
       description: 'An entity representing an item of an order.'
-      required:
-        - name
-        - order
-        - offer
-        - quantity
-        - price
-        - taxPercentage
       properties:
         name:
           description: 'The name of the object'
@@ -1499,6 +1470,11 @@ components:
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
+      required:
+        - order
+        - offer
+        - quantity
+        - taxPercentage
     'OrderItem:jsonld-read':
       type: object
       description: 'An entity representing an item of an order.'
@@ -1554,22 +1530,13 @@ components:
           type: string
           format: date-time
       required:
-        - name
         - order
         - offer
         - quantity
-        - price
         - taxPercentage
     'OrderItem:jsonld-write':
       type: object
       description: 'An entity representing an item of an order.'
-      required:
-        - name
-        - order
-        - offer
-        - quantity
-        - price
-        - taxPercentage
       properties:
         '@context':
           readOnly: true
@@ -1611,6 +1578,11 @@ components:
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
+      required:
+        - order
+        - offer
+        - quantity
+        - taxPercentage
 definitions:
   Order-read:
     properties:
@@ -1644,7 +1616,6 @@ definitions:
     required:
       - name
       - targetOrganization
-      - price
   Order-write:
     properties:
       name:
@@ -1656,12 +1627,6 @@ definitions:
       targetOrganization:
         example: '002851234'
         maxLength: 255
-      price:
-        example: '50.00'
-      priceCurrency:
-        example: EUR
-      tax:
-        example: '21.00'
       customer:
         example: 'https://example.org/people/1'
         format: url
@@ -1669,7 +1634,6 @@ definitions:
     required:
       - name
       - targetOrganization
-      - price
   OrderItem-read:
     properties:
       id:
@@ -1697,9 +1661,7 @@ definitions:
       createdAt: []
       order: []
     required:
-      - name
       - offer
-      - price
       - order
   OrderItem-write:
     properties:
@@ -1724,9 +1686,7 @@ definitions:
         example: '9'
       order: []
     required:
-      - name
       - offer
-      - price
       - order
 tags:
   -
