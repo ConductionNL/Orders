@@ -51,8 +51,7 @@ class OrderItem
      * @Assert\Length(
      *     max=255
      * )
-     * @Assert\NotNull
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
     /**
@@ -119,8 +118,7 @@ class OrderItem
      * @example 50.00
      *
      * @Groups({"read","write"})
-     * @Assert\NotNull
-     * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
     private $price;
 

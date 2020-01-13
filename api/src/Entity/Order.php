@@ -118,7 +118,7 @@ class Order
      * @example 50.00
      *
      * @Groups({"read"})
-     * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
     private $price;
 
@@ -128,7 +128,7 @@ class Order
      *
      * @Assert\Currency
      * @Groups({"read"})
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $priceCurrency;
     /**
@@ -136,7 +136,7 @@ class Order
      * @example 21.00
      *
      * @Groups({"read"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tax;
 
