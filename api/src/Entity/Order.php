@@ -117,8 +117,7 @@ class Order
      * @var string The price of this product
      * @example 50.00
      *
-     * @Groups({"read","write"})
-     * @Assert\NotNull
+     * @Groups({"read"})
      * @ORM\Column(type="decimal", precision=8, scale=2)
      */
     private $price;
@@ -128,7 +127,7 @@ class Order
      * @example EUR
      *
      * @Assert\Currency
-     * @Groups({"read","write"})
+     * @Groups({"read"})
      * @ORM\Column(type="string")
      */
     private $priceCurrency;
@@ -136,7 +135,7 @@ class Order
      * @var string The total tax over the order
      * @example 21.00
      *
-     * @Groups({"read","write"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $tax;
