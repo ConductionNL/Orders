@@ -60,8 +60,8 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		bin/console doctrine:schema:update --force --no-interaction			
 		
 		# If you want to retain data in your dev enviroment comment this command out
-		echo "Loading fixtures"
-		bin/console doctrine:fixtures:load  --no-interaction
+		#echo "Loading fixtures"
+		#bin/console doctrine:fixtures:load  --no-interaction
 		
 		# Lets update the docs to show the latest chages
 		echo "Creating OAS documentation"

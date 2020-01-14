@@ -72,7 +72,8 @@
             },
             "conflict": {
                 "doctrine/common": "<2.7",
-                "doctrine/mongodb-odm": "<2.0"
+                "doctrine/mongodb-odm": "<2.0",
+                "doctrine/mongodb-odm-bundle": "4.0.0-RC2"
             },
             "require-dev": {
                 "behat/behat": "^3.1",
