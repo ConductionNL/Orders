@@ -16,7 +16,6 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * An entity representing an order.
@@ -118,9 +117,8 @@ class Order
      * @var string The price of this product
      * @example 50.00
      *
-     * @Groups({"read","write"})
-     * @Assert\NotNull
-     * @ORM\Column(type="decimal", precision=8, scale=2)
+     * @Groups({"read"})
+     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
     private $price;
 
@@ -129,16 +127,16 @@ class Order
      * @example EUR
      *
      * @Assert\Currency
-     * @Groups({"read","write"})
-     * @ORM\Column(type="string")
+     * @Groups({"read"})
+     * @ORM\Column(type="string", nullable=true)
      */
     private $priceCurrency;
     /**
      * @var string The total tax over the order
      * @example 21.00
      *
-     * @Groups({"read","write"})
-     * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tax;
 
