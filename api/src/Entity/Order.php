@@ -82,7 +82,7 @@ class Order
      * @example 6666-2019-0000000012
      *
      * @Groups({"read"})
-     * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
@@ -90,18 +90,9 @@ class Order
      */
     private $reference;
 
-    /**
-     * @var string The autoincrementing id part of the reference, unique on a organization-year-id basis
-     *
-     * @ORM\Column(type="integer", length=11, nullable=true)
-     * @Assert\Length(
-     *     max = 11
-     * )
-     */
-    private $referenceId;
 
     /**
-     * @var string The RSIN of the organization that ownes this proces
+     * @var string The RSIN of the organization that owns this process
      *
      * @example 002851234
      *
@@ -120,7 +111,7 @@ class Order
      *
      * @example 50.00
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
     private $price;
@@ -131,7 +122,7 @@ class Order
      * @example EUR
      *
      * @Assert\Currency
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", nullable=true)
      */
     private $priceCurrency;
@@ -140,7 +131,7 @@ class Order
      *
      * @example 21.00
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tax;
@@ -154,7 +145,18 @@ class Order
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $dateCreated;
+
+    /**
+     * @var DateTime The moment this request was modified by the submitter
+     *
+     * @example 20190101
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     /**
      * @var ArrayCollection The items in this order
@@ -182,9 +184,31 @@ class Order
      */
     private $humanCustomer;
 
+    /**
+     * @var ReferenceId The auto incrementing part of the reference parameter
+     *
+     * @Groups({"read", "write"})
+     * @MaxDepth(1)
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\ReferenceId", mappedBy="referencedOrder", cascade={"persist", "remove"})
+     * @Assert\Valid
+     */
+    private $referenceId;
+
+    /**
+     * @var Organization The organization that created this order
+     *
+     * @Groups({"read","write"})
+     * @MaxDepth(1)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders")
+     * @Assert\Valid
+     */
+    private $organization;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->setReferenceId(new ReferenceId());
     }
 
     public function getId()
@@ -201,27 +225,17 @@ class Order
 
     public function getReference(): ?string
     {
+        $this->reference = "".$this->organization->getShortCode()."-".$this->dateCreated->format("Y")."-".str_pad((string)$this->referenceId->getId(), 11, 0, STR_PAD_LEFT);
         return $this->reference;
     }
 
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
-
         return $this;
     }
 
-    public function getReferenceId(): ?int
-    {
-        return $this->reference;
-    }
 
-    public function setReferenceId(int $referenceId): self
-    {
-        $this->referenceId = $referenceId;
-
-        return $this;
-    }
 
     public function getRsin(): ?string
     {
@@ -302,14 +316,25 @@ class Order
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getDateCreated(): ?DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->dateCreated;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setDateCreated(DateTimeInterface $dateCreated): self
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+    public function getDateModified(): ?DateTimeInterface
+    {
+        return $this->dateModified;
+    }
+
+    public function setDateModified(DateTimeInterface $dateModified): self
+    {
+        $this->dateModified = $dateModified;
 
         return $this;
     }
@@ -382,6 +407,35 @@ class Order
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getReferenceId(): ?ReferenceId
+    {
+        return $this->referenceId;
+    }
+
+    public function setReferenceId(ReferenceId $referenceId): self
+    {
+        $this->referenceId = $referenceId;
+
+        // set the owning side of the relation if necessary
+        if ($referenceId->getReferencedOrder() !== $this) {
+            $referenceId->setReferencedOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): self
+    {
+        $this->organization = $organization;
 
         return $this;
     }
