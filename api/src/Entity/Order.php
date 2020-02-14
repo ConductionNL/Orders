@@ -90,21 +90,16 @@ class Order
      */
     private $reference;
 
-
     /**
-     * @var string The RSIN of the organization that owns this process
+     * @param string $referenceId The autoincrementing id part of the reference, unique on an organization-year-id basis
      *
-     * @example 002851234
-     *
-     * @Assert\NotNull
+     * @Assert\Positive
      * @Assert\Length(
-     *     max = 255
+     *      max = 11
      * )
-     * @Groups({"read", "write"})
-     * @ORM\Column(type="string", length=255)
-     * @ApiFilter(SearchFilter::class, strategy="exact")
+     * @ORM\Column(type="integer", length=11, nullable=true)
      */
-    private $targetOrganization;
+    private $referenceId;
 
     /**
      * @var string The price of this product
@@ -173,6 +168,7 @@ class Order
      * @example https://example.org/people/1
      *
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"read","write"})
      * @Assert\Url
      */
@@ -185,22 +181,12 @@ class Order
     private $humanCustomer;
 
     /**
-     * @var ReferenceId The auto incrementing part of the reference parameter
-     *
-     * @Groups({"read", "write"})
-     * @MaxDepth(1)
-     *
-     * @ORM\OneToOne(targetEntity="App\Entity\ReferenceId", mappedBy="referencedOrder", cascade={"persist", "remove"})
-     * @Assert\Valid
-     */
-    private $referenceId;
-
-    /**
      * @var Organization The organization that created this order
      *
-     * @Groups({"read","write"})
+     * @Groups({"write"})
      * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
     private $organization;
@@ -208,7 +194,6 @@ class Order
     public function __construct()
     {
         $this->items = new ArrayCollection();
-        $this->setReferenceId(new ReferenceId());
     }
 
     public function getId()
@@ -225,7 +210,6 @@ class Order
 
     public function getReference(): ?string
     {
-        $this->reference = "".$this->organization->getShortCode()."-".$this->dateCreated->format("Y")."-".str_pad((string)$this->referenceId->getId(), 11, 0, STR_PAD_LEFT);
         return $this->reference;
     }
 
@@ -235,7 +219,17 @@ class Order
         return $this;
     }
 
+    public function getReferenceId(): ?int
+    {
+        return $this->reference;
+    }
 
+    public function setReferenceId(int $referenceId): self
+    {
+        $this->referenceId = $referenceId;
+
+        return $this;
+    }
 
     public function getRsin(): ?string
     {
@@ -407,23 +401,6 @@ class Order
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getReferenceId(): ?ReferenceId
-    {
-        return $this->referenceId;
-    }
-
-    public function setReferenceId(ReferenceId $referenceId): self
-    {
-        $this->referenceId = $referenceId;
-
-        // set the owning side of the relation if necessary
-        if ($referenceId->getReferencedOrder() !== $this) {
-            $referenceId->setReferencedOrder($this);
-        }
 
         return $this;
     }

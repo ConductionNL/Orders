@@ -666,22 +666,6 @@ paths:
           style: form
           explode: true
         -
-          name: targetOrganization
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'targetOrganization[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
           name: page
           in: query
           required: false
@@ -1781,584 +1765,6 @@ paths:
             schema:
               $ref: '#/components/schemas/Organization-write'
         description: 'The updated Organization resource'
-  /reference_ids:
-    get:
-      tags:
-        - ReferenceId
-      operationId: getReferenceIdCollection
-      summary: 'Retrieves the collection of ReferenceId resources.'
-      responses:
-        200:
-          description: 'ReferenceId collection response'
-          content:
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-            application/ld+json:
-              schema:
-                type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/ReferenceId:jsonld-read' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
-            application/vnd.api+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-            application/x-yaml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-            text/csv:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-            text/html:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ReferenceId-read'
-      parameters:
-        -
-          name: page
-          in: query
-          required: false
-          description: 'The collection page number'
-          schema:
-            type: integer
-            default: 1
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-        -
-          name: Link
-          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
-          in: header
-        -
-          name: 'extend[]'
-          required: false
-          description: 'An array of nested objects to include in the return object'
-          in: query
-          schema:
-            type: array
-        -
-          name: 'fields[]'
-          required: false
-          description: 'An array of fields to return in output, wil return all fields is not supplied'
-          in: query
-          schema:
-            type: array
-        -
-          name: validOn
-          required: false
-          description: 'Returns object as valid on a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validFrom
-          required: false
-          description: 'Returns objects valid from a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validUntil
-          required: false
-          description: 'Returns objects valid until a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-      produces:
-        - application/health+json
-    post:
-      tags:
-        - ReferenceId
-      operationId: postReferenceIdCollection
-      summary: 'Creates a ReferenceId resource.'
-      responses:
-        201:
-          description: 'ReferenceId resource created'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-          links:
-            GetReferenceIdItem:
-              parameters:
-                id: '$response.body#/id'
-              operationId: getReferenceIdItem
-              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /reference_ids/{id}`.'
-        400:
-          description: 'Invalid input'
-        404:
-          description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-        description: 'The new ReferenceId resource'
-      parameters:
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-  '/reference_ids/{id}':
-    get:
-      tags:
-        - ReferenceId
-      operationId: getReferenceIdItem
-      summary: 'Retrieves a ReferenceId resource.'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-        -
-          name: Link
-          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
-          in: header
-        -
-          name: 'extend[]'
-          required: false
-          description: 'An array of nested objects to include in the return object'
-          in: query
-          schema:
-            type: array
-        -
-          name: 'fields[]'
-          required: false
-          description: 'An array of fields to return in output, wil return all fields is not supplied'
-          in: query
-          schema:
-            type: array
-        -
-          name: validOn
-          required: false
-          description: 'Returns object as valid on a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validFrom
-          required: false
-          description: 'Returns objects valid from a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validUntil
-          required: false
-          description: 'Returns objects valid until a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-      responses:
-        200:
-          description: 'ReferenceId resource response'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-        404:
-          description: 'Resource not found'
-      produces:
-        - application/health+json
-    delete:
-      tags:
-        - ReferenceId
-      operationId: deleteReferenceIdItem
-      summary: 'Removes the ReferenceId resource.'
-      responses:
-        204:
-          description: 'ReferenceId resource deleted'
-        404:
-          description: 'Resource not found'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-    put:
-      tags:
-        - ReferenceId
-      operationId: putReferenceIdItem
-      summary: 'Replaces the ReferenceId resource.'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-      responses:
-        200:
-          description: 'ReferenceId resource updated'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-        400:
-          description: 'Invalid input'
-        404:
-          description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-        description: 'The updated ReferenceId resource'
-    patch:
-      tags:
-        - ReferenceId
-      operationId: patchReferenceIdItem
-      summary: 'Updates the ReferenceId resource.'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-      responses:
-        200:
-          description: 'ReferenceId resource updated'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/ReferenceId-read'
-        400:
-          description: 'Invalid input'
-        404:
-          description: 'Resource not found'
-      requestBody:
-        content:
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/ReferenceId-write'
-        description: 'The updated ReferenceId resource'
 components:
   schemas:
     Order-read:
@@ -2380,9 +1786,6 @@ components:
         reference:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
-          type: string
-        targetOrganization:
-          description: 'The RSIN of the organization that owns this process'
           type: string
         price:
           description: 'The price of this product'
@@ -2415,30 +1818,22 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        referenceId:
-          description: 'The auto incrementing part of the reference parameter'
-          $ref: '#/components/schemas/ReferenceId-read'
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization-read'
       required:
         - name
-        - targetOrganization
     Order-write:
       type: object
       description: 'An entity representing an order.'
       required:
         - name
-        - targetOrganization
       properties:
         name:
           description: 'The name of the order'
           type: string
         description:
           description: 'The description of the order'
-          type: string
-        targetOrganization:
-          description: 'The RSIN of the organization that owns this process'
           type: string
         price:
           description: 'The price of this product'
@@ -2461,9 +1856,6 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        referenceId:
-          description: 'The auto incrementing part of the reference parameter'
-          $ref: '#/components/schemas/ReferenceId-write'
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization-write'
@@ -2496,9 +1888,6 @@ components:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
-        targetOrganization:
-          description: 'The RSIN of the organization that owns this process'
-          type: string
         price:
           description: 'The price of this product'
           type: string
@@ -2530,21 +1919,16 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        referenceId:
-          description: 'The auto incrementing part of the reference parameter'
-          $ref: '#/components/schemas/ReferenceId:jsonld-read'
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization:jsonld-read'
       required:
         - name
-        - targetOrganization
     'Order:jsonld-write':
       type: object
       description: 'An entity representing an order.'
       required:
         - name
-        - targetOrganization
       properties:
         '@context':
           readOnly: true
@@ -2560,9 +1944,6 @@ components:
           type: string
         description:
           description: 'The description of the order'
-          type: string
-        targetOrganization:
-          description: 'The RSIN of the organization that owns this process'
           type: string
         price:
           description: 'The price of this product'
@@ -2585,9 +1966,6 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        referenceId:
-          description: 'The auto incrementing part of the reference parameter'
-          $ref: '#/components/schemas/ReferenceId:jsonld-write'
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization:jsonld-write'
@@ -2631,9 +2009,14 @@ components:
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
-        createdAt:
+        dateCreated:
           readOnly: true
           description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request was updated'
           type: string
           format: date-time
       required:
@@ -2730,9 +2113,14 @@ components:
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
-        createdAt:
+        dateCreated:
           readOnly: true
           description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request was updated'
           type: string
           format: date-time
       required:
@@ -2863,54 +2251,6 @@ components:
           type: string
         shortCode:
           type: string
-    ReferenceId-read:
-      type: object
-      description: ''
-      properties:
-        id:
-          readOnly: true
-          type: integer
-        referencedOrder:
-          $ref: '#/components/schemas/Order-read'
-    ReferenceId-write:
-      type: object
-      description: ''
-      properties:
-        referencedOrder:
-          $ref: '#/components/schemas/Order-write'
-    'ReferenceId:jsonld-read':
-      type: object
-      description: ''
-      properties:
-        '@context':
-          readOnly: true
-          type: string
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        id:
-          readOnly: true
-          type: integer
-        referencedOrder:
-          $ref: '#/components/schemas/Order:jsonld-read'
-    'ReferenceId:jsonld-write':
-      type: object
-      description: ''
-      properties:
-        '@context':
-          readOnly: true
-          type: string
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        referencedOrder:
-          $ref: '#/components/schemas/Order:jsonld-write'
 definitions:
   Order-read:
     properties:
@@ -2933,11 +2273,6 @@ definitions:
         description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
         type: string
         example: 6666-2019-0000000012
-        maxLength: 255
-      targetOrganization:
-        description: 'The RSIN of the organization that owns this process'
-        type: string
-        example: '002851234'
         maxLength: 255
       price:
         description: 'The price of this product'
@@ -2967,15 +2302,11 @@ definitions:
       items:
         description: 'The items in this order'
         type: \ArrayCollection
-      referenceId:
-        description: 'The auto incrementing part of the reference parameter'
-        type: \ReferenceId
       organization:
         description: 'The organization that created this order'
         type: \Organization
     required:
       - name
-      - targetOrganization
   Order-write:
     properties:
       name:
@@ -2987,11 +2318,6 @@ definitions:
         description: 'The description of the order'
         type: string
         example: 'This is the best order ever'
-        maxLength: 255
-      targetOrganization:
-        description: 'The RSIN of the organization that owns this process'
-        type: string
-        example: '002851234'
         maxLength: 255
       price:
         description: 'The price of this product'
@@ -3013,15 +2339,11 @@ definitions:
       items:
         description: 'The items in this order'
         type: \ArrayCollection
-      referenceId:
-        description: 'The auto incrementing part of the reference parameter'
-        type: \ReferenceId
       organization:
         description: 'The organization that created this order'
         type: \Organization
     required:
       - name
-      - targetOrganization
   OrderItem-read:
     properties:
       id:
@@ -3064,8 +2386,11 @@ definitions:
         description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
         type: int
         example: '9'
-      createdAt:
+      dateCreated:
         description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was updated'
         type: \DateTime
       order:
         description: 'The order that contains this item'
@@ -3141,15 +2466,6 @@ definitions:
     required:
       - rsin
       - shortCode
-  ReferenceId-read:
-    properties:
-      id: []
-      referencedOrder: []
-    required: []
-  ReferenceId-write:
-    properties:
-      referencedOrder: []
-    required: []
 tags:
   -
     name: Order
@@ -3169,27 +2485,21 @@ tags:
       
       
       
-  -
-    name: ReferenceId
-    description: |
-      
-      
-      
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ReferenceId resource'
-      write: 'write right to the ReferenceId resource'
+      read: 'read right to the Organization resource'
+      write: 'write right to the Organization resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ReferenceId resource'
-      write: 'write right to the ReferenceId resource'
+      read: 'read right to the Organization resource'
+      write: 'write right to the Organization resource'
 host: irc.zaakonline.nl
 servers:
   -

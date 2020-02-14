@@ -18,7 +18,25 @@ class OrganizationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Organization::class);
     }
+    public function findOrCreateByRsin($rsin)
+    {
+        $result = $this->createQueryBuilder('o')
+            ->andWhere('o.rsin = :rsin')
+            ->setParameter('rsin', $rsin)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
 
+        if(!$result){
+            $result = New Organization;
+            $result->setRsin($rsin);
+            $result->setShortcode($rsin);
+        }
+
+        return $result;
+    }
     // /**
     //  * @return Organization[] Returns an array of Organization objects
     //  */
