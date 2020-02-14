@@ -102,6 +102,21 @@ class Order
     private $referenceId;
 
     /**
+     * @var string The RSIN of the organization that ownes this proces
+     *
+     * @example 002851234
+     *
+     * @Assert\NotNull
+     * @Assert\Length(
+     *     max = 255
+     * )
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255)
+     * @ApiFilter(SearchFilter::class, strategy="exact")
+     */
+    private $targetOrganization;
+
+    /**
      * @var string The price of this product
      *
      * @example 50.00
@@ -183,7 +198,7 @@ class Order
     /**
      * @var Organization The organization that created this order
      *
-     * @Groups({"write"})
+     * @Groups({"write", "read"})
      * @MaxDepth(1)
      * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
