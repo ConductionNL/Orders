@@ -18,7 +18,32 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
+    public function getNextReferenceId($organization, $date = null)
+    {
+        //if(!$date){
+        $start = new \DateTime('first day of January this year');
+        $end = new \DateTime('last day of December this year');
+        //}
 
+        $result = $this->createQueryBuilder('r')
+            ->select('MAX(r.referenceId) AS reference_id')
+            ->andWhere(':organization = r.organization')
+            ->setParameter('organization', $organization)
+            ->andWhere('r.dateCreated >= :start')
+            ->setParameter('start', $start)
+            ->andWhere('r.dateCreated <= :end')
+            ->setParameter('end', $end)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        if(!$result){
+            return 1;
+        }
+        else{
+            return $result['reference_id'] + 1;
+        }
+    }
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */

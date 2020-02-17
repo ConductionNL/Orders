@@ -82,7 +82,7 @@ class Order
      * @example 6666-2019-0000000012
      *
      * @Groups({"read"})
-     * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
@@ -91,12 +91,13 @@ class Order
     private $reference;
 
     /**
-     * @var string The autoincrementing id part of the reference, unique on a organization-year-id basis
+     * @param string $referenceId The autoincrementing id part of the reference, unique on an organization-year-id basis
      *
-     * @ORM\Column(type="integer", length=11, nullable=true)
+     * @Assert\Positive
      * @Assert\Length(
-     *     max = 11
+     *      max = 11
      * )
+     * @ORM\Column(type="integer", length=11, nullable=true)
      */
     private $referenceId;
 
@@ -120,7 +121,7 @@ class Order
      *
      * @example 50.00
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
     private $price;
@@ -131,7 +132,7 @@ class Order
      * @example EUR
      *
      * @Assert\Currency
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", nullable=true)
      */
     private $priceCurrency;
@@ -140,7 +141,7 @@ class Order
      *
      * @example 21.00
      *
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $tax;
@@ -154,7 +155,18 @@ class Order
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $dateCreated;
+
+    /**
+     * @var DateTime The moment this request was modified by the submitter
+     *
+     * @example 20190101
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     /**
      * @var ArrayCollection The items in this order
@@ -171,6 +183,7 @@ class Order
      * @example https://example.org/people/1
      *
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"read","write"})
      * @Assert\Url
      */
@@ -181,6 +194,17 @@ class Order
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $humanCustomer;
+
+    /**
+     * @var Organization The organization that created this order
+     *
+     * @Groups({"write", "read"})
+     * @MaxDepth(1)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
+     */
+    private $organization;
 
     public function __construct()
     {
@@ -207,7 +231,6 @@ class Order
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
-
         return $this;
     }
 
@@ -302,14 +325,25 @@ class Order
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getDateCreated(): ?DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->dateCreated;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setDateCreated(DateTimeInterface $dateCreated): self
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+    public function getDateModified(): ?DateTimeInterface
+    {
+        return $this->dateModified;
+    }
+
+    public function setDateModified(DateTimeInterface $dateModified): self
+    {
+        $this->dateModified = $dateModified;
 
         return $this;
     }
@@ -382,6 +416,18 @@ class Order
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): self
+    {
+        $this->organization = $organization;
 
         return $this;
     }
