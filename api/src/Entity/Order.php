@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use DateTime;
@@ -39,6 +38,7 @@ class Order
 {
     /**
      * @var UuidInterface The UUID identifier of this object
+     *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      *
@@ -78,6 +78,7 @@ class Order
 
     /**
      * @var string The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
+     *
      * @example 6666-2019-0000000012
      *
      * @Groups({"read"})
@@ -101,6 +102,7 @@ class Order
 
     /**
      * @var string The RSIN of the organization that ownes this proces
+     *
      * @example 002851234
      *
      * @Assert\NotNull
@@ -115,6 +117,7 @@ class Order
 
     /**
      * @var string The price of this product
+     *
      * @example 50.00
      *
      * @Groups({"read"})
@@ -124,6 +127,7 @@ class Order
 
     /**
      * @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     *
      * @example EUR
      *
      * @Assert\Currency
@@ -133,6 +137,7 @@ class Order
     private $priceCurrency;
     /**
      * @var string The total tax over the order
+     *
      * @example 21.00
      *
      * @Groups({"read"})
@@ -142,6 +147,7 @@ class Order
 
     /**
      * @var DateTime The moment this request was created by the submitter
+     *
      * @example 20190101
      *
      * @Groups({"read"})
@@ -161,6 +167,7 @@ class Order
 
     /**
      * @var string The customer that placed this order
+     *
      * @example https://example.org/people/1
      *
      * @ORM\Column(type="string", length=255)
