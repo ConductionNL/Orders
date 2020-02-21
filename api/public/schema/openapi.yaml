@@ -666,6 +666,22 @@ paths:
           style: form
           explode: true
         -
+          name: targetOrganization
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'targetOrganization[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
           name: page
           in: query
           required: false
@@ -1787,6 +1803,9 @@ components:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
+          type: string
         price:
           description: 'The price of this product'
           type: string
@@ -1821,19 +1840,27 @@ components:
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization-read'
+        remark:
+          description: 'Remarks on this order'
+          type: string
       required:
         - name
+        - targetOrganization
     Order-write:
       type: object
       description: 'An entity representing an order.'
       required:
         - name
+        - targetOrganization
       properties:
         name:
           description: 'The name of the order'
           type: string
         description:
           description: 'The description of the order'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1859,6 +1886,9 @@ components:
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization-write'
+        remark:
+          description: 'Remarks on this order'
+          type: string
     'Order:jsonld-read':
       type: object
       description: 'An entity representing an order.'
@@ -1887,6 +1917,9 @@ components:
         reference:
           readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1922,13 +1955,18 @@ components:
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization:jsonld-read'
+        remark:
+          description: 'Remarks on this order'
+          type: string
       required:
         - name
+        - targetOrganization
     'Order:jsonld-write':
       type: object
       description: 'An entity representing an order.'
       required:
         - name
+        - targetOrganization
       properties:
         '@context':
           readOnly: true
@@ -1944,6 +1982,9 @@ components:
           type: string
         description:
           description: 'The description of the order'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
@@ -1969,6 +2010,9 @@ components:
         organization:
           description: 'The organization that created this order'
           $ref: '#/components/schemas/Organization:jsonld-write'
+        remark:
+          description: 'Remarks on this order'
+          type: string
     OrderItem-read:
       type: object
       description: 'An entity representing an item of an order.'
@@ -2191,6 +2235,16 @@ components:
           type: string
         shortCode:
           type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - rsin
         - shortCode
@@ -2228,6 +2282,16 @@ components:
           type: string
         shortCode:
           type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - rsin
         - shortCode
@@ -2274,6 +2338,11 @@ definitions:
         type: string
         example: 6666-2019-0000000012
         maxLength: 255
+      targetOrganization:
+        description: 'The RSIN of the organization that ownes this proces'
+        type: string
+        example: '002851234'
+        maxLength: 255
       price:
         description: 'The price of this product'
         type: string
@@ -2299,6 +2368,9 @@ definitions:
         type: string
         example: 'https://example.org/people/1'
         format: url
+      remark:
+        description: 'Remarks on this order'
+        type: string
       items:
         description: 'The items in this order'
         type: \ArrayCollection
@@ -2307,6 +2379,7 @@ definitions:
         type: \Organization
     required:
       - name
+      - targetOrganization
   Order-write:
     properties:
       name:
@@ -2318,6 +2391,11 @@ definitions:
         description: 'The description of the order'
         type: string
         example: 'This is the best order ever'
+        maxLength: 255
+      targetOrganization:
+        description: 'The RSIN of the organization that ownes this proces'
+        type: string
+        example: '002851234'
         maxLength: 255
       price:
         description: 'The price of this product'
@@ -2336,6 +2414,9 @@ definitions:
         type: string
         example: 'https://example.org/people/1'
         format: url
+      remark:
+        description: 'Remarks on this order'
+        type: string
       items:
         description: 'The items in this order'
         type: \ArrayCollection
@@ -2344,6 +2425,7 @@ definitions:
         type: \Organization
     required:
       - name
+      - targetOrganization
   OrderItem-read:
     properties:
       id:
@@ -2453,6 +2535,12 @@ definitions:
         minLength: 4
       shortCode:
         maxLength: 4
+      dateCreated:
+        description: 'The moment this request was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: \Datetime
     required:
       - rsin
       - shortCode
