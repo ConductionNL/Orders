@@ -104,24 +104,23 @@ $ helm dependency update ./api/helm
 ```
 If you want to create a new instance
 ```CLI
-$ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm install --name pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm install --name orc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-fuga.yaml" --namespace=prod --set settings.env=prod,settings.debug=0,postgresql.enabled=false,postgresql.enabled=false,postgresql.url=pgsql://orc:a2ajxtp2y20czkin@db-postgresql-ams3-larping-do-user-4716261-0.db.ondigitalocean.com:25060/orc?sslmode=require
- --set settings.env=prod,settings.debug=0,postgresql.enabled=false,postgresql.enabled=false,postgresql.url=<de database url>
+$ helm install --name orc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm install --name orc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm install --name orc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-fuga.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or update if you want to update an existing one
 ```CLI
-$ helm upgrade pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev  --set settings.env=dev, settings.debug=1
-$ helm upgrade pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag --set settings.env=stag, settings.debug=0 
-$ helm upgrade orc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-fuga.yaml" --namespace=prod --set settings.env=prod, settings.debug=0, postgresql.enabled=false,postgresql.url=pgsql://orc:a2ajxtp2y20czkin@db-postgresql-ams3-larping-do-user-4716261-0.db.ondigitalocean.com:25060/orc?sslmode=require 
+$ helm upgrade orc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev, settings.debug=1
+$ helm upgrade orc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag, settings.debug=0 
+$ helm upgrade orc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-fuga.yaml" --namespace=prod --set settings.env=prod, settings.debug=0
 ```
 
 Or del if you want to delete an existing  one
 ```CLI
-$ helm del pc-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev
-$ helm del pc-stag --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag
-$ helm del pp-prod --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod
+$ helm del orc-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev
+$ helm del orc-stag --purge --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag
+$ helm del orc-prod --purge --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod
 ```
 
 
