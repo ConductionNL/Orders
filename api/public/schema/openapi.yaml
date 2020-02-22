@@ -589,7 +589,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem:jsonld-write'
           application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/html:
             schema:
               $ref: '#/components/schemas/OrderItem-write'
         description: 'The updated OrderItem resource'
@@ -1199,7 +1223,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Order:jsonld-write'
           application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          text/html:
             schema:
               $ref: '#/components/schemas/Order-write'
         description: 'The updated Order resource'
@@ -1777,7 +1825,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Organization:jsonld-write'
           application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          text/html:
             schema:
               $ref: '#/components/schemas/Organization-write'
         description: 'The updated Organization resource'
@@ -2319,7 +2391,7 @@ definitions:
   Order-read:
     properties:
       id:
-        description: 'The id of this entity'
+        description: 'The UUID identifier of this object'
         type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
