@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Money\Currency;
+use Money\Money;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,6 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  * @ORM\Table(name="orders")
+ * @ORM\HasLifecycleCallbacks
  */
 class Order
 {
@@ -136,15 +139,16 @@ class Order
      * @ORM\Column(type="string", nullable=true)
      */
     private $priceCurrency;
+    
     /**
-     * @var string The total tax over the order
+     * @var array A list of total taxes
      *
-     * @example 21.00
+     * @example EUR
      *
-     * @Groups({"read", "write"})
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read"})
+     * @ORM\Column(type="array")
      */
-    private $tax;
+    private $taxes = [];
 
     /**
      * @var DateTime The moment this request was created by the submitter
@@ -172,7 +176,7 @@ class Order
      * @var ArrayCollection The items in this order
      *
      * @Groups({"read", "write"})
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order", cascade={"persist"})
      * @MaxDepth(1)
      */
     private $items;
@@ -188,12 +192,6 @@ class Order
      * @Assert\Url
      */
     private $customer;
-    /**
-     * @var bool Property to determine if customer is a human or an organisation
-     *
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $humanCustomer;
 
     /**
      * @var Organization The organization that created this order
@@ -213,7 +211,59 @@ class Order
      * @ORM\Column(type="text", nullable=true)
      */
     private $remark;
-
+    
+    /**
+     * 
+     *  @ORM\prePersist 
+     *  @ORM\preUpdate 
+     *  
+     *  */ 
+    public function prePersist()
+    {
+    	/*@todo we should support non euro */
+    	$price = new Money(0, new Currency('EUR'));
+    	$taxes = [];
+    	
+    	foreach ($this->items as $item){
+    		
+    		// Calculate Invoice Price
+    		//
+    		if(is_string ($item->getPrice())){
+    			//Value is a string, so presumably a float
+    			$float = floatval($item->getPrice());
+    			$float = $float*100;
+    			$itemPrice = new Money((int) $float, new Currency($item->getPriceCurrency()));
+    			
+    		}
+    		else{
+    			// Calculate Invoice Price
+    			$itemPrice = new Money($item->getPrice(), new Currency($item->getPriceCurrency()));
+    			
+    			
+    		}
+    		
+    		$itemPrice = $itemPrice->multiply($item->getQuantity());
+    		$price = $price->add($itemPrice);
+    		
+    		// Calculate Taxes
+    		/*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
+    		foreach($item->getTaxes() as $tax){
+    			if(!array_key_exists($tax->getPercentage(), $taxes)){
+    				$tax[$tax->getPercentage()] = $itemPrice->multiply($tax->getPercentage()/100);
+    			}
+    			else{
+    				$taxPrice = $itemPrice->multiply($tax->getPercentage()/100);
+    				$tax[$tax->getPercentage()] = $tax[$tax->getPercentage()]->add($taxPrice);
+    			}
+    		}
+    		
+    	}
+    	    	
+    	$this->taxes = $taxes;
+    	$this->price = $price->getAmount()/100;
+    	$this->priceCurrency = $price->getCurrency();
+    }
+    
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -367,17 +417,13 @@ class Order
 
         return $this;
     }
-
-    public function getTax(): ?string
+    
+    /**
+     * @return Array
+     */
+    public function getTaxes(): Array
     {
-        return $this->tax;
-    }
-
-    public function setTax(string $tax): self
-    {
-        $this->tax = $tax;
-
-        return $this;
+    	return $this->taxes;
     }
 
     public function getCustomer(): ?string
@@ -388,18 +434,6 @@ class Order
     public function setCustomer(string $customer): self
     {
         $this->customer = $customer;
-
-        return $this;
-    }
-
-    public function getHumanCustomer(): ?bool
-    {
-        return $this->humanCustomer;
-    }
-
-    public function setHumanCustomer(bool $humanCustomer): self
-    {
-        $this->humanCustomer = $humanCustomer;
 
         return $this;
     }

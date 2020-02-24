@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -114,14 +116,15 @@ class OrderItem
      * @Assert\PositiveOrZero
      */
     private $quantity;
-
+    
     /**
-     * @var string The price of this product
+     *  @var string The price of this orderItem
      *
-     * @example 50.00
+     *  @example 50.00
      *
+     * @Assert\NotNull
      * @Groups({"read","write"})
-     * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=8, scale=2)
      */
     private $price;
 
@@ -135,18 +138,16 @@ class OrderItem
      * @ORM\Column(type="string")
      */
     private $priceCurrency;
-
+    
     /**
-     * @var int The tax percentage for this offer as an integer e.g. 9% makes 9
+     * @var ArrayCollection The taxes that affect this offer
      *
-     * @example 9
      *
-     * @Assert\NotBlank
-     * @Assert\PositiveOrZero
+     * @MaxDepth(1)
      * @Groups({"read", "write"})
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tax", mappedBy="orderItems")
      */
-    private $taxPercentage;
+    private $taxes;
 
     /**
      * @var DateTime The moment this request was created by the submitter
@@ -165,6 +166,11 @@ class OrderItem
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
+    
+    public function __construct()
+    {
+    	$this->taxes = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -252,17 +258,33 @@ class OrderItem
 
         return $this;
     }
-
-    public function getTaxPercentage(): ?int
+    
+    /**
+     * @return Collection|Tax[]
+     */
+    public function getTaxes(): Collection
     {
-        return $this->taxPercentage;
+    	return $this->taxes;
     }
-
-    public function setTaxPercentage(int $taxPercentage): self
+    
+    public function addTax(Tax $tax): self
     {
-        $this->taxPercentage = $taxPercentage;
-
-        return $this;
+    	if (!$this->taxes->contains($tax)) {
+    		$this->taxes[] = $tax;
+    		$tax->addOffer($this);
+    	}
+    	
+    	return $this;
+    }
+    
+    public function removeTax(Tax $tax): self
+    {
+    	if ($this->taxes->contains($tax)) {
+    		$this->taxes->removeElement($tax);
+    		$gtax->removeProduct($this);
+    	}
+    	
+    	return $this;
     }
 
     public function getName(): ?string
