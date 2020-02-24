@@ -213,13 +213,18 @@ class Order
     private $remark;
     
     /**
-     * 
-     *  @ORM\PrePersist 
-     *  @ORM\PreUpdate 
-     *  
-     *  */ 
+     *
+     *  @ORM\PrePersist
+     *  @ORM\PreUpdate
+     *
+     *  */
     public function prePersist()
     {
+    	$this->calculateTotals();
+    }
+    
+    public function calculateTotals()
+    {    	
     	/*@todo we should support non euro */
     	$price = new Money(0, new Currency('EUR'));
     	$taxes = [];
