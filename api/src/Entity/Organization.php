@@ -51,9 +51,6 @@ class Organization
     /**
      * @Groups({"read", "write"})
      * @Assert\NotNull
-     * @Assert\Length(
-     *     max=4
-     * )
      * @ORM\Column(type="string", length=255, unique=true)
      */
     private $shortCode;
