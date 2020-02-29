@@ -153,8 +153,6 @@ class Order
     /**
      * @var DateTime The moment this request was created by the submitter
      *
-     * @example 20190101
-     *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
@@ -163,8 +161,6 @@ class Order
 
     /**
      * @var DateTime The moment this request was modified by the submitter
-     *
-     * @example 20190101
      *
      * @Groups({"read"})
      * @Gedmo\Timestampable(on="update")
