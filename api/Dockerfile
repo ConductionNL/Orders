@@ -39,9 +39,9 @@ RUN set -eux; \
 		intl \
 		pdo_pgsql \
 		zip \
-		mysqli \ 
+		mysqli \
 		pdo_mysql \
-		pcntl \ 
+		pcntl \
 		gd \
 	; \
 	pecl install \
@@ -94,6 +94,8 @@ RUN composer dump-env prod; \
 	rm .env
 
 # copy only specifically what we need
+#TODO: remove the helm files from containers
+COPY helm helm/
 COPY bin bin/
 COPY config config/
 COPY public public/
@@ -106,7 +108,7 @@ RUN set -eux; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync
-	
+
 VOLUME /srv/api/var
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
@@ -117,7 +119,7 @@ CMD ["php-fpm"]
 
 # Let update the docs to show the latest chages
 # RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
-# RUN bin/console app:publiccode:update --location=/srv/api/public/schema/ --spec-version=0.2	
+# RUN bin/console app:publiccode:update --location=/srv/api/public/schema/ --spec-version=0.2
 
 #############################
 # 		"nginx" stage 		#
@@ -140,7 +142,7 @@ COPY --from=api_platform_php /srv/api/public public/
 # 		"varnish" stage 	#
 #############################
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
-#FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish 
+#FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
 FROM eeacms/varnish AS api_platform_varnish
 #FROM varnish:6.3 AS api_platform_varnish
 
