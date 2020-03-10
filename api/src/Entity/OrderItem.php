@@ -3,6 +3,12 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,9 +32,36 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     itemOperations={
+ *          "get",
+ *          "put",
+ *          "delete",
+ *          "get_change_logs"={
+ *              "path"="/order_items/{id}/change_log",
+ *              "method"="get",
+ *              "swagger_context" = {
+ *                  "summary"="Changelogs",
+ *                  "description"="Gets al the change logs for this resource"
+ *              }
+ *          },
+ *          "get_audit_trail"={
+ *              "path"="/order_items/{id}/audit_trail",
+ *              "method"="get",
+ *              "swagger_context" = {
+ *                  "summary"="Audittrail",
+ *                  "description"="Gets the audit trail for this resource"
+ *              }
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
+ * 
+ * @ApiFilter(BooleanFilter::class)
+ * @ApiFilter(OrderFilter::class)
+ * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
+ * @ApiFilter(SearchFilter::class)
  */
 class OrderItem
 {
@@ -45,21 +78,28 @@ class OrderItem
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
+    
     /**
      * @var string The name of the object
      *
      * @example my OrderItem
+     * 
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Length(
      *     max=255
      * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    
     private $name;
+    
     /**
      * @var string The description of the order item
      *
      * @example This is the best order item ever
+     * 
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Length(
      *     max=255
@@ -83,6 +123,7 @@ class OrderItem
      *
      * @example http://example.org/offers/1
      *
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=255)
      * @Groups({"read","write"})
      * @Assert\Url
@@ -94,6 +135,7 @@ class OrderItem
     /**
      * @var string The product this item represents. DEPRECATED: REPLACED BY OFFER
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      * @MaxDepth(1)
@@ -110,6 +152,7 @@ class OrderItem
      *
      * @example 1
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
@@ -122,6 +165,7 @@ class OrderItem
      *
      *  @example 50.00
      *
+     * @Gedmo\Versioned
      * @Assert\NotNull
      * @Groups({"read","write"})
      * @ORM\Column(type="decimal", precision=8, scale=2)
@@ -133,6 +177,7 @@ class OrderItem
      *
      * @example EUR
      *
+     * @Gedmo\Versioned
      * @Assert\Currency
      * @Groups({"read","write"})
      * @ORM\Column(type="string")

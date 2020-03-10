@@ -15,6 +15,1915 @@ info:
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
+  /audit_trails:
+    get:
+      tags:
+        - AuditTrail
+      operationId: getAuditTrailCollection
+      summary: 'Retrieves the collection of AuditTrail resources.'
+      responses:
+        200:
+          description: 'AuditTrail collection response'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/AuditTrail:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/AuditTrail:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+      parameters:
+        -
+          name: 'order[application]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[request]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[user]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[subject]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[resource]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[resourceType]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[endpoint]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[contentType]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[content]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[session]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: request
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'request[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: user
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'user[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: subject
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'subject[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: resource
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'resource[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: resourceType
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: endpoint
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'endpoint[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: contentType
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'contentType[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: content
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'content[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: session
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'session[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - AuditTrail
+      operationId: postAuditTrailCollection
+      summary: 'Creates a AuditTrail resource.'
+      responses:
+        201:
+          description: 'AuditTrail resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+          links:
+            GetAuditTrailItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getAuditTrailItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /audit_trails/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+        description: 'The new AuditTrail resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/audit_trails/{id}':
+    get:
+      tags:
+        - AuditTrail
+      operationId: getAuditTrailItem
+      summary: 'Retrieves a AuditTrail resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'AuditTrail resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - AuditTrail
+      operationId: deleteAuditTrailItem
+      summary: 'Removes the AuditTrail resource.'
+      responses:
+        204:
+          description: 'AuditTrail resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - AuditTrail
+      operationId: putAuditTrailItem
+      summary: 'Replaces the AuditTrail resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'AuditTrail resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+        description: 'The updated AuditTrail resource'
+    patch:
+      tags:
+        - AuditTrail
+      operationId: patchAuditTrailItem
+      summary: 'Updates the AuditTrail resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'AuditTrail resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+        description: 'The updated AuditTrail resource'
+  /change_logs:
+    get:
+      tags:
+        - ChangeLog
+      operationId: getChangeLogCollection
+      summary: 'Retrieves the collection of ChangeLog resources.'
+      responses:
+        200:
+          description: 'ChangeLog collection response'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/ChangeLog:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/ChangeLog:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+      parameters:
+        -
+          name: 'order[action]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[objectId]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[objectClass]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[version]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[username]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: action
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'action[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: objectId
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'objectId[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: objectClass
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'objectClass[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: version
+          in: query
+          required: false
+          schema:
+            type: integer
+        -
+          name: 'version[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: true
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - ChangeLog
+      operationId: postChangeLogCollection
+      summary: 'Creates a ChangeLog resource.'
+      responses:
+        201:
+          description: 'ChangeLog resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+          links:
+            GetChangeLogItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getChangeLogItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /change_logs/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+        description: 'The new ChangeLog resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/change_logs/{id}':
+    get:
+      tags:
+        - ChangeLog
+      operationId: getChangeLogItem
+      summary: 'Retrieves a ChangeLog resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'ChangeLog resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - ChangeLog
+      operationId: deleteChangeLogItem
+      summary: 'Removes the ChangeLog resource.'
+      responses:
+        204:
+          description: 'ChangeLog resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - ChangeLog
+      operationId: putChangeLogItem
+      summary: 'Replaces the ChangeLog resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'ChangeLog resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+        description: 'The updated ChangeLog resource'
+    patch:
+      tags:
+        - ChangeLog
+      operationId: patchChangeLogItem
+      summary: 'Updates the ChangeLog resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'ChangeLog resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+        description: 'The updated ChangeLog resource'
   /order_items:
     get:
       tags:
@@ -25,21 +1934,6 @@ paths:
         200:
           description: 'OrderItem collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OrderItem-read'
             application/ld+json:
               schema:
                 type: object
@@ -54,18 +1948,43 @@ paths:
               schema:
                 type: object
                 properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/ExampleEntity:jsonld-read' } }
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/OrderItem:jsonld-read' } }
                   'hydra:totalItems': { type: integer, minimum: 0 }
                   'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/OrderItem-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrderItem-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -91,6 +2010,296 @@ paths:
                 items:
                   $ref: '#/components/schemas/OrderItem-read'
       parameters:
+        -
+          name: 'order[id]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[name]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[description]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[offer]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[product]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[quantity]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[price]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[priceCurrency]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: id
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'id[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'name[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: description
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'description[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: offer
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'offer[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: product
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'product[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: quantity
+          in: query
+          required: false
+          schema:
+            type: integer
+        -
+          name: 'quantity[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: true
+        -
+          name: price
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'price[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: priceCurrency
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'priceCurrency[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: dateCreated
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: dateModified
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: page
           in: query
@@ -181,16 +2390,31 @@ paths:
         201:
           description: 'OrderItem resource created'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/OrderItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
             application/xml:
@@ -217,16 +2441,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/OrderItem:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/OrderItem:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/OrderItem-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/OrderItem-write'
           application/xml:
@@ -360,16 +2599,31 @@ paths:
         200:
           description: 'OrderItem resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/OrderItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
             application/xml:
@@ -388,6 +2642,136 @@ paths:
           description: 'Resource not found'
       produces:
         - application/health+json
+    put:
+      tags:
+        - OrderItem
+      operationId: putOrderItemItem
+      summary: 'Replaces the OrderItem resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'OrderItem resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/OrderItem:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/OrderItem-write'
+        description: 'The updated OrderItem resource'
     delete:
       tags:
         - OrderItem
@@ -434,11 +2818,12 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-    put:
+  '/order_items/{id}/audit_trail':
+    get:
       tags:
         - OrderItem
-      operationId: putOrderItemItem
-      summary: 'Replaces the OrderItem resource.'
+      operationId: get_audit_trailOrderItemItem
+      summary: 'Retrieves a OrderItem resource.'
       parameters:
         -
           name: id
@@ -475,20 +2860,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'OrderItem resource updated'
+          description: 'OrderItem resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/OrderItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
             application/xml:
@@ -503,42 +2945,16 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-        description: 'The updated OrderItem resource'
-    patch:
+      produces:
+        - application/health+json
+  '/order_items/{id}/change_log':
+    get:
       tags:
         - OrderItem
-      operationId: patchOrderItemItem
-      summary: 'Updates the OrderItem resource.'
+      operationId: get_change_logsOrderItemItem
+      summary: 'Retrieves a OrderItem resource.'
       parameters:
         -
           name: id
@@ -575,20 +2991,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'OrderItem resource updated'
+          description: 'OrderItem resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/OrderItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/OrderItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/OrderItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
             application/xml:
@@ -603,40 +3076,10 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/OrderItem-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/merge-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          applications/x-yaml:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/OrderItem-write'
-        description: 'The updated OrderItem resource'
+      produces:
+        - application/health+json
   /orders:
     get:
       tags:
@@ -647,11 +3090,6 @@ paths:
         200:
           description: 'Order collection response'
           content:
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
                 type: object
@@ -662,12 +3100,47 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Order:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Order-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -693,6 +3166,171 @@ paths:
                 items:
                   $ref: '#/components/schemas/Order-read'
       parameters:
+        -
+          name: 'order[id]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[name]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[description]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[reference]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[referenceId]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[targetOrganization]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[price]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[priceCurrency]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[taxes]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[customer]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[remark]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: reference
           in: query
@@ -815,22 +3453,31 @@ paths:
         201:
           description: 'Order resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Order:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Order-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Order-read'
             application/xml:
@@ -857,22 +3504,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Order:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Order:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Order-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Order-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Order-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Order-write'
           application/xml:
@@ -1006,22 +3662,31 @@ paths:
         200:
           description: 'Order resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Order:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Order-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Order-read'
             application/xml:
@@ -1040,6 +3705,136 @@ paths:
           description: 'Resource not found'
       produces:
         - application/health+json
+    put:
+      tags:
+        - Order
+      operationId: putOrderItem
+      summary: 'Replaces the Order resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Order resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Order:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Order:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Order-write'
+        description: 'The updated Order resource'
     delete:
       tags:
         - Order
@@ -1086,11 +3881,12 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-    put:
+  '/orders/{id}/audit_trail':
+    get:
       tags:
         - Order
-      operationId: putOrderItem
-      summary: 'Replaces the Order resource.'
+      operationId: get_audit_trailOrderItem
+      summary: 'Retrieves a Order resource.'
       parameters:
         -
           name: id
@@ -1127,26 +3923,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'Order resource updated'
+          description: 'Order resource response'
           content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/health+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/Order-read'
             application/json+health:
-              schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Order-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/Order:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/Order-read'
-            application/json:
               schema:
                 $ref: '#/components/schemas/Order-read'
             application/xml:
@@ -1161,48 +4008,16 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/Order-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Order:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-        description: 'The updated Order resource'
-    patch:
+      produces:
+        - application/health+json
+  '/orders/{id}/change_log':
+    get:
       tags:
         - Order
-      operationId: patchOrderItem
-      summary: 'Updates the Order resource.'
+      operationId: get_change_logsOrderItem
+      summary: 'Retrieves a Order resource.'
       parameters:
         -
           name: id
@@ -1239,20 +4054,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'Order resource updated'
+          description: 'Order resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Order-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Order:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Order:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Order-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Order-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Order-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Order-read'
             application/xml:
@@ -1267,40 +4139,141 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/Order-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Order:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/merge-patch+json:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          applications/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Order-write'
-        description: 'The updated Order resource'
+      produces:
+        - application/health+json
+  '/organiszations/{id}/audit_trail':
+    get:
+      tags:
+        - Organization
+      operationId: get_audit_trailOrganizationItem
+      summary: 'Retrieves a Organization resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Organization resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
   /organizations:
     get:
       tags:
@@ -1311,11 +4284,6 @@ paths:
         200:
           description: 'Organization collection response'
           content:
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 type: object
@@ -1326,12 +4294,47 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Organization:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -1357,6 +4360,171 @@ paths:
                 items:
                   $ref: '#/components/schemas/Organization-read'
       parameters:
+        -
+          name: 'order[id]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[rsin]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[shortCode]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: id
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'id[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: rsin
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'rsin[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: shortCode
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'shortCode[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: dateCreated
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: dateModified
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: page
           in: query
@@ -1447,16 +4615,31 @@ paths:
         201:
           description: 'Organization resource created'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -1483,16 +4666,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Organization:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Organization:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Organization-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Organization-write'
           application/xml:
@@ -1626,16 +4824,31 @@ paths:
         200:
           description: 'Organization resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -1654,6 +4867,136 @@ paths:
           description: 'Resource not found'
       produces:
         - application/health+json
+    put:
+      tags:
+        - Organization
+      operationId: putOrganizationItem
+      summary: 'Replaces the Organization resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Organization resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Organization:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Organization:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+        description: 'The updated Organization resource'
     delete:
       tags:
         - Organization
@@ -1700,11 +5043,12 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-    put:
+  '/organizations/{id}/change_log':
+    get:
       tags:
         - Organization
-      operationId: putOrganizationItem
-      summary: 'Replaces the Organization resource.'
+      operationId: get_change_logsOrganizationItem
+      summary: 'Retrieves a Organization resource.'
       parameters:
         -
           name: id
@@ -1741,120 +5085,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-      responses:
-        200:
-          description: 'Organization resource updated'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/Organization:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-        400:
-          description: 'Invalid input'
-        404:
-          description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Organization:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-        description: 'The updated Organization resource'
-    patch:
-      tags:
-        - Organization
-      operationId: patchOrganizationItem
-      summary: 'Updates the Organization resource.'
-      parameters:
         -
-          name: id
-          in: path
-          required: true
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
           schema:
             type: string
+            format: date-time
+          in: query
         -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
         -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'Organization resource updated'
+          description: 'Organization resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -1869,40 +5170,10 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/Organization-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Organization:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/merge-patch+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          applications/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-        description: 'The updated Organization resource'
+      produces:
+        - application/health+json
   /taxes:
     get:
       tags:
@@ -1913,11 +5184,6 @@ paths:
         200:
           description: 'Tax collection response'
           content:
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 type: object
@@ -1928,12 +5194,47 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/json+ld:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Tax:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
                   $ref: '#/components/schemas/Tax-read'
+            application/json+vnd.api:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -1959,6 +5260,246 @@ paths:
                 items:
                   $ref: '#/components/schemas/Tax-read'
       parameters:
+        -
+          name: 'order[id]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[name]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[description]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[price]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[priceCurrency]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[percentage]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: id
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'id[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'name[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: description
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'description[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: price
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'price[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: priceCurrency
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'priceCurrency[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: percentage
+          in: query
+          required: false
+          schema:
+            type: integer
+        -
+          name: 'percentage[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+          style: form
+          explode: true
+        -
+          name: dateCreated
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: dateModified
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: page
           in: query
@@ -2049,16 +5590,31 @@ paths:
         201:
           description: 'Tax resource created'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -2085,16 +5641,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Tax:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Tax:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Tax-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Tax-write'
           application/xml:
@@ -2228,16 +5799,31 @@ paths:
         200:
           description: 'Tax resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -2256,6 +5842,136 @@ paths:
           description: 'Resource not found'
       produces:
         - application/health+json
+    put:
+      tags:
+        - Tax
+      operationId: putTaxItem
+      summary: 'Replaces the Tax resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Tax resource updated'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Tax:jsonld-write'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/Tax:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+        description: 'The updated Tax resource'
     delete:
       tags:
         - Tax
@@ -2302,11 +6018,12 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-    put:
+  '/taxes/{id}/audit_trail':
+    get:
       tags:
         - Tax
-      operationId: putTaxItem
-      summary: 'Replaces the Tax resource.'
+      operationId: get_audit_trailTaxItem
+      summary: 'Retrieves a Tax resource.'
       parameters:
         -
           name: id
@@ -2343,20 +6060,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'Tax resource updated'
+          description: 'Tax resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -2371,42 +6145,16 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/Tax-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Tax:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-        description: 'The updated Tax resource'
-    patch:
+      produces:
+        - application/health+json
+  '/taxes/{id}/change_log':
+    get:
       tags:
         - Tax
-      operationId: patchTaxItem
-      summary: 'Updates the Tax resource.'
+      operationId: get_change_logsTaxItem
+      summary: 'Retrieves a Tax resource.'
       parameters:
         -
           name: id
@@ -2443,20 +6191,77 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
       responses:
         200:
-          description: 'Tax resource updated'
+          description: 'Tax resource response'
           content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -2471,42 +6276,350 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/Tax-read'
-        400:
-          description: 'Invalid input'
         404:
           description: 'Resource not found'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Tax:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/merge-patch+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          applications/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-        description: 'The updated Tax resource'
+      produces:
+        - application/health+json
 components:
   schemas:
+    AuditTrail-read:
+      type: object
+      description: 'An resource representing a log line.'
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        request:
+          readOnly: true
+          description: 'The id of the request within that application'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        user:
+          readOnly: true
+          description: 'The user on behalf of wich the request was made'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        subject:
+          readOnly: true
+          description: '???'
+          type: string
+        process:
+          readOnly: true
+          description: 'The procces on behalf of wich the request was made'
+          type: string
+        dataElements:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: array
+          items:
+            type: string
+        dataSubjects:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: array
+          items:
+            type: string
+        resource:
+          readOnly: true
+          description: 'The resource that was requested'
+          type: string
+        resourceType:
+          readOnly: true
+          description: 'The type of the resource that was requested'
+          type: string
+        route:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        endpoint:
+          readOnly: true
+          description: 'The endpoint that the request was made to'
+          type: string
+        method:
+          readOnly: true
+          description: 'The method that was used'
+          type: string
+        accept:
+          readOnly: true
+          description: 'The contentType that was reqousted'
+          type: string
+        contentType:
+          readOnly: true
+          description: 'The contentType that was suplieds'
+          type: string
+        content:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        ip:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        session:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+    AuditTrail-write:
+      type: object
+      description: 'An resource representing a log line.'
+    'AuditTrail:jsonld-read':
+      type: object
+      description: 'An resource representing a log line.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        request:
+          readOnly: true
+          description: 'The id of the request within that application'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        user:
+          readOnly: true
+          description: 'The user on behalf of wich the request was made'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        subject:
+          readOnly: true
+          description: '???'
+          type: string
+        process:
+          readOnly: true
+          description: 'The procces on behalf of wich the request was made'
+          type: string
+        dataElements:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: array
+          items:
+            type: string
+        dataSubjects:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: array
+          items:
+            type: string
+        resource:
+          readOnly: true
+          description: 'The resource that was requested'
+          type: string
+        resourceType:
+          readOnly: true
+          description: 'The type of the resource that was requested'
+          type: string
+        route:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        endpoint:
+          readOnly: true
+          description: 'The endpoint that the request was made to'
+          type: string
+        method:
+          readOnly: true
+          description: 'The method that was used'
+          type: string
+        accept:
+          readOnly: true
+          description: 'The contentType that was reqousted'
+          type: string
+        contentType:
+          readOnly: true
+          description: 'The contentType that was suplieds'
+          type: string
+        content:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        ip:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        session:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+    'AuditTrail:jsonld-write':
+      type: object
+      description: 'An resource representing a log line.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+    ChangeLog-read:
+      type: object
+      description: 'An resource representing a log line.'
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        action:
+          readOnly: true
+          type: string
+        objectId:
+          readOnly: true
+          type: string
+        objectClass:
+          readOnly: true
+          type: string
+        version:
+          readOnly: true
+          type: integer
+        data:
+          readOnly: true
+          type: array
+          items:
+            type: string
+        username:
+          readOnly: true
+          type: string
+        session:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+    ChangeLog-write:
+      type: object
+      description: 'An resource representing a log line.'
+    'ChangeLog:jsonld-read':
+      type: object
+      description: 'An resource representing a log line.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        action:
+          readOnly: true
+          type: string
+        objectId:
+          readOnly: true
+          type: string
+        objectClass:
+          readOnly: true
+          type: string
+        version:
+          readOnly: true
+          type: integer
+        data:
+          readOnly: true
+          type: array
+          items:
+            type: string
+        username:
+          readOnly: true
+          type: string
+        session:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          externalDocs:
+            url: 'http://schema.org/DateTime'
+          type: string
+          format: date-time
+    'ChangeLog:jsonld-write':
+      type: object
+      description: 'An resource representing a log line.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
     Order-read:
       type: object
       description: 'An entity representing an order.'
@@ -2541,21 +6654,9 @@ components:
         taxes:
           readOnly: true
           description: 'A list of total taxes'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
           type: array
           items:
             type: string
-        dateCreated:
-          readOnly: true
-          description: 'The moment this request was created by the submitter'
-          type: string
-          format: date-time
-        dateModified:
-          readOnly: true
-          description: 'The moment this request was modified by the submitter'
-          type: string
-          format: date-time
         items:
           description: 'The items in this order'
           type: array
@@ -2572,6 +6673,16 @@ components:
         remark:
           description: 'Remarks on this order'
           type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request was modified by the submitter'
+          type: string
+          format: date-time
       required:
         - name
         - targetOrganization
@@ -2658,21 +6769,9 @@ components:
         taxes:
           readOnly: true
           description: 'A list of total taxes'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
           type: array
           items:
             type: string
-        dateCreated:
-          readOnly: true
-          description: 'The moment this request was created by the submitter'
-          type: string
-          format: date-time
-        dateModified:
-          readOnly: true
-          description: 'The moment this request was modified by the submitter'
-          type: string
-          format: date-time
         items:
           description: 'The items in this order'
           type: array
@@ -2689,6 +6788,16 @@ components:
         remark:
           description: 'Remarks on this order'
           type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request was modified by the submitter'
+          type: string
+          format: date-time
       required:
         - name
         - targetOrganization
@@ -2781,6 +6890,11 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax-read'
         dateCreated:
           readOnly: true
           description: 'The moment this request was created by the submitter'
@@ -2831,6 +6945,11 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax-write'
       required:
         - order
         - offer
@@ -2885,6 +7004,11 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax:jsonld-read'
         dateCreated:
           readOnly: true
           description: 'The moment this request was created by the submitter'
@@ -2944,6 +7068,11 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax:jsonld-write'
       required:
         - order
         - offer
@@ -3206,6 +7335,159 @@ components:
           description: 'The offers that use this tax'
           $ref: '#/components/schemas/OrderItem:jsonld-write'
 definitions:
+  AuditTrail-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      application:
+        description: 'The application that made the request'
+        type: string
+        format: url
+        maxLength: 255
+      request:
+        description: 'The id of the request within that application'
+        type: string
+        format: url
+        maxLength: 255
+      user:
+        description: 'The user on behalf of wich the request was made'
+        type: string
+        format: url
+        maxLength: 255
+      subject:
+        description: '???'
+        type: \sting
+        maxLength: 255
+      process:
+        description: 'The procces on behalf of wich the request was made'
+        type: \sting
+        maxLength: 255
+      dataElements:
+        description: 'The moment this request was created'
+        type: array
+      dataSubjects:
+        description: 'The moment this request was created'
+        type: array
+      resource:
+        description: 'The resource that was requested'
+        type: \sting
+        maxLength: 255
+      resourceType:
+        description: 'The type of the resource that was requested'
+        type: \sting
+        maxLength: 255
+      route:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      endpoint:
+        description: 'The endpoint that the request was made to'
+        type: \sting
+        maxLength: 255
+      method:
+        description: 'The method that was used'
+        type: \sting
+        maxLength: 255
+      accept:
+        description: 'The contentType that was reqousted'
+        type: \sting
+        maxLength: 255
+      contentType:
+        description: 'The contentType that was suplieds'
+        type: \sting
+        maxLength: 255
+      content:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 2555
+      ip:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      session:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-03-10 13:33:29'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-03-10 13:33:29'
+    required: []
+  AuditTrail-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-03-10 13:33:29'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-03-10 13:33:29'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
   Order-read:
     properties:
       id:
@@ -3245,14 +7527,6 @@ definitions:
         description: 'A list of total taxes'
         type: array
         example: EUR
-      dateCreated:
-        description: 'The moment this request was created by the submitter'
-        type: \DateTime
-        example: '20190101'
-      dateModified:
-        description: 'The moment this request was modified by the submitter'
-        type: \DateTime
-        example: '20190101'
       customer:
         description: 'The customer that placed this order'
         type: string
@@ -3261,6 +7535,12 @@ definitions:
       remark:
         description: 'Remarks on this order'
         type: string
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was modified by the submitter'
+        type: \DateTime
       items:
         description: 'The items in this order'
         type: \ArrayCollection
@@ -3514,6 +7794,18 @@ definitions:
       - name
       - price
 tags:
+  -
+    name: AuditTrail
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
+  -
+    name: ChangeLog
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
     name: Order
     description: |
