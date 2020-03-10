@@ -59,6 +59,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks
  * 
@@ -87,6 +88,7 @@ class Order
     /**
      * @var string The name of the order
      *
+     * @Gedmo\Versioned
      * @example my Order
      * @Groups({"read","write"})
      * @Assert\Length(
@@ -100,6 +102,7 @@ class Order
     /**
      * @var string The description of the order
      *
+     * @Gedmo\Versioned
      * @example This is the best order ever
      * @Groups({"read","write"})
      * @Assert\Length(
@@ -114,6 +117,7 @@ class Order
      *
      * @example 6666-2019-0000000012
      *
+     * @Gedmo\Versioned
      * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
@@ -126,6 +130,7 @@ class Order
     /**
      * @param string $referenceId The autoincrementing id part of the reference, unique on an organization-year-id basis
      *
+     * @Gedmo\Versioned
      * @Assert\Positive
      * @Assert\Length(
      *      max = 11
@@ -139,6 +144,7 @@ class Order
      *
      * @example 002851234
      *
+     * @Gedmo\Versioned
      * @Assert\NotNull
      * @Assert\Length(
      *     max = 255
@@ -154,6 +160,7 @@ class Order
      *
      * @example 50.00
      *
+     * @Gedmo\Versioned
      * @Groups({"read", "write"})
      * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
@@ -164,6 +171,7 @@ class Order
      *
      * @example EUR
      *
+     * @Gedmo\Versioned
      * @Assert\Currency
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", nullable=true)
@@ -175,28 +183,11 @@ class Order
      *
      * @example EUR
      *
+     * @Gedmo\Versioned
      * @Groups({"read"})
      * @ORM\Column(type="array")
      */
     private $taxes = [];
-
-    /**
-     * @var DateTime The moment this request was created by the submitter
-     *
-     * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateCreated;
-
-    /**
-     * @var DateTime The moment this request was modified by the submitter
-     *
-     * @Groups({"read"})
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateModified;
 
     /**
      * @var ArrayCollection The items in this order
@@ -214,6 +205,7 @@ class Order
      *
      * @ORM\Column(type="string", length=255)
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Url
      */
@@ -233,10 +225,29 @@ class Order
     /**
      * @var string Remarks on this order
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $remark;
+    
+    /**
+     * @var DateTime The moment this request was created by the submitter
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateCreated;
+    
+    /**
+     * @var DateTime The moment this request was modified by the submitter
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
     
     /**
      *

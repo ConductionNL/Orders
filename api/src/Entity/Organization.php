@@ -70,6 +70,7 @@ class Organization
 
     /**
      *
+     * @Gedmo\Versioned
      * @Groups({"read", "write"})
      * @Assert\NotNull
      * @Assert\Length(
@@ -81,6 +82,7 @@ class Organization
     private $rsin;
 
     /**
+     * @Gedmo\Versioned
      * @Groups({"read", "write"})
      * @Assert\NotNull
      * @ORM\Column(type="string", length=255, unique=true)

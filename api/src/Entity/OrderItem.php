@@ -56,6 +56,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  * 
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
@@ -77,21 +78,28 @@ class OrderItem
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
+    
     /**
      * @var string The name of the object
      *
      * @example my OrderItem
+     * 
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Length(
      *     max=255
      * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    
     private $name;
+    
     /**
      * @var string The description of the order item
      *
      * @example This is the best order item ever
+     * 
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Length(
      *     max=255
@@ -115,6 +123,7 @@ class OrderItem
      *
      * @example http://example.org/offers/1
      *
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=255)
      * @Groups({"read","write"})
      * @Assert\Url
@@ -126,6 +135,7 @@ class OrderItem
     /**
      * @var string The product this item represents. DEPRECATED: REPLACED BY OFFER
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      * @MaxDepth(1)
@@ -142,6 +152,7 @@ class OrderItem
      *
      * @example 1
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
@@ -154,6 +165,7 @@ class OrderItem
      *
      *  @example 50.00
      *
+     * @Gedmo\Versioned
      * @Assert\NotNull
      * @Groups({"read","write"})
      * @ORM\Column(type="decimal", precision=8, scale=2)
@@ -165,6 +177,7 @@ class OrderItem
      *
      * @example EUR
      *
+     * @Gedmo\Versioned
      * @Assert\Currency
      * @Groups({"read","write"})
      * @ORM\Column(type="string")
