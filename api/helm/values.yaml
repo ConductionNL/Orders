@@ -9,7 +9,9 @@ settings:
   title: Order Registratie Component
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  repro: 'https://github.com/ConductionNL/Proto-component-commonground'
+  repro: https://github.com/ConductionNL/orderregistratiecomponent
+  demo: orc.zaakonline.nl
+  container: https://hub.docker.com/repository/docker/conduction/orc-php
   subdomain: orc  
   domains:
     - conduction.nl
@@ -23,7 +25,6 @@ settings:
   state: Noord-Holland
   locality: Amsterdam
   unit: Common-Ground  
-  demo: orc.zaakonline.nl
   env: dev
   debug: 1
   replicaCount: 1
