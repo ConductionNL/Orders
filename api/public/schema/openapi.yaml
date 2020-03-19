@@ -7379,6 +7379,282 @@ components:
           description: 'The offers that use this tax'
           $ref: '#/components/schemas/OrderItem:jsonld-write'
 definitions:
+  AuditTrail-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line looks suspicius'
+        maxLength: 2555
+      application:
+        description: 'The application that made the request'
+        type: string
+        format: url
+        maxLength: 255
+      request:
+        description: 'The id of the request within that application'
+        type: string
+        format: url
+        maxLength: 255
+      user:
+        description: 'The user on behalf of wich the request was made'
+        type: string
+        format: url
+        maxLength: 255
+      subject:
+        description: '???'
+        type: \sting
+        maxLength: 255
+      process:
+        description: 'The procces on behalf of wich the request was made'
+        type: \sting
+        maxLength: 255
+      dataElements:
+        description: 'The moment this request was created'
+        type: array
+      dataSubjects:
+        description: 'The moment this request was created'
+        type: array
+      resource:
+        description: 'The resource that was requested'
+        type: \sting
+        maxLength: 255
+      resourceType:
+        description: 'The type of the resource that was requested'
+        type: \sting
+        maxLength: 255
+      route:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      endpoint:
+        description: 'The endpoint that the request was made to'
+        type: \sting
+        maxLength: 255
+      method:
+        description: 'The method that was used'
+        type: \sting
+        maxLength: 255
+      accept:
+        description: 'The contentType that was reqousted'
+        type: \sting
+        maxLength: 255
+      contentType:
+        description: 'The contentType that was suplieds'
+        type: \sting
+        maxLength: 255
+      content:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 2555
+      ip:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      headers:
+        description: 'The headers supplied by client'
+        type: array
+      statusCode:
+        description: 'The status code returned to client'
+        type: int
+        example: '200'
+      notFound:
+        description: 'Whether or not the reqousted endpoint was found'
+        type: bool
+        example: 'false'
+      forbidden:
+        description: 'Whether or not the client was allowed to the reqousted endpoint'
+        type: bool
+        example: 'false'
+      ok:
+        description: 'Whether or not there where any problems'
+        type: bool
+        example: 'true'
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-03-11 08:03:46'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-03-11 08:03:46'
+    required: []
+  AuditTrail-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line looks suspicius'
+        maxLength: 2555
+    required: []
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: \sting
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-03-11 08:03:46'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-03-11 08:03:46'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
+  Order-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        description: 'The name of the order'
+        type: string
+        example: 'my Order'
+        maxLength: 255
+      description:
+        description: 'The description of the order'
+        type: string
+        example: 'This is the best order ever'
+        maxLength: 255
+      reference:
+        description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+        type: string
+        example: 6666-2019-0000000012
+        maxLength: 255
+      targetOrganization:
+        description: 'The RSIN of the organization that ownes this proces'
+        type: string
+        example: '002851234'
+        maxLength: 255
+      price:
+        description: 'The price of this product'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      taxes:
+        description: 'A list of total taxes'
+        type: array
+        example: EUR
+      customer:
+        description: 'The customer that placed this order'
+        type: string
+        example: 'https://example.org/people/1'
+        format: url
+      remark:
+        description: 'Remarks on this order'
+        type: string
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was modified by the submitter'
+        type: \DateTime
+      items:
+        description: 'The items in this order'
+        type: \ArrayCollection
+      organization:
+        description: 'The organization that created this order'
+        type: \Organization
+    required:
+      - name
+      - targetOrganization
+  Order-write:
+    properties:
+      name:
+        description: 'The name of the order'
+        type: string
+        example: 'my Order'
+        maxLength: 255
+      description:
+        description: 'The description of the order'
+        type: string
+        example: 'This is the best order ever'
+        maxLength: 255
+      targetOrganization:
+        description: 'The RSIN of the organization that ownes this proces'
+        type: string
+        example: '002851234'
+        maxLength: 255
+      price:
+        description: 'The price of this product'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      customer:
+        description: 'The customer that placed this order'
+        type: string
+        example: 'https://example.org/people/1'
+        format: url
+      remark:
+        description: 'Remarks on this order'
+        type: string
+      items:
+        description: 'The items in this order'
+        type: \ArrayCollection
+      organization:
+        description: 'The organization that created this order'
+        type: \Organization
+    required:
+      - name
+      - targetOrganization
   OrderItem-read:
     properties:
       id:
@@ -7509,110 +7785,6 @@ definitions:
     required:
       - rsin
       - shortCode
-  Order-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      name:
-        description: 'The name of the order'
-        type: string
-        example: 'my Order'
-        maxLength: 255
-      description:
-        description: 'The description of the order'
-        type: string
-        example: 'This is the best order ever'
-        maxLength: 255
-      reference:
-        description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
-        type: string
-        example: 6666-2019-0000000012
-        maxLength: 255
-      targetOrganization:
-        description: 'The RSIN of the organization that ownes this proces'
-        type: string
-        example: '002851234'
-        maxLength: 255
-      price:
-        description: 'The price of this product'
-        type: string
-        example: '50.00'
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      taxes:
-        description: 'A list of total taxes'
-        type: array
-        example: EUR
-      customer:
-        description: 'The customer that placed this order'
-        type: string
-        example: 'https://example.org/people/1'
-        format: url
-      remark:
-        description: 'Remarks on this order'
-        type: string
-      dateCreated:
-        description: 'The moment this request was created by the submitter'
-        type: \DateTime
-      dateModified:
-        description: 'The moment this request was modified by the submitter'
-        type: \DateTime
-      items:
-        description: 'The items in this order'
-        type: \ArrayCollection
-      organization:
-        description: 'The organization that created this order'
-        type: \Organization
-    required:
-      - name
-      - targetOrganization
-  Order-write:
-    properties:
-      name:
-        description: 'The name of the order'
-        type: string
-        example: 'my Order'
-        maxLength: 255
-      description:
-        description: 'The description of the order'
-        type: string
-        example: 'This is the best order ever'
-        maxLength: 255
-      targetOrganization:
-        description: 'The RSIN of the organization that ownes this proces'
-        type: string
-        example: '002851234'
-        maxLength: 255
-      price:
-        description: 'The price of this product'
-        type: string
-        example: '50.00'
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      customer:
-        description: 'The customer that placed this order'
-        type: string
-        example: 'https://example.org/people/1'
-        format: url
-      remark:
-        description: 'Remarks on this order'
-        type: string
-      items:
-        description: 'The items in this order'
-        type: \ArrayCollection
-      organization:
-        description: 'The organization that created this order'
-        type: \Organization
-    required:
-      - name
-      - targetOrganization
   Tax-read:
     properties:
       id:
@@ -7684,179 +7856,25 @@ definitions:
     required:
       - name
       - price
-  AuditTrail-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line looks suspicius'
-        maxLength: 2555
-      application:
-        description: 'The application that made the request'
-        type: string
-        format: url
-        maxLength: 255
-      request:
-        description: 'The id of the request within that application'
-        type: string
-        format: url
-        maxLength: 255
-      user:
-        description: 'The user on behalf of wich the request was made'
-        type: string
-        format: url
-        maxLength: 255
-      subject:
-        description: '???'
-        type: \sting
-        maxLength: 255
-      process:
-        description: 'The procces on behalf of wich the request was made'
-        type: \sting
-        maxLength: 255
-      dataElements:
-        description: 'The moment this request was created'
-        type: array
-      dataSubjects:
-        description: 'The moment this request was created'
-        type: array
-      resource:
-        description: 'The resource that was requested'
-        type: \sting
-        maxLength: 255
-      resourceType:
-        description: 'The type of the resource that was requested'
-        type: \sting
-        maxLength: 255
-      route:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 255
-      endpoint:
-        description: 'The endpoint that the request was made to'
-        type: \sting
-        maxLength: 255
-      method:
-        description: 'The method that was used'
-        type: \sting
-        maxLength: 255
-      accept:
-        description: 'The contentType that was reqousted'
-        type: \sting
-        maxLength: 255
-      contentType:
-        description: 'The contentType that was suplieds'
-        type: \sting
-        maxLength: 255
-      content:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 2555
-      ip:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 255
-      session:
-        description: 'The moment this request was created'
-        type: string
-        maxLength: 255
-      headers:
-        description: 'The headers supplied by client'
-        type: array
-      statusCode:
-        description: 'The status code returned to client'
-        type: int
-        example: '200'
-      notFound:
-        description: 'Whether or not the reqousted endpoint was found'
-        type: bool
-        example: 'false'
-      forbidden:
-        description: 'Whether or not the client was allowed to the reqousted endpoint'
-        type: bool
-        example: 'false'
-      ok:
-        description: 'Whether or not there where any problems'
-        type: bool
-        example: 'true'
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2020-03-19 12:38:02'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2020-03-19 12:38:02'
-    required: []
-  AuditTrail-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line looks suspicius'
-        maxLength: 2555
-    required: []
-  ChangeLog-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 255
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2020-03-19 12:38:02'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2020-03-19 12:38:02'
-    required: []
-  ChangeLog-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-    required: []
 tags:
+  -
+    name: AuditTrail
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
+  -
+    name: ChangeLog
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
+  -
+    name: Order
+    description: |
+      An entity representing an order.
+      
+      This entity represents an order for sales
   -
     name: OrderItem
     description: |
@@ -7870,44 +7888,26 @@ tags:
       
       
   -
-    name: Order
-    description: |
-      An entity representing an order.
-      
-      This entity represents an order for sales
-  -
     name: Tax
     description: |
       An entity representing an tax.
       
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
-  -
-    name: AuditTrail
-    description: |
-      An resource representing a log line.
-      
-      This entity represents a product that can be ordered via the OrderRegistratieComponent.
-  -
-    name: ChangeLog
-    description: |
-      An resource representing a log line.
-      
-      This entity represents a product that can be ordered via the OrderRegistratieComponent.
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the Tax resource'
+      write: 'write right to the Tax resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the Tax resource'
+      write: 'write right to the Tax resource'
 host: irc.zaakonline.nl
 servers:
   -
