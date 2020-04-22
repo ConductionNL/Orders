@@ -6678,6 +6678,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         name:
           description: 'The name of the order'
           type: string
@@ -6793,6 +6794,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         name:
           description: 'The name of the order'
           type: string
@@ -6907,6 +6909,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         name:
           description: 'The name of the object'
           type: string
@@ -7021,6 +7024,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         name:
           description: 'The name of the object'
           type: string
@@ -7136,6 +7140,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         rsin:
           type: string
         shortCode:
@@ -7183,6 +7188,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         rsin:
           type: string
         shortCode:
@@ -7230,6 +7236,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         name:
           description: 'The name of this tax'
           type: string
@@ -7311,6 +7318,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         name:
           description: 'The name of this tax'
           type: string
@@ -7487,12 +7495,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-11 08:03:46'
+        example: '2020-04-22 09:44:05'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-11 08:03:46'
+        example: '2020-04-22 09:44:05'
     required: []
   AuditTrail-write:
     properties:
@@ -7540,12 +7548,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-11 08:03:46'
+        example: '2020-04-22 09:44:05'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-11 08:03:46'
+        example: '2020-04-22 09:44:05'
     required: []
   ChangeLog-write:
     properties:
@@ -7760,35 +7768,6 @@ definitions:
       - offer
       - price
       - order
-  Organization-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      rsin:
-        maxLength: 16
-        minLength: 4
-      shortCode: []
-      dateCreated:
-        description: 'The moment this request was created'
-        type: \Datetime
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: \Datetime
-    required:
-      - rsin
-      - shortCode
-  Organization-write:
-    properties:
-      rsin:
-        maxLength: 16
-        minLength: 4
-      shortCode: []
-    required:
-      - rsin
-      - shortCode
   Tax-read:
     properties:
       id:
@@ -7860,6 +7839,35 @@ definitions:
     required:
       - name
       - price
+  Organization-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      rsin:
+        maxLength: 16
+        minLength: 4
+      shortCode: []
+      dateCreated:
+        description: 'The moment this request was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: \Datetime
+    required:
+      - rsin
+      - shortCode
+  Organization-write:
+    properties:
+      rsin:
+        maxLength: 16
+        minLength: 4
+      shortCode: []
+    required:
+      - rsin
+      - shortCode
 tags:
   -
     name: AuditTrail
@@ -7886,37 +7894,37 @@ tags:
       
       This entity represents an item that is placed on the order
   -
-    name: Organization
-    description: |
-      
-      
-      
-  -
     name: Tax
     description: |
       An entity representing an tax.
       
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
+  -
+    name: Organization
+    description: |
+      
+      
+      
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the Tax resource'
-      write: 'write right to the Tax resource'
+      read: 'read right to the Organization resource'
+      write: 'write right to the Organization resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the Tax resource'
-      write: 'write right to the Tax resource'
+      read: 'read right to the Organization resource'
+      write: 'write right to the Organization resource'
 host: irc.zaakonline.nl
 servers:
   -
-    description: 'Demo Omgeving'
-    url: 'http://pdc.zaakonline.nl'
+    name: conduction.nl
+    url: orc.dev.conduction.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
