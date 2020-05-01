@@ -57,7 +57,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
  * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
- * 
+ *
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
@@ -78,12 +78,12 @@ class OrderItem
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
-    
+
     /**
      * @var string The name of the object
      *
      * @example my OrderItem
-     * 
+     *
      * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Length(
@@ -91,14 +91,14 @@ class OrderItem
      * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    
+
     private $name;
-    
+
     /**
      * @var string The description of the order item
      *
      * @example This is the best order item ever
-     * 
+     *
      * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\Length(
@@ -159,7 +159,7 @@ class OrderItem
      * @Assert\PositiveOrZero
      */
     private $quantity;
-    
+
     /**
      *  @var string The price of this orderItem
      *
@@ -183,7 +183,7 @@ class OrderItem
      * @ORM\Column(type="string")
      */
     private $priceCurrency;
-    
+
     /**
      * @var ArrayCollection The taxes that affect this offer
      *
@@ -207,11 +207,11 @@ class OrderItem
      * @var DateTime The moment this request was updated
      *
      * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
-    
+
     public function __construct()
     {
     	$this->taxes = new ArrayCollection();
@@ -303,7 +303,7 @@ class OrderItem
 
         return $this;
     }
-    
+
     /**
      * @return Collection|Tax[]
      */
@@ -311,24 +311,24 @@ class OrderItem
     {
     	return $this->taxes;
     }
-    
+
     public function addTax(Tax $tax): self
     {
     	if (!$this->taxes->contains($tax)) {
     		$this->taxes[] = $tax;
     		$tax->addOffer($this);
     	}
-    	
+
     	return $this;
     }
-    
+
     public function removeTax(Tax $tax): self
     {
     	if ($this->taxes->contains($tax)) {
     		$this->taxes->removeElement($tax);
     		$gtax->removeProduct($this);
     	}
-    	
+
     	return $this;
     }
 
