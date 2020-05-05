@@ -58,7 +58,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TaxRepository")
  * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
- * 
+ *
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
@@ -154,7 +154,7 @@ class Tax
      * @ORM\ManyToOne(targetEntity="App\Entity\OrderItem", inversedBy="taxes")
      */
     private $orderItems;
-    
+
     /**
      * @var Datetime $dateCreated The moment this request was created
      *
@@ -168,7 +168,7 @@ class Tax
      * @var Datetime $dateModified  The moment this request last Modified
      *
      * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
