@@ -251,7 +251,7 @@ class Tax
     }
 
     /**
-     * @return Collection|Offer[]
+     * @return Collection|OrderItem[]
      */
     public function getOrderItems(): Collection
     {
@@ -275,6 +275,7 @@ class Tax
 
         return $this;
     }
+
     public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
