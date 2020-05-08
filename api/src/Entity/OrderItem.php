@@ -112,7 +112,7 @@ class OrderItem
      * @var Order The order that contains this item
      *
      * @Groups({"read","write"})
-     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull
      */

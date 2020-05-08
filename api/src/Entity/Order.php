@@ -216,7 +216,7 @@ class Order
      *
      * @Groups({"write", "read"})
      * @MaxDepth(1)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
