@@ -62,7 +62,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  * @ORM\Table(name="orders")
  * @ORM\HasLifecycleCallbacks
- * 
+ *
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
@@ -177,7 +177,7 @@ class Order
      * @ORM\Column(type="string", nullable=true)
      */
     private $priceCurrency;
-    
+
     /**
      * @var array A list of total taxes
      *
@@ -216,7 +216,7 @@ class Order
      *
      * @Groups({"write", "read"})
      * @MaxDepth(1)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid
      */
@@ -230,7 +230,7 @@ class Order
      * @ORM\Column(type="text", nullable=true)
      */
     private $remark;
-    
+
     /**
      * @var DateTime The moment this request was created by the submitter
      *
@@ -239,7 +239,7 @@ class Order
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateCreated;
-    
+
     /**
      * @var DateTime The moment this request was modified by the submitter
      *
@@ -248,7 +248,7 @@ class Order
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
-    
+
     /**
      *
      *  @ORM\PrePersist
@@ -259,15 +259,15 @@ class Order
     {
     	$this->calculateTotals();
     }
-    
+
     public function calculateTotals()
-    {    	
+    {
     	/*@todo we should support non euro */
     	$price = new Money(0, new Currency('EUR'));
     	$taxes = [];
-    	
+
     	foreach ($this->items as $item){
-    		
+
     		// Calculate Invoice Price
     		//
     		if(is_string ($item->getPrice())){
@@ -275,18 +275,18 @@ class Order
     			$float = floatval($item->getPrice());
     			$float = $float*100;
     			$itemPrice = new Money((int) $float, new Currency($item->getPriceCurrency()));
-    			
+
     		}
     		else{
     			// Calculate Invoice Price
     			$itemPrice = new Money($item->getPrice(), new Currency($item->getPriceCurrency()));
-    			
-    			
+
+
     		}
-    		
+
     		$itemPrice = $itemPrice->multiply($item->getQuantity());
     		$price = $price->add($itemPrice);
-    		
+
     		// Calculate Taxes
     		/*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
     		foreach($item->getTaxes() as $tax){
@@ -298,14 +298,14 @@ class Order
     				$tax[$tax->getPercentage()] = $tax[$tax->getPercentage()]->add($taxPrice);
     			}
     		}
-    		
+
     	}
-    	    	
+
     	$this->taxes = $taxes;
     	$this->price = number_format($price->getAmount()/100, 2, '.', "");
     	$this->priceCurrency = $price->getCurrency();
     }
-    
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -459,7 +459,7 @@ class Order
 
         return $this;
     }
-    
+
     /**
      * @return Array
      */

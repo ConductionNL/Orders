@@ -7256,7 +7256,9 @@ components:
           type: integer
         orderItems:
           description: 'The offers that use this tax'
-          $ref: '#/components/schemas/OrderItem-read'
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem-read'
         dateCreated:
           readOnly: true
           description: 'The moment this request was created'
@@ -7298,7 +7300,9 @@ components:
           type: integer
         orderItems:
           description: 'The offers that use this tax'
-          $ref: '#/components/schemas/OrderItem-write'
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem-write'
     'Tax:jsonld-read':
       type: object
       description: 'An entity representing an tax.'
@@ -7338,7 +7342,9 @@ components:
           type: integer
         orderItems:
           description: 'The offers that use this tax'
-          $ref: '#/components/schemas/OrderItem:jsonld-read'
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem:jsonld-read'
         dateCreated:
           readOnly: true
           description: 'The moment this request was created'
@@ -7389,7 +7395,9 @@ components:
           type: integer
         orderItems:
           description: 'The offers that use this tax'
-          $ref: '#/components/schemas/OrderItem:jsonld-write'
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem:jsonld-write'
 definitions:
   AuditTrail-read:
     properties:
@@ -7495,12 +7503,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-06 08:36:55'
+        example: '2020-05-08 14:16:15'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-06 08:36:55'
+        example: '2020-05-08 14:16:15'
     required: []
   AuditTrail-write:
     properties:
@@ -7548,12 +7556,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-06 08:36:55'
+        example: '2020-05-08 14:16:15'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-06 08:36:55'
+        example: '2020-05-08 14:16:15'
     required: []
   ChangeLog-write:
     properties:

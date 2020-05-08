@@ -151,7 +151,7 @@ class Tax
      *
      * @MaxDepth(1)
      * @Groups({"read","write"})
-     * @ORM\ManyToOne(targetEntity="App\Entity\OrderItem", inversedBy="taxes")
+     * @ORM\ManyToMany(targetEntity="App\Entity\OrderItem", inversedBy="taxes")
      */
     private $orderItems;
 
@@ -176,9 +176,10 @@ class Tax
     public function __construct()
     {
         $this->eligibleCustomerTypes = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
-    public function getId(): Uuid
+    public function getId()
     {
         return $this->id;
     }
@@ -262,6 +263,7 @@ class Tax
     {
     	if (!$this->orderItems->contains($orderItems)) {
     		$this->orderItems[] = $orderItems;
+            $orderItems->addTax($this);
         }
 
         return $this;
@@ -271,6 +273,7 @@ class Tax
     {
     	if ($this->orderItems->contains($orderItems)) {
     		$this->orderItems->removeElement($orderItems);
+            $orderItems->removeTax($this);
         }
 
         return $this;
