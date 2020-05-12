@@ -190,7 +190,7 @@ class OrderItem
      *
      * @MaxDepth(1)
      * @Groups({"read", "write"})
-     * @ORM\OneToMany(targetEntity="App\Entity\Tax", mappedBy="orderItems")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tax", mappedBy="orderItems")
      */
     private $taxes;
 
@@ -316,7 +316,7 @@ class OrderItem
     {
     	if (!$this->taxes->contains($tax)) {
     		$this->taxes[] = $tax;
-    		$tax->addOffer($this);
+    		$tax->addOrderItem($this);
     	}
 
     	return $this;
@@ -326,7 +326,7 @@ class OrderItem
     {
     	if ($this->taxes->contains($tax)) {
     		$this->taxes->removeElement($tax);
-    		$gtax->removeProduct($this);
+    		$tax->removeOrderItem($this);
     	}
 
     	return $this;

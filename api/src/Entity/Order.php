@@ -295,7 +295,7 @@ class Order
     			}
     			else{
     				$taxPrice = $itemPrice->multiply($tax->getPercentage()/100);
-    				$tax[$tax->getPercentage()] = $tax[$tax->getPercentage()]->add($taxPrice);
+    				$taxes[$tax->getPercentage()] = $taxes[$tax->getPercentage()]->add($taxPrice);
     			}
     		}
 
