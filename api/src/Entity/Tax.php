@@ -57,8 +57,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TaxRepository")
- * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
- * 
+ * @Gedmo\Loggable(logEntryClass="Conduction\CommonGroundBundle\Entity\ChangeLog")
+ *
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
@@ -151,10 +151,10 @@ class Tax
      *
      * @MaxDepth(1)
      * @Groups({"read","write"})
-     * @ORM\ManyToOne(targetEntity="App\Entity\OrderItem", inversedBy="taxes")
+     * @ORM\ManyToMany(targetEntity="App\Entity\OrderItem", inversedBy="taxes")
      */
     private $orderItems;
-    
+
     /**
      * @var Datetime $dateCreated The moment this request was created
      *
@@ -168,7 +168,7 @@ class Tax
      * @var Datetime $dateModified  The moment this request last Modified
      *
      * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
+     * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
@@ -176,9 +176,10 @@ class Tax
     public function __construct()
     {
         $this->eligibleCustomerTypes = new ArrayCollection();
+        $this->orderItems = new ArrayCollection();
     }
 
-    public function getId(): Uuid
+    public function getId()
     {
         return $this->id;
     }
@@ -251,7 +252,7 @@ class Tax
     }
 
     /**
-     * @return Collection|Offer[]
+     * @return Collection|OrderItem[]
      */
     public function getOrderItems(): Collection
     {
@@ -262,6 +263,7 @@ class Tax
     {
     	if (!$this->orderItems->contains($orderItems)) {
     		$this->orderItems[] = $orderItems;
+            $orderItems->addTax($this);
         }
 
         return $this;
@@ -271,10 +273,12 @@ class Tax
     {
     	if ($this->orderItems->contains($orderItems)) {
     		$this->orderItems->removeElement($orderItems);
+            $orderItems->removeTax($this);
         }
 
         return $this;
     }
+
     public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
