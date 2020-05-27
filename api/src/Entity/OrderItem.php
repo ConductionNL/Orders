@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
-
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -91,7 +90,6 @@ class OrderItem
      * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-
     private $name;
 
     /**
@@ -214,7 +212,7 @@ class OrderItem
 
     public function __construct()
     {
-    	$this->taxes = new ArrayCollection();
+        $this->taxes = new ArrayCollection();
     }
 
     public function getId()
@@ -309,27 +307,27 @@ class OrderItem
      */
     public function getTaxes(): Collection
     {
-    	return $this->taxes;
+        return $this->taxes;
     }
 
     public function addTax(Tax $tax): self
     {
-    	if (!$this->taxes->contains($tax)) {
-    		$this->taxes[] = $tax;
-    		$tax->addOrderItem($this);
-    	}
+        if (!$this->taxes->contains($tax)) {
+            $this->taxes[] = $tax;
+            $tax->addOrderItem($this);
+        }
 
-    	return $this;
+        return $this;
     }
 
     public function removeTax(Tax $tax): self
     {
-    	if ($this->taxes->contains($tax)) {
-    		$this->taxes->removeElement($tax);
-    		$tax->removeOrderItem($this);
-    	}
+        if ($this->taxes->contains($tax)) {
+            $this->taxes->removeElement($tax);
+            $tax->removeOrderItem($this);
+        }
 
-    	return $this;
+        return $this;
     }
 
     public function getName(): ?string
@@ -357,9 +355,9 @@ class OrderItem
     }
 
     public function getDateCreated(): ?\DateTimeInterface
-{
-    return $this->dateCreated;
-}
+    {
+        return $this->dateCreated;
+    }
 
     public function setDateCreated(?\DateTimeInterface $dateCreated): self
     {
@@ -367,6 +365,7 @@ class OrderItem
 
         return $this;
     }
+
     public function getDateModified(): ?\DateTimeInterface
     {
         return $this->dateModified;

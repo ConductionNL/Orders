@@ -18,6 +18,7 @@ class OrderRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Order::class);
     }
+
     public function getNextReferenceId($organization, $date = null)
     {
         //if(!$date){
@@ -34,16 +35,15 @@ class OrderRepository extends ServiceEntityRepository
             ->andWhere('r.dateCreated <= :end')
             ->setParameter('end', $end)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
 
-        if(!$result){
+        if (!$result) {
             return 1;
-        }
-        else{
+        } else {
             return $result['reference_id'] + 1;
         }
     }
+
     // /**
     //  * @return Order[] Returns an array of Order objects
     //  */
