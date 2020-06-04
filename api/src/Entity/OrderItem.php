@@ -131,21 +131,6 @@ class OrderItem
     private $offer;
 
     /**
-     * @var string The product this item represents. DEPRECATED: REPLACED BY OFFER
-     *
-     * @Gedmo\Versioned
-     * @Groups({"read","write"})
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @MaxDepth(1)
-     * @Assert\Length(
-     *     max = 255
-     * )
-     *
-     * @deprecated
-     */
-    private $product;
-
-    /**
      * @var int The quantity of the items that are ordered
      *
      * @example 1
@@ -218,28 +203,6 @@ class OrderItem
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getProduct(): ?string
-    {
-        if ($this->product) {
-            return $this->product;
-        } else {
-            return $this->getOffer();
-        }
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setProduct(string $product): self
-    {
-        $this->product = $product;
-
-        return $this;
     }
 
     public function getQuantity(): ?int
