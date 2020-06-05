@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
-    - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -2047,15 +2047,6 @@ paths:
               - asc
               - desc
         -
-          name: 'order[product]'
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        -
           name: 'order[quantity]'
           in: query
           required: false
@@ -2204,22 +2195,6 @@ paths:
             type: string
         -
           name: 'offer[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: product
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'product[]'
           in: query
           required: false
           schema:
@@ -4143,137 +4118,6 @@ paths:
           description: 'Resource not found'
       produces:
         - application/health+json
-  '/organiszations/{id}/audit_trail':
-    get:
-      tags:
-        - Organization
-      operationId: get_audit_trailOrganizationItem
-      summary: 'Retrieves a Organization resource.'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-        -
-          name: Link
-          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
-          in: header
-        -
-          name: 'extend[]'
-          required: false
-          description: 'An array of nested objects to include in the return object'
-          in: query
-          schema:
-            type: array
-        -
-          name: 'fields[]'
-          required: false
-          description: 'An array of fields to return in output, wil return all fields is not supplied'
-          in: query
-          schema:
-            type: array
-        -
-          name: validOn
-          required: false
-          description: 'Returns object as valid on a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validFrom
-          required: false
-          description: 'Returns objects valid from a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validUntil
-          required: false
-          description: 'Returns objects valid until a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-      responses:
-        200:
-          description: 'Organization resource response'
-          content:
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/Organization:jsonld-read'
-            application/json+ld:
-              schema:
-                $ref: '#/components/schemas/Organization:jsonld-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+vnd.api:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-        404:
-          description: 'Resource not found'
-      produces:
-        - application/health+json
   /organizations:
     get:
       tags:
@@ -5043,6 +4887,137 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+  '/organizations/{id}/audit_trail':
+    get:
+      tags:
+        - Organization
+      operationId: get_audit_trailOrganizationItem
+      summary: 'Retrieves a Organization resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Organization resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
   '/organizations/{id}/change_log':
     get:
       tags:
@@ -6934,10 +6909,6 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-          type: string
-          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
@@ -6992,10 +6963,6 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-          type: string
-          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
@@ -7055,10 +7022,6 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-          type: string
-          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
@@ -7122,10 +7085,6 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-          type: string
-          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
@@ -7549,10 +7508,6 @@ definitions:
         type: string
         example: 'http://example.org/offers/1'
         format: url
-      product:
-        description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-        type: string
-        maxLength: 255
       quantity:
         description: 'The quantity of the items that are ordered'
         type: int
@@ -7600,10 +7555,6 @@ definitions:
         type: string
         example: 'http://example.org/offers/1'
         format: url
-      product:
-        description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-        type: string
-        maxLength: 255
       quantity:
         description: 'The quantity of the items that are ordered'
         type: int
@@ -7832,12 +7783,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-25 12:03:09'
+        example: '2020-06-04 08:13:38'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-25 12:03:09'
+        example: '2020-06-04 08:13:38'
     required: []
   AuditTrail-write:
     properties:
@@ -7885,12 +7836,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-25 12:03:09'
+        example: '2020-06-04 08:13:38'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-25 12:03:09'
+        example: '2020-06-04 08:13:38'
     required: []
   ChangeLog-write:
     properties:
