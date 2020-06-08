@@ -180,15 +180,14 @@ class Order
     private $priceCurrency;
 
     /**
-     * @var array A list of total taxes
+     * @var ArrayCollection The taxes that affect this offer
      *
-     * @example EUR
      *
-     * @Gedmo\Versioned
-     * @Groups({"read"})
-     * @ORM\Column(type="array")
+     * @MaxDepth(1)
+     * @Groups({"read", "write"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tax", mappedBy="orders")
      */
-    private $taxes = [];
+    private $taxes;
 
     /**
      * @var ArrayCollection The items in this order
@@ -250,6 +249,7 @@ class Order
      */
     private $dateModified;
 
+
     /**
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
@@ -303,6 +303,7 @@ class Order
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->taxes = new ArrayCollection();
     }
 
     public function getId()
@@ -457,11 +458,31 @@ class Order
     }
 
     /**
-     * @return array
+     * @return Collection|Tax[]
      */
-    public function getTaxes(): array
+    public function getTaxes(): Collection
     {
         return $this->taxes;
+    }
+
+    public function addTax(Tax $tax): self
+    {
+        if (!$this->taxes->contains($tax)) {
+            $this->taxes[] = $tax;
+            $tax->addOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTax(Tax $tax): self
+    {
+        if ($this->taxes->contains($tax)) {
+            $this->taxes->removeElement($tax);
+            $tax->removeOrder($this);
+        }
+
+        return $this;
     }
 
     public function getCustomer(): ?string
