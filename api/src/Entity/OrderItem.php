@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
-
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -56,7 +55,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
- * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
+ * @Gedmo\Loggable(logEntryClass="Conduction\CommonGroundBundle\Entity\ChangeLog")
  *
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
@@ -91,7 +90,6 @@ class OrderItem
      * )
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-
     private $name;
 
     /**
@@ -131,21 +129,6 @@ class OrderItem
      * @MaxDepth(1)
      */
     private $offer;
-
-    /**
-     * @var string The product this item represents. DEPRECATED: REPLACED BY OFFER
-     *
-     * @Gedmo\Versioned
-     * @Groups({"read","write"})
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @MaxDepth(1)
-     * @Assert\Length(
-     *     max = 255
-     * )
-     *
-     * @deprecated
-     */
-    private $product;
 
     /**
      * @var int The quantity of the items that are ordered
@@ -190,7 +173,7 @@ class OrderItem
      *
      * @MaxDepth(1)
      * @Groups({"read", "write"})
-     * @ORM\OneToMany(targetEntity="App\Entity\Tax", mappedBy="orderItems")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Tax", mappedBy="orderItems")
      */
     private $taxes;
 
@@ -214,34 +197,12 @@ class OrderItem
 
     public function __construct()
     {
-    	$this->taxes = new ArrayCollection();
+        $this->taxes = new ArrayCollection();
     }
 
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function getProduct(): ?string
-    {
-        if ($this->product) {
-            return $this->product;
-        } else {
-            return $this->getOffer();
-        }
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setProduct(string $product): self
-    {
-        $this->product = $product;
-
-        return $this;
     }
 
     public function getQuantity(): ?int
@@ -309,27 +270,27 @@ class OrderItem
      */
     public function getTaxes(): Collection
     {
-    	return $this->taxes;
+        return $this->taxes;
     }
 
     public function addTax(Tax $tax): self
     {
-    	if (!$this->taxes->contains($tax)) {
-    		$this->taxes[] = $tax;
-    		$tax->addOffer($this);
-    	}
+        if (!$this->taxes->contains($tax)) {
+            $this->taxes[] = $tax;
+            $tax->addOrderItem($this);
+        }
 
-    	return $this;
+        return $this;
     }
 
     public function removeTax(Tax $tax): self
     {
-    	if ($this->taxes->contains($tax)) {
-    		$this->taxes->removeElement($tax);
-    		$gtax->removeProduct($this);
-    	}
+        if ($this->taxes->contains($tax)) {
+            $this->taxes->removeElement($tax);
+            $tax->removeOrderItem($this);
+        }
 
-    	return $this;
+        return $this;
     }
 
     public function getName(): ?string
@@ -357,9 +318,9 @@ class OrderItem
     }
 
     public function getDateCreated(): ?\DateTimeInterface
-{
-    return $this->dateCreated;
-}
+    {
+        return $this->dateCreated;
+    }
 
     public function setDateCreated(?\DateTimeInterface $dateCreated): self
     {
@@ -367,6 +328,7 @@ class OrderItem
 
         return $this;
     }
+
     public function getDateModified(): ?\DateTimeInterface
     {
         return $this->dateModified;

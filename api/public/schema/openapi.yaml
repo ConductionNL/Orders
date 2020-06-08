@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
-    - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -2047,15 +2047,6 @@ paths:
               - asc
               - desc
         -
-          name: 'order[product]'
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        -
           name: 'order[quantity]'
           in: query
           required: false
@@ -2204,22 +2195,6 @@ paths:
             type: string
         -
           name: 'offer[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: product
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'product[]'
           in: query
           required: false
           schema:
@@ -4143,137 +4118,6 @@ paths:
           description: 'Resource not found'
       produces:
         - application/health+json
-  '/organiszations/{id}/audit_trail':
-    get:
-      tags:
-        - Organization
-      operationId: get_audit_trailOrganizationItem
-      summary: 'Retrieves a Organization resource.'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-        -
-          name: Link
-          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
-          in: header
-        -
-          name: 'extend[]'
-          required: false
-          description: 'An array of nested objects to include in the return object'
-          in: query
-          schema:
-            type: array
-        -
-          name: 'fields[]'
-          required: false
-          description: 'An array of fields to return in output, wil return all fields is not supplied'
-          in: query
-          schema:
-            type: array
-        -
-          name: validOn
-          required: false
-          description: 'Returns object as valid on a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validFrom
-          required: false
-          description: 'Returns objects valid from a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-        -
-          name: validUntil
-          required: false
-          description: 'Returns objects valid until a given date time'
-          schema:
-            type: string
-            format: date-time
-          in: query
-      responses:
-        200:
-          description: 'Organization resource response'
-          content:
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/Organization:jsonld-read'
-            application/json+ld:
-              schema:
-                $ref: '#/components/schemas/Organization:jsonld-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+vnd.api:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-        404:
-          description: 'Resource not found'
-      produces:
-        - application/health+json
   /organizations:
     get:
       tags:
@@ -5043,6 +4887,137 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+  '/organizations/{id}/audit_trail':
+    get:
+      tags:
+        - Organization
+      operationId: get_audit_trailOrganizationItem
+      summary: 'Retrieves a Organization resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Organization resource response'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
   '/organizations/{id}/change_log':
     get:
       tags:
@@ -6293,114 +6268,113 @@ components:
             url: 'http://schema.org/identifier'
           type: string
           format: uuid
+        application:
+          writeOnly: true
+          description: 'The application that made the request'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         request:
-          readOnly: true
           description: 'The id of the request within that application'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         user:
-          readOnly: true
           description: 'The user on behalf of wich the request was made'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         subject:
-          readOnly: true
           description: '???'
           type: string
+          nullable: true
         process:
-          readOnly: true
           description: 'The procces on behalf of wich the request was made'
           type: string
+          nullable: true
         dataElements:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         dataSubjects:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         resource:
-          readOnly: true
           description: 'The resource that was requested'
           type: string
+          nullable: true
         resourceType:
-          readOnly: true
           description: 'The type of the resource that was requested'
           type: string
+          nullable: true
         route:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         endpoint:
-          readOnly: true
           description: 'The endpoint that the request was made to'
           type: string
         method:
-          readOnly: true
           description: 'The method that was used'
           type: string
         accept:
-          readOnly: true
           description: 'The contentType that was reqousted'
           type: string
         contentType:
-          readOnly: true
           description: 'The contentType that was suplieds'
           type: string
         content:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         ip:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         headers:
-          readOnly: true
           description: 'The headers supplied by client'
           type: array
           items:
             type: string
         statusCode:
-          readOnly: true
           description: 'The status code returned to client'
           type: integer
+          nullable: true
         notFound:
-          readOnly: true
           description: 'Whether or not the reqousted endpoint was found'
           type: boolean
+          nullable: true
         forbidden:
-          readOnly: true
           description: 'Whether or not the client was allowed to the reqousted endpoint'
           type: boolean
+          nullable: true
         ok:
-          readOnly: true
           description: 'Whether or not there where any problems'
           type: boolean
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     AuditTrail-write:
       type: object
       description: 'An resource representing a log line.'
@@ -6424,114 +6398,113 @@ components:
             url: 'http://schema.org/identifier'
           type: string
           format: uuid
+        application:
+          writeOnly: true
+          description: 'The application that made the request'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         request:
-          readOnly: true
           description: 'The id of the request within that application'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         user:
-          readOnly: true
           description: 'The user on behalf of wich the request was made'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         subject:
-          readOnly: true
           description: '???'
           type: string
+          nullable: true
         process:
-          readOnly: true
           description: 'The procces on behalf of wich the request was made'
           type: string
+          nullable: true
         dataElements:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         dataSubjects:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         resource:
-          readOnly: true
           description: 'The resource that was requested'
           type: string
+          nullable: true
         resourceType:
-          readOnly: true
           description: 'The type of the resource that was requested'
           type: string
+          nullable: true
         route:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         endpoint:
-          readOnly: true
           description: 'The endpoint that the request was made to'
           type: string
         method:
-          readOnly: true
           description: 'The method that was used'
           type: string
         accept:
-          readOnly: true
           description: 'The contentType that was reqousted'
           type: string
         contentType:
-          readOnly: true
           description: 'The contentType that was suplieds'
           type: string
         content:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         ip:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         headers:
-          readOnly: true
           description: 'The headers supplied by client'
           type: array
           items:
             type: string
         statusCode:
-          readOnly: true
           description: 'The status code returned to client'
           type: integer
+          nullable: true
         notFound:
-          readOnly: true
           description: 'Whether or not the reqousted endpoint was found'
           type: boolean
+          nullable: true
         forbidden:
-          readOnly: true
           description: 'Whether or not the client was allowed to the reqousted endpoint'
           type: boolean
+          nullable: true
         ok:
-          readOnly: true
           description: 'Whether or not there where any problems'
           type: boolean
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     'AuditTrail:jsonld-write':
       type: object
       description: 'An resource representing a log line.'
@@ -6557,43 +6530,40 @@ components:
           type: string
           format: uuid
         action:
-          readOnly: true
           type: string
         objectId:
-          readOnly: true
           type: string
+          nullable: true
         objectClass:
-          readOnly: true
           type: string
         version:
-          readOnly: true
           type: integer
         data:
-          readOnly: true
           type: array
           items:
             type: string
+          nullable: true
         username:
-          readOnly: true
           type: string
+          nullable: true
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     ChangeLog-write:
       type: object
       description: 'An resource representing a log line.'
@@ -6618,43 +6588,40 @@ components:
           type: string
           format: uuid
         action:
-          readOnly: true
           type: string
         objectId:
-          readOnly: true
           type: string
+          nullable: true
         objectClass:
-          readOnly: true
           type: string
         version:
-          readOnly: true
           type: integer
         data:
-          readOnly: true
           type: array
           items:
             type: string
+          nullable: true
         username:
-          readOnly: true
           type: string
+          nullable: true
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     'ChangeLog:jsonld-write':
       type: object
       description: 'An resource representing a log line.'
@@ -6685,21 +6652,24 @@ components:
         description:
           description: 'The description of the order'
           type: string
+          nullable: true
         reference:
-          readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
+          nullable: true
         targetOrganization:
           description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
           type: string
+          nullable: true
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+          nullable: true
         taxes:
           readOnly: true
           description: 'A list of total taxes'
@@ -6722,16 +6692,17 @@ components:
         remark:
           description: 'Remarks on this order'
           type: string
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request was modified by the submitter'
           type: string
           format: date-time
+          nullable: true
       required:
         - name
         - targetOrganization
@@ -6748,17 +6719,20 @@ components:
         description:
           description: 'The description of the order'
           type: string
+          nullable: true
         targetOrganization:
           description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
           type: string
+          nullable: true
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+          nullable: true
         items:
           description: 'The items in this order'
           type: array
@@ -6775,6 +6749,7 @@ components:
         remark:
           description: 'Remarks on this order'
           type: string
+          nullable: true
     'Order:jsonld-read':
       type: object
       description: 'An entity representing an order.'
@@ -6801,21 +6776,24 @@ components:
         description:
           description: 'The description of the order'
           type: string
+          nullable: true
         reference:
-          readOnly: true
           description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
+          nullable: true
         targetOrganization:
           description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
           type: string
+          nullable: true
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+          nullable: true
         taxes:
           readOnly: true
           description: 'A list of total taxes'
@@ -6838,16 +6816,17 @@ components:
         remark:
           description: 'Remarks on this order'
           type: string
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request was modified by the submitter'
           type: string
           format: date-time
+          nullable: true
       required:
         - name
         - targetOrganization
@@ -6873,17 +6852,20 @@ components:
         description:
           description: 'The description of the order'
           type: string
+          nullable: true
         targetOrganization:
           description: 'The RSIN of the organization that ownes this proces'
           type: string
         price:
           description: 'The price of this product'
           type: string
+          nullable: true
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
+          nullable: true
         items:
           description: 'The items in this order'
           type: array
@@ -6900,6 +6882,7 @@ components:
         remark:
           description: 'Remarks on this order'
           type: string
+          nullable: true
     OrderItem-read:
       type: object
       description: 'An entity representing an item of an order.'
@@ -6913,9 +6896,11 @@ components:
         name:
           description: 'The name of the object'
           type: string
+          nullable: true
         description:
           description: 'The description of the order item'
           type: string
+          nullable: true
         order:
           description: 'The order that contains this item'
           $ref: '#/components/schemas/Order-read'
@@ -6923,9 +6908,6 @@ components:
           description: 'The offer this item represents'
           externalDocs:
             url: 'http://schema.org/url'
-          type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
           description: 'The quantity of the items that are ordered'
@@ -6947,15 +6929,15 @@ components:
           items:
             $ref: '#/components/schemas/Tax-read'
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request was updated'
           type: string
           format: date-time
+          nullable: true
       required:
         - order
         - offer
@@ -6968,9 +6950,11 @@ components:
         name:
           description: 'The name of the object'
           type: string
+          nullable: true
         description:
           description: 'The description of the order item'
           type: string
+          nullable: true
         order:
           description: 'The order that contains this item'
           $ref: '#/components/schemas/Order-write'
@@ -6978,9 +6962,6 @@ components:
           description: 'The offer this item represents'
           externalDocs:
             url: 'http://schema.org/url'
-          type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
           description: 'The quantity of the items that are ordered'
@@ -7028,9 +7009,11 @@ components:
         name:
           description: 'The name of the object'
           type: string
+          nullable: true
         description:
           description: 'The description of the order item'
           type: string
+          nullable: true
         order:
           description: 'The order that contains this item'
           $ref: '#/components/schemas/Order:jsonld-read'
@@ -7038,9 +7021,6 @@ components:
           description: 'The offer this item represents'
           externalDocs:
             url: 'http://schema.org/url'
-          type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
           description: 'The quantity of the items that are ordered'
@@ -7062,15 +7042,15 @@ components:
           items:
             $ref: '#/components/schemas/Tax:jsonld-read'
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request was updated'
           type: string
           format: date-time
+          nullable: true
       required:
         - order
         - offer
@@ -7092,9 +7072,11 @@ components:
         name:
           description: 'The name of the object'
           type: string
+          nullable: true
         description:
           description: 'The description of the order item'
           type: string
+          nullable: true
         order:
           description: 'The order that contains this item'
           $ref: '#/components/schemas/Order:jsonld-write'
@@ -7102,9 +7084,6 @@ components:
           description: 'The offer this item represents'
           externalDocs:
             url: 'http://schema.org/url'
-          type: string
-        product:
-          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
           type: string
         quantity:
           description: 'The quantity of the items that are ordered'
@@ -7146,15 +7125,15 @@ components:
         shortCode:
           type: string
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           type: string
           format: date-time
+          nullable: true
       required:
         - rsin
         - shortCode
@@ -7194,15 +7173,15 @@ components:
         shortCode:
           type: string
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           type: string
           format: date-time
+          nullable: true
       required:
         - rsin
         - shortCode
@@ -7243,6 +7222,7 @@ components:
         description:
           description: 'An short description of this tax'
           type: string
+          nullable: true
         price:
           description: 'The price of this tax'
           type: string
@@ -7260,15 +7240,15 @@ components:
           items:
             $ref: '#/components/schemas/OrderItem-read'
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           type: string
           format: date-time
+          nullable: true
       required:
         - name
         - price
@@ -7287,6 +7267,7 @@ components:
         description:
           description: 'An short description of this tax'
           type: string
+          nullable: true
         price:
           description: 'The price of this tax'
           type: string
@@ -7329,6 +7310,7 @@ components:
         description:
           description: 'An short description of this tax'
           type: string
+          nullable: true
         price:
           description: 'The price of this tax'
           type: string
@@ -7346,15 +7328,15 @@ components:
           items:
             $ref: '#/components/schemas/OrderItem:jsonld-read'
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           type: string
           format: date-time
+          nullable: true
       required:
         - name
         - price
@@ -7382,6 +7364,7 @@ components:
         description:
           description: 'An short description of this tax'
           type: string
+          nullable: true
         price:
           description: 'The price of this tax'
           type: string
@@ -7399,178 +7382,6 @@ components:
           items:
             $ref: '#/components/schemas/OrderItem:jsonld-write'
 definitions:
-  AuditTrail-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line looks suspicius'
-        maxLength: 2555
-      application:
-        description: 'The application that made the request'
-        type: string
-        format: url
-        maxLength: 255
-      request:
-        description: 'The id of the request within that application'
-        type: string
-        format: url
-        maxLength: 255
-      user:
-        description: 'The user on behalf of wich the request was made'
-        type: string
-        format: url
-        maxLength: 255
-      subject:
-        description: '???'
-        type: \sting
-        maxLength: 255
-      process:
-        description: 'The procces on behalf of wich the request was made'
-        type: \sting
-        maxLength: 255
-      dataElements:
-        description: 'The moment this request was created'
-        type: array
-      dataSubjects:
-        description: 'The moment this request was created'
-        type: array
-      resource:
-        description: 'The resource that was requested'
-        type: \sting
-        maxLength: 255
-      resourceType:
-        description: 'The type of the resource that was requested'
-        type: \sting
-        maxLength: 255
-      route:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 255
-      endpoint:
-        description: 'The endpoint that the request was made to'
-        type: \sting
-        maxLength: 255
-      method:
-        description: 'The method that was used'
-        type: \sting
-        maxLength: 255
-      accept:
-        description: 'The contentType that was reqousted'
-        type: \sting
-        maxLength: 255
-      contentType:
-        description: 'The contentType that was suplieds'
-        type: \sting
-        maxLength: 255
-      content:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 2555
-      ip:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 255
-      session:
-        description: 'The moment this request was created'
-        type: string
-        maxLength: 255
-      headers:
-        description: 'The headers supplied by client'
-        type: array
-      statusCode:
-        description: 'The status code returned to client'
-        type: int
-        example: '200'
-      notFound:
-        description: 'Whether or not the reqousted endpoint was found'
-        type: bool
-        example: 'false'
-      forbidden:
-        description: 'Whether or not the client was allowed to the reqousted endpoint'
-        type: bool
-        example: 'false'
-      ok:
-        description: 'Whether or not there where any problems'
-        type: bool
-        example: 'true'
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2020-05-08 14:16:15'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2020-05-08 14:16:15'
-    required: []
-  AuditTrail-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line looks suspicius'
-        maxLength: 2555
-    required: []
-  ChangeLog-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: \sting
-        maxLength: 255
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2020-05-08 14:16:15'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2020-05-08 14:16:15'
-    required: []
-  ChangeLog-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-    required: []
   Order-read:
     properties:
       id:
@@ -7697,10 +7508,6 @@ definitions:
         type: string
         example: 'http://example.org/offers/1'
         format: url
-      product:
-        description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-        type: string
-        maxLength: 255
       quantity:
         description: 'The quantity of the items that are ordered'
         type: int
@@ -7748,10 +7555,6 @@ definitions:
         type: string
         example: 'http://example.org/offers/1'
         format: url
-      product:
-        description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
-        type: string
-        maxLength: 255
       quantity:
         description: 'The quantity of the items that are ordered'
         type: int
@@ -7876,19 +7679,179 @@ definitions:
     required:
       - name
       - price
+  AuditTrail-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line looks suspicius'
+        maxLength: 2555
+      application:
+        description: 'The application that made the request'
+        type: string
+        format: url
+        maxLength: 255
+      request:
+        description: 'The id of the request within that application'
+        type: string
+        format: url
+        maxLength: 255
+      user:
+        description: 'The user on behalf of wich the request was made'
+        type: string
+        format: url
+        maxLength: 255
+      subject:
+        description: '???'
+        type: string
+        maxLength: 255
+      process:
+        description: 'The procces on behalf of wich the request was made'
+        type: string
+        maxLength: 255
+      dataElements:
+        description: 'The moment this request was created'
+        type: array
+      dataSubjects:
+        description: 'The moment this request was created'
+        type: array
+      resource:
+        description: 'The resource that was requested'
+        type: string
+        maxLength: 255
+      resourceType:
+        description: 'The type of the resource that was requested'
+        type: string
+        maxLength: 255
+      route:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      endpoint:
+        description: 'The endpoint that the request was made to'
+        type: string
+        maxLength: 255
+      method:
+        description: 'The method that was used'
+        type: string
+        maxLength: 255
+      accept:
+        description: 'The contentType that was reqousted'
+        type: string
+        maxLength: 255
+      contentType:
+        description: 'The contentType that was suplieds'
+        type: string
+        maxLength: 255
+      content:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 2555
+      ip:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      headers:
+        description: 'The headers supplied by client'
+        type: array
+      statusCode:
+        description: 'The status code returned to client'
+        type: int
+        example: '200'
+      notFound:
+        description: 'Whether or not the reqousted endpoint was found'
+        type: bool
+        example: 'false'
+      forbidden:
+        description: 'Whether or not the client was allowed to the reqousted endpoint'
+        type: bool
+        example: 'false'
+      ok:
+        description: 'Whether or not there where any problems'
+        type: bool
+        example: 'true'
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-06-04 08:13:38'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-06-04 08:13:38'
+    required: []
+  AuditTrail-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line looks suspicius'
+        maxLength: 2555
+    required: []
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-06-04 08:13:38'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-06-04 08:13:38'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
 tags:
-  -
-    name: AuditTrail
-    description: |
-      An resource representing a log line.
-      
-      This entity represents a product that can be ordered via the OrderRegistratieComponent.
-  -
-    name: ChangeLog
-    description: |
-      An resource representing a log line.
-      
-      This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
     name: Order
     description: |
@@ -7913,21 +7876,33 @@ tags:
       An entity representing an tax.
       
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
+  -
+    name: AuditTrail
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
+  -
+    name: ChangeLog
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the Tax resource'
-      write: 'write right to the Tax resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the Tax resource'
-      write: 'write right to the Tax resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
 host: irc.zaakonline.nl
 servers:
   -
@@ -7936,10 +7911,7 @@ servers:
 externalDocs:
   -
     description: 'OAS Documentatie'
-    url: 'http://pdc.zaakonline.nl'
-  -
-    description: Repository
-    url: 'https://github.com/ConductionNL/productenendienstencatalogus'
+    url: 'http://proto.demo.common-ground.dev'
 x-commonground:
   type: service
   developers:
@@ -7948,7 +7920,7 @@ x-commonground:
       url: 'https://github.com/ConductionNL'
       email: info@conduction.nl
     -
-      name: 'Gemeente ''s-Hertogenbosch'
+      name: 'Gemeente "s-Hertogenbosch'
       url: 'https://github.com/gemeenteshertogenbosch'
       email: info@s-hertogenbosch.nl/
     -
