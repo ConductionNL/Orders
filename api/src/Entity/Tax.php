@@ -155,6 +155,15 @@ class Tax
     private $orderItems;
 
     /**
+     * @var ArrayCollection The offers that use this tax
+     *
+     * @MaxDepth(1)
+     * @Groups({"read","write"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Order", inversedBy="taxes")
+     */
+    private $orders;
+
+    /**
      * @var Datetime The moment this request was created
      *
      * @Groups({"read"})
@@ -176,6 +185,7 @@ class Tax
     {
         $this->eligibleCustomerTypes = new ArrayCollection();
         $this->orderItems = new ArrayCollection();
+        $this->orders = new ArrayCollection();
     }
 
     public function getId()
@@ -273,6 +283,34 @@ class Tax
         if ($this->orderItems->contains($orderItems)) {
             $this->orderItems->removeElement($orderItems);
             $orderItems->removeTax($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $orders): self
+    {
+        if (!$this->orders->contains($orders)) {
+            $this->orders[] = $orders;
+            $orders->addTax($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $orders): self
+    {
+        if ($this->orders->contains($orders)) {
+            $this->orders->removeElement($orders);
+            $orders->removeTax($this);
         }
 
         return $this;
