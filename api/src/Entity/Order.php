@@ -249,7 +249,6 @@ class Order
      */
     private $dateModified;
 
-
     /**
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
