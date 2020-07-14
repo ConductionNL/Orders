@@ -39,7 +39,7 @@ parameters:
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
-  
+
     app_env: "%env(APP_ENV)%"
     app_debug: "%env(APP_DEBUG)%"
     app_cache: "%env(APP_CACHE)%"
@@ -150,7 +150,7 @@ parameters:
     env(APP_COMMONGROUND_KIC_LOCATION): "https://kic.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_KIC_ID): "%env(APP_COMMONGROUND_ID)%"
     env(APP_COMMONGROUND_KIC_SECRET): "%env(APP_COMMONGROUND_SECRET)%"
-    
+
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): "https://bag.basisregistraties.overheid.nl/api/v1/"
     env(APP_COMMONGROUND_BAG_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
