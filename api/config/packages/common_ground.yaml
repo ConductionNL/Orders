@@ -14,30 +14,32 @@ parameters:
     app_commonground_key: "%env(APP_COMMONGROUND_KEY)%"
     app_commonground_secret: "%env(APP_COMMONGROUND_SECRET)%"
 
-  # Application Parameters
-  env(APP_ENV): "prod"
-  env(APP_DEBUG): false
-  env(APP_CACHE): false
-  env(APP_AUTH): true
-  env(AUDITTRAIL_ENABLED): true
-  env(NOTIFICATION_ENABLED): false
-  env(HEALTH_ENABLED): true
-  env(APP_VERSION): "1.0.0"
-  env(APP_NAME): "Proto Component"
-  env(APP_ID): ""
-  env(APP_DESCRIPTION): "A commonground component"
-  env(APP_DOMAIN): "zaakonline.nl"
-  env(APP_TITLE): "Proto Component"
-  env(APP_LOGO): "zaakonline.nl"
-  env(APP_HOME): "zaakonline.nl"
-  env(APP_SUBDOMAIN): "pc"
-  env(APP_DEMO): "pc.zaakonline.nl" 
-  env(APP_WEB): false
-  env(APP_BUILD_ALL_FIXTURES): false
+    # Application Parameters
+    env(APP_ENV): "prod"
+    env(APP_DEBUG): false
+    env(APP_CACHE): false
+    env(APP_AUTH): true
+    env(AUDITTRAIL_ENABLED): true
+    env(NOTIFICATION_ENABLED): false
+    env(HEALTH_ENABLED): true
+    env(APP_VERSION): "1.0.0"
+    env(APP_NAME): "Proto Component"
+    env(APP_ID): ""
+    env(APP_DESCRIPTION): "A commonground component"
+    env(APP_DOMAIN): "zaakonline.nl"
+    env(APP_TITLE): "Proto Component"
+    env(APP_LOGO): "zaakonline.nl"
+    env(APP_HOME): "zaakonline.nl"
+    env(APP_SUBDOMAIN): "pc"
+    env(APP_SUBPATH): false
+    env(APP_DEMO): "pc.zaakonline.nl"
+    env(APP_WEB): false
+    env(APP_INTERNAL): false
+    env(APP_BUILD_ALL_FIXTURES): false
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
-  
+
     app_env: "%env(APP_ENV)%"
     app_debug: "%env(APP_DEBUG)%"
     app_cache: "%env(APP_CACHE)%"
@@ -148,7 +150,7 @@ parameters:
     env(APP_COMMONGROUND_KIC_LOCATION): "https://kic.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_KIC_ID): "%env(APP_COMMONGROUND_ID)%"
     env(APP_COMMONGROUND_KIC_SECRET): "%env(APP_COMMONGROUND_SECRET)%"
-    
+
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): "https://bag.basisregistraties.overheid.nl/api/v1/"
     env(APP_COMMONGROUND_BAG_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
