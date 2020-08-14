@@ -137,17 +137,6 @@ class Order
     private $description;
 
     /**
-     * @var Organization The organization that created this order
-     *
-     * @Groups({"write", "read"})
-     * @MaxDepth(1)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Valid
-     */
-    private $subject;
-
-    /**
      * @var string The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
      *
      * @example 6666-2019-0000000012

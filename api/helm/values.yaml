@@ -9,7 +9,7 @@ settings:
   title: Order Registratie Component
   version: V.0.1
   id: 
-  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
+  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: component
   repro: https://github.com/ConductionNL/orderregistratiecomponent
   demo: orc.zaakonline.nl
@@ -28,7 +28,6 @@ settings:
   cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$'
   trustedHosts: '^.+$'
   pullPolicy: Always
   # You will need these proxies on kubernetes
