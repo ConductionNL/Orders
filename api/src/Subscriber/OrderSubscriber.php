@@ -51,7 +51,7 @@ class OrderSubscriber implements EventSubscriberInterface
 
             $referenceId = $this->em->getRepository('App\Entity\Order')->getNextReferenceId($organisation);
             $result->setReferenceId($referenceId);
-            $result->setReference($organisation->getShortCode().'-'.date('Y').'-'.$referenceId);
+            $result->setReference('con'.'-'.date('Y').'-'.$referenceId);
         }
 
         return $result;
