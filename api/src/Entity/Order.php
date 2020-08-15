@@ -300,7 +300,7 @@ class Order
             */
         }
 
-        $this->taxes = $taxes;
+        //$this->taxes = $taxes;
         $this->price = number_format($price->getAmount() / 100, 2, '.', '');
         $this->priceCurrency = $price->getCurrency();
     }
