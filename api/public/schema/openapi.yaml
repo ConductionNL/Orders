@@ -3334,6 +3334,60 @@ paths:
           schema:
             type: string
         -
+          name: id
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'id[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: organization
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'organization[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: resources
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'resources[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: deepObject
+          explode: true
+        -
+          name: description
+          in: query
+          required: false
+          schema:
+            type: string
+        -
           name: reference
           in: query
           required: false
@@ -6716,12 +6770,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-14 13:31:48'
+        example: '2020-08-15 11:47:40'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-14 13:31:48'
+        example: '2020-08-15 11:47:40'
     required: []
   AuditTrail-write:
     properties:
@@ -6769,12 +6823,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-14 13:31:48'
+        example: '2020-08-15 11:47:40'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-14 13:31:48'
+        example: '2020-08-15 11:47:40'
     required: []
   ChangeLog-write:
     properties:

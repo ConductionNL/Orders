@@ -66,7 +66,14 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
- * @ApiFilter(SearchFilter::class)
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "id": "exact",
+ *     "organization": "exact",
+ *     "organization": "exact",
+ *     "resources": "exact",
+ *     "description": "partial",
+ *     "reference": "exact"
+ * })
  */
 class Order
 {
@@ -249,7 +256,8 @@ class Order
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
      *
-     *  */
+     *
+     */
     public function prePersist()
     {
         $this->calculateTotals();
