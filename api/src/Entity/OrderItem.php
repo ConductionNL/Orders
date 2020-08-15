@@ -203,8 +203,8 @@ class OrderItem
 
 
     /**
-     *  @ORM\PrePersist
-     *  @ORM\PreUpdate
+     *  @ORM\PostPersist
+     *  @ORM\PostUpdate
      */
     public function prePersist()
     {

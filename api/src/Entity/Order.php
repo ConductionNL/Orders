@@ -255,6 +255,7 @@ class Order
     /**
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
+     *  @ORM\PostLoad
      *
      *
      */
