@@ -288,6 +288,7 @@ class Order
 
             // Calculate Taxes
             /*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
+            /*
             foreach ($item->getTaxes() as $tax) {
                 if (!array_key_exists($tax->getPercentage(), $taxes)) {
                     $tax[$tax->getPercentage()] = $itemPrice->multiply($tax->getPercentage() / 100);
@@ -296,6 +297,7 @@ class Order
                     $taxes[$tax->getPercentage()] = $taxes[$tax->getPercentage()]->add($taxPrice);
                 }
             }
+            */
         }
 
         $this->taxes = $taxes;
@@ -460,10 +462,7 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection|Tax[]
-     */
-    public function getTaxes(): Collection
+    public function getTaxes()
     {
         return $this->taxes;
     }
