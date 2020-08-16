@@ -69,7 +69,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(SearchFilter::class, properties={
  *     "id": "exact",
  *     "organization": "exact",
- *     "organization": "exact",
  *     "resources": "exact",
  *     "description": "partial",
  *     "reference": "exact"
@@ -104,6 +103,19 @@ class Order
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $organization;
+
+    /**
+     * @var string The invoice of this order
+     *
+     * @example https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f
+     *
+     * @Gedmo\Versioned
+     * @Assert\NotNull
+     * @Assert\Url
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $invoice;
 
     /**
      * @var array The resource of the contact moment
@@ -332,6 +344,18 @@ class Order
     public function setOrganization(string $organization): self
     {
         $this->organization = $organization;
+
+        return $this;
+    }
+
+    public function getInvoice(): ?string
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(string $invoice): self
+    {
+        $this->invoice = invoice;
 
         return $this;
     }
