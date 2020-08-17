@@ -49,16 +49,9 @@ class OrderSubscriber implements EventSubscriberInterface
         if (!$result->getReference()) {
             $organisation = $result->getOrganization();
 
-            if (!$organisation || !($organisation instanceof Organization)) {
-                $organisation = $this->em->getRepository('App\Entity\Organization')->findOrCreateByRsin($result->getTargetOrganization());
-                $this->em->persist($organisation);
-                $this->em->flush();
-                $result->setOrganization($organisation);
-            }
-
             $referenceId = $this->em->getRepository('App\Entity\Order')->getNextReferenceId($organisation);
             $result->setReferenceId($referenceId);
-            $result->setReference($organisation->getShortCode().'-'.date('Y').'-'.$referenceId);
+            $result->setReference('con'.'-'.date('Y').'-'.$referenceId);
         }
 
         return $result;

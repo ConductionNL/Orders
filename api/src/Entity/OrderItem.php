@@ -56,6 +56,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
  * @Gedmo\Loggable(logEntryClass="Conduction\CommonGroundBundle\Entity\ChangeLog")
+ * @ORM\HasLifecycleCallbacks
  *
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
@@ -198,6 +199,16 @@ class OrderItem
     public function __construct()
     {
         $this->taxes = new ArrayCollection();
+    }
+
+
+    /**
+     *  @ORM\PostPersist
+     *  @ORM\PostUpdate
+     */
+    public function prePersist()
+    {
+        $this->order->calculateTotals();
     }
 
     public function getId()

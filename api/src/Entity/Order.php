@@ -66,7 +66,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
- * @ApiFilter(SearchFilter::class)
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "id": "exact",
+ *     "organization": "exact",
+ *     "resources": "exact",
+ *     "description": "partial",
+ *     "reference": "exact"
+ * })
  */
 class Order
 {
@@ -97,6 +103,18 @@ class Order
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $organization;
+
+    /**
+     * @var string The invoice of this order
+     *
+     * @example https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f
+     *
+     * @Gedmo\Versioned
+     * @Assert\Url
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $invoice;
 
     /**
      * @var array The resource of the contact moment
@@ -135,17 +153,6 @@ class Order
      * @ORM\Column(type="string", length=2550, nullable=true)
      */
     private $description;
-
-    /**
-     * @var Organization The organization that created this order
-     *
-     * @Groups({"write", "read"})
-     * @MaxDepth(1)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Valid
-     */
-    private $subject;
 
     /**
      * @var string The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations
@@ -259,8 +266,10 @@ class Order
     /**
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
+     *  @ORM\PostLoad
      *
-     *  */
+     *
+     */
     public function prePersist()
     {
         $this->calculateTotals();
@@ -291,6 +300,7 @@ class Order
 
             // Calculate Taxes
             /*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
+            /*
             foreach ($item->getTaxes() as $tax) {
                 if (!array_key_exists($tax->getPercentage(), $taxes)) {
                     $tax[$tax->getPercentage()] = $itemPrice->multiply($tax->getPercentage() / 100);
@@ -299,9 +309,10 @@ class Order
                     $taxes[$tax->getPercentage()] = $taxes[$tax->getPercentage()]->add($taxPrice);
                 }
             }
+            */
         }
 
-        $this->taxes = $taxes;
+        //$this->taxes = $taxes;
         $this->price = number_format($price->getAmount() / 100, 2, '.', '');
         $this->priceCurrency = $price->getCurrency();
     }
@@ -332,6 +343,18 @@ class Order
     public function setOrganization(string $organization): self
     {
         $this->organization = $organization;
+
+        return $this;
+    }
+
+    public function getInvoice(): ?string
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(string $invoice): self
+    {
+        $this->invoice = invoice;
 
         return $this;
     }
@@ -463,10 +486,7 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection|Tax[]
-     */
-    public function getTaxes(): Collection
+    public function getTaxes()
     {
         return $this->taxes;
     }
