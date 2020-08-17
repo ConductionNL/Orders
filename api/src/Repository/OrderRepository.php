@@ -19,6 +19,12 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
+    /**
+     * @param Organization $organization The orgniaztion for wich this reference should be unique
+     * @param Datetime     $date         The date used to provide a year for the reference
+     *
+     * @return int the referenceId that should be used for the next refenceId
+     */
     public function getNextReferenceId($organization, $date = null)
     {
         //if(!$date){
@@ -26,13 +32,13 @@ class OrderRepository extends ServiceEntityRepository
         $end = new \DateTime('last day of December this year');
         //}
 
-        $result = $this->createQueryBuilder('r')
-            ->select('MAX(r.referenceId) AS reference_id')
-            ->andWhere(':organization = r.organization')
-            ->setParameter('organization', $organization)
-            ->andWhere('r.dateCreated >= :start')
+        $result = $this->createQueryBuilder('o')
+            ->select('MAX(o.referenceId) AS reference_id')
+            ->andWhere(':organisation = o.organization')
+            ->setParameter('organisation', $organization)
+            ->andWhere('o.dateCreated >= :start')
             ->setParameter('start', $start)
-            ->andWhere('r.dateCreated <= :end')
+            ->andWhere('o.dateCreated <= :end')
             ->setParameter('end', $end)
             ->getQuery()
             ->getOneOrNullResult();

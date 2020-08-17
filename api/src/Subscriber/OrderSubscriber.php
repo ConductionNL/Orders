@@ -47,11 +47,16 @@ class OrderSubscriber implements EventSubscriberInterface
         }
 
         if (!$result->getReference()) {
-            $organisation = $result->getOrganization();
-
-            $referenceId = $this->em->getRepository('App\Entity\Order')->getNextReferenceId($organisation);
+            $organization = json_decode($event->getRequest()->getContent(), true)['organization'];
+            $referenceId = $this->em->getRepository('App\Entity\Order')->getNextReferenceId($organization);
             $result->setReferenceId($referenceId);
-            $result->setReference('con'.'-'.date('Y').'-'.$referenceId);
+            $organization = $this->commonGroundService->getResource($organization);
+            if (array_key_exists('shortcode', $organization) && $organization['shortcode'] != null) {
+                $shortcode = $organization['shortcode'];
+            } else {
+                $shortcode = $organization['name'];
+            }
+            $result->setReference($shortcode.'-'.date('Y').'-'.$referenceId);
         }
 
         return $result;
