@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Money\Currency;
 use Money\Money;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -65,7 +66,13 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
- * @ApiFilter(SearchFilter::class)
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "id": "exact",
+ *     "organization": "exact",
+ *     "resources": "exact",
+ *     "description": "partial",
+ *     "reference": "exact"
+ * })
  */
 class Order
 {
@@ -83,6 +90,40 @@ class Order
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
     private $id;
+
+    /**
+     * @var string A specific commonground organisation
+     *
+     * @example https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f
+     *
+     * @Gedmo\Versioned
+     * @Assert\NotNull
+     * @Assert\Url
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $organization;
+
+    /**
+     * @var string The invoice of this order
+     *
+     * @example https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f
+     *
+     * @Gedmo\Versioned
+     * @Assert\Url
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $invoice;
+
+    /**
+     * @var array The resource of the contact moment
+     *
+     *
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $resources = [];
 
     /**
      * @var string The name of the order
@@ -141,22 +182,6 @@ class Order
     private $referenceId;
 
     /**
-     * @var string The RSIN of the organization that ownes this proces
-     *
-     * @example 002851234
-     *
-     * @Gedmo\Versioned
-     * @Assert\NotNull
-     * @Assert\Length(
-     *     max = 255
-     * )
-     * @Groups({"read", "write"})
-     * @ORM\Column(type="string", length=255)
-     * @ApiFilter(SearchFilter::class, strategy="exact")
-     */
-    private $targetOrganization;
-
-    /**
      * @var string The price of this product
      *
      * @example 50.00
@@ -212,17 +237,6 @@ class Order
     private $customer;
 
     /**
-     * @var Organization The organization that created this order
-     *
-     * @Groups({"write", "read"})
-     * @MaxDepth(1)
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="orders", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\Valid
-     */
-    private $organization;
-
-    /**
      * @var string Remarks on this order
      *
      * @Gedmo\Versioned
@@ -252,8 +266,10 @@ class Order
     /**
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
+     *  @ORM\PostLoad
      *
-     *  */
+     *
+     */
     public function prePersist()
     {
         $this->calculateTotals();
@@ -284,6 +300,7 @@ class Order
 
             // Calculate Taxes
             /*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
+            /*
             foreach ($item->getTaxes() as $tax) {
                 if (!array_key_exists($tax->getPercentage(), $taxes)) {
                     $tax[$tax->getPercentage()] = $itemPrice->multiply($tax->getPercentage() / 100);
@@ -292,9 +309,10 @@ class Order
                     $taxes[$tax->getPercentage()] = $taxes[$tax->getPercentage()]->add($taxPrice);
                 }
             }
+            */
         }
 
-        $this->taxes = $taxes;
+        //$this->taxes = $taxes;
         $this->price = number_format($price->getAmount() / 100, 2, '.', '');
         $this->priceCurrency = $price->getCurrency();
     }
@@ -305,14 +323,50 @@ class Order
         $this->taxes = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): Uuid
     {
         return $this->id;
     }
 
-    public function setId(string $id): self
+    public function setId(Uuid $id): self
     {
         $this->id = $id;
+
+        return $this;
+    }
+
+    public function getOrganization(): ?string
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(string $organization): self
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    public function getInvoice(): ?string
+    {
+        return $this->invoice;
+    }
+
+    public function setInvoice(string $invoice): self
+    {
+        $this->invoice = invoice;
+
+        return $this;
+    }
+
+    public function getResources(): ?array
+    {
+        return $this->resources;
+    }
+
+    public function setResources(array $resources): self
+    {
+        $this->resources = $resources;
 
         return $this;
     }
@@ -337,30 +391,6 @@ class Order
     public function setReferenceId(int $referenceId): self
     {
         $this->referenceId = $referenceId;
-
-        return $this;
-    }
-
-    public function getRsin(): ?string
-    {
-        return $this->targetOrganization;
-    }
-
-    public function setRsin(string $rsin): self
-    {
-        $this->targetOrganization = $rsin;
-
-        return $this;
-    }
-
-    public function getTargetOrganization(): ?string
-    {
-        return $this->targetOrganization;
-    }
-
-    public function setTargetOrganization(string $targetOrganization): self
-    {
-        $this->targetOrganization = $targetOrganization;
 
         return $this;
     }
@@ -456,10 +486,7 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Collection|Tax[]
-     */
-    public function getTaxes(): Collection
+    public function getTaxes()
     {
         return $this->taxes;
     }
@@ -516,18 +543,6 @@ class Order
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getOrganization(): ?Organization
-    {
-        return $this->organization;
-    }
-
-    public function setOrganization(?Organization $organization): self
-    {
-        $this->organization = $organization;
 
         return $this;
     }

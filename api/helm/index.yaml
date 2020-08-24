@@ -3,14 +3,14 @@ entries:
   orc:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-06-17T14:01:19.3291719+02:00"
-    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
-      interface beschikbaar.&#039;'
-    digest: 2c99504ab63a798da93ca46e406ba25745e0f35731e4ca0ec7efe7071a31184a
+    created: "2020-08-15T11:46:27.8898263Z"
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
+      beschikbaar.
+    digest: aa3ab0fee89145a46d9432accdc2cd5fb5a5b7eee8878d2b1051b0613a894ec0
     home: orc.zaakonline.nl
     icon: orc.zaakonline.nl
     name: orc
     urls:
     - orc-0.1.0.tgz
     version: 0.1.0
-generated: "2020-06-17T14:01:19.3271727+02:00"
+generated: "2020-08-15T11:46:27.8853275Z"

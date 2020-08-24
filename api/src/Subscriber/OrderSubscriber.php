@@ -10,7 +10,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\SerializerInterface;;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 
 //use App\Entity\Request as CCRequest;
 
@@ -20,12 +21,14 @@ class OrderSubscriber implements EventSubscriberInterface
     private $em;
     private $serializer;
     private $nlxLogService;
+    private $commonGroundService;
 
-    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em, SerializerInterface $serializer)
+    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em, SerializerInterface $serializer, CommonGroundService $commonGroundService)
     {
         $this->params = $params;
         $this->em = $em;
         $this->serializer = $serializer;
+        $this->commonGroundService = $commonGroundService;
     }
 
     public static function getSubscribedEvents()
@@ -47,18 +50,16 @@ class OrderSubscriber implements EventSubscriberInterface
         }
 
         if (!$result->getReference()) {
-            $organisation = $result->getOrganization();
-
-            if (!$organisation || !($organisation instanceof Organization)) {
-                $organisation = $this->em->getRepository('App\Entity\Organization')->findOrCreateByRsin($result->getTargetOrganization());
-                $this->em->persist($organisation);
-                $this->em->flush();
-                $result->setOrganization($organisation);
-            }
-
-            $referenceId = $this->em->getRepository('App\Entity\Order')->getNextReferenceId($organisation);
+            $organization = json_decode($event->getRequest()->getContent(), true)['organization'];
+            $referenceId = $this->em->getRepository('App\Entity\Order')->getNextReferenceId($organization);
             $result->setReferenceId($referenceId);
-            $result->setReference($organisation->getShortCode().'-'.date('Y').'-'.$referenceId);
+            $organization = $this->commonGroundService->getResource($organization);
+            if (array_key_exists('shortcode', $organization) && $organization['shortcode'] != null) {
+                $shortcode = $organization['shortcode'];
+            } else {
+                $shortcode = $organization['name'];
+            }
+            $result->setReference($shortcode.'-'.date('Y').'-'.$referenceId);
         }
 
         return $result;
