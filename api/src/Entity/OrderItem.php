@@ -201,7 +201,6 @@ class OrderItem
         $this->taxes = new ArrayCollection();
     }
 
-
     /**
      *  @ORM\PostPersist
      *  @ORM\PostUpdate
