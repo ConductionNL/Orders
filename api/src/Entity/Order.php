@@ -352,7 +352,7 @@ class Order
 
     public function setInvoice(string $invoice): self
     {
-        $this->invoice = invoice;
+        $this->invoice = $invoice;
 
         return $this;
     }
