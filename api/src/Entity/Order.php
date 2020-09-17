@@ -161,7 +161,7 @@ class Order
      *
      * @Gedmo\Versioned
      * @Groups({"read"})
-     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255

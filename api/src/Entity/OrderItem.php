@@ -179,6 +179,44 @@ class OrderItem
     private $taxes;
 
     /**
+     * @var string The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)
+     *
+     * @example PT10M
+     *
+     * @Gedmo\Versioned
+     * @Groups({"read","write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $recurrence;
+
+    /**
+     * @var string The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)
+     *
+     * @example PT10M
+     *
+     * @Gedmo\Versioned
+     * @Groups({"read","write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $notice;
+
+    /**
+     * @var DateTime The moment this subscribtion begins (only used on subscribtions)
+     *
+     * @Groups({"read","write"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateStart;
+
+    /**
+     * @var DateTime The moment this subscribtion end
+     *
+     * @Groups({"read","write"})
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateEnd;
+
+    /**
      * @var DateTime The moment this request was created by the submitter
      *
      * @Groups({"read"})
@@ -327,6 +365,54 @@ class OrderItem
         return $this;
     }
 
+    public function getRecurrence(): ?string
+    {
+        return $this->recurrence;
+    }
+
+    public function setRecurrence(string $recurrence): self
+    {
+        $this->recurrence = $recurrence;
+
+        return $this;
+    }
+
+    public function getNotice(): ?string
+    {
+        return $this->notice;
+    }
+
+    public function setNotice(string $notice): self
+    {
+        $this->notice = $notice;
+
+        return $this;
+    }
+
+    public function getDateStart(): ?\DateTimeInterface
+    {
+        return $this->dateStart;
+    }
+
+    public function setDateStart(?\DateTimeInterface $dateStart): self
+    {
+        $this->dateStart = $dateStart;
+
+        return $this;
+    }
+
+    public function getDateEnd(): ?\DateTimeInterface
+    {
+        return $this->dateEnd;
+    }
+
+    public function setDateEnd(?\DateTimeInterface $dateEnd): self
+    {
+        $this->dateEnd = $dateEnd;
+
+        return $this;
+    }
+
     public function getDateCreated(): ?\DateTimeInterface
     {
         return $this->dateCreated;
@@ -347,6 +433,30 @@ class OrderItem
     public function setDateModified(?\DateTimeInterface $dateModified): self
     {
         $this->dateModified = $dateModified;
+
+        return $this;
+    }
+
+    public function getRecurrence(): ?string
+    {
+        return $this->recurrence;
+    }
+
+    public function setRecurrence(string $recurrence): self
+    {
+        $this->recurrence = $recurrence;
+
+        return $this;
+    }
+
+    public function getNotice(): ?string
+    {
+        return $this->notice;
+    }
+
+    public function setNotice(string $notice): self
+    {
+        $this->notice = $notice;
 
         return $this;
     }
