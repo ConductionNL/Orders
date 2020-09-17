@@ -1566,7 +1566,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"targetOrganization\": \"002851234\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}",
+							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"organization\": \"https://wrc.dev.zuid-drecht.nl/organizations/4d1eded3-fbdf-438f-9536-8747dd8ab591\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -4542,7 +4542,7 @@
 	],
 	"variable": [
 		{
-			"id": "b6d708b1-6cf6-4320-8c2e-456f70bb5119",
+			"id": "2b50d7c3-ca30-4ebe-b365-5ec27e3affb5",
 			"key": "baseUrl",
 			"value": "orc.dev.zuid-drecht.nl"
 		}
