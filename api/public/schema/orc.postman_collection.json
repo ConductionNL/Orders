@@ -2828,7 +2828,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"541230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}\n",
+							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}\n",
 							"options": {
 								"raw": {}
 							}
@@ -3504,7 +3504,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"541230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}",
+							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -4542,9 +4542,9 @@
 	],
 	"variable": [
 		{
-			"id": "2b50d7c3-ca30-4ebe-b365-5ec27e3affb5",
+			"id": "90aa7d97-76c0-4be9-aafb-1e84d5bc5825",
 			"key": "baseUrl",
-			"value": "orc.dev.zuid-drecht.nl"
+			"value": "localhost"
 		}
 	],
 	"protocolProfileBehavior": {}
