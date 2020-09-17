@@ -49,7 +49,6 @@ class OrderSubscriber implements EventSubscriberInterface
         }
 
         if (!$result->getReference()) {
-
             $organization = $this->commonGroundService->getResource($result->getOrganization());
             if (array_key_exists('shortcode', $organization) && $organization['shortcode'] != null) {
                 $shortcode = $organization['shortcode'];
