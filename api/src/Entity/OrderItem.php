@@ -436,28 +436,4 @@ class OrderItem
 
         return $this;
     }
-
-    public function getRecurrence(): ?string
-    {
-        return $this->recurrence;
-    }
-
-    public function setRecurrence(string $recurrence): self
-    {
-        $this->recurrence = $recurrence;
-
-        return $this;
-    }
-
-    public function getNotice(): ?string
-    {
-        return $this->notice;
-    }
-
-    public function setNotice(string $notice): self
-    {
-        $this->notice = $notice;
-
-        return $this;
-    }
 }
