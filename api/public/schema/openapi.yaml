@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
     - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
+    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
   /audit_trails:
@@ -2092,6 +2092,42 @@ paths:
               - asc
               - desc
         -
+          name: 'order[recurrence]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[notice]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateStart]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateEnd]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
           name: 'order[dateCreated]'
           in: query
           required: false
@@ -2109,6 +2145,54 @@ paths:
             enum:
               - asc
               - desc
+        -
+          name: 'dateStart[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: 'dateCreated[before]'
           in: query
@@ -2269,6 +2353,62 @@ paths:
               type: string
           style: form
           explode: true
+        -
+          name: recurrence
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'recurrence[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: notice
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'notice[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: dateStart
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: dateEnd
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: dateCreated
           in: query
@@ -3179,6 +3319,15 @@ paths:
               - desc
         -
           name: 'order[organization]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[invoice]'
           in: query
           required: false
           schema:
@@ -5704,6 +5853,12 @@ components:
             url: 'http://schema.org/url'
           type: string
           nullable: true
+        invoice:
+          description: 'The invoice of this order'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         resources:
           description: 'The resource of the contact moment'
           type: array
@@ -5776,6 +5931,12 @@ components:
             url: 'http://schema.org/url'
           type: string
           nullable: true
+        invoice:
+          description: 'The invoice of this order'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         resources:
           description: 'The resource of the contact moment'
           type: array
@@ -5840,6 +6001,12 @@ components:
           format: uuid
         organization:
           description: 'A specific commonground organisation'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
+        invoice:
+          description: 'The invoice of this order'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
@@ -5921,6 +6088,12 @@ components:
           type: string
         organization:
           description: 'A specific commonground organisation'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
+        invoice:
+          description: 'The invoice of this order'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
@@ -6012,6 +6185,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax-read'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
         dateCreated:
           description: 'The moment this request was created by the submitter'
           type: string
@@ -6066,6 +6257,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax-write'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
       required:
         - order
         - offer
@@ -6125,6 +6334,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax:jsonld-read'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
         dateCreated:
           description: 'The moment this request was created by the submitter'
           type: string
@@ -6188,6 +6415,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax:jsonld-write'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
       required:
         - order
         - offer
@@ -6402,6 +6647,11 @@ definitions:
         type: string
         example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
         format: url
+      invoice:
+        description: 'The invoice of this order'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
       resources:
         description: 'The resource of the contact moment'
         type: array
@@ -6458,6 +6708,11 @@ definitions:
         type: string
         example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
         format: url
+      invoice:
+        description: 'The invoice of this order'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
       resources:
         description: 'The resource of the contact moment'
         type: array
@@ -6496,99 +6751,6 @@ definitions:
     required:
       - organization
       - name
-  OrderItem-read:
-    properties:
-      id:
-        description: ''
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      name:
-        description: 'The name of the object'
-        type: string
-        example: 'my OrderItem'
-        maxLength: 255
-      description:
-        description: 'The description of the order item'
-        type: string
-        example: 'This is the best order item ever'
-        maxLength: 255
-      offer:
-        description: 'The offer this item represents'
-        type: string
-        example: 'http://example.org/offers/1'
-        format: url
-      quantity:
-        description: 'The quantity of the items that are ordered'
-        type: int
-        example: '1'
-      price:
-        description: |
-          The price of this orderItem
-          
-          @example 50.00
-        type: string
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      dateCreated:
-        description: 'The moment this request was created by the submitter'
-        type: \DateTime
-      dateModified:
-        description: 'The moment this request was updated'
-        type: \DateTime
-      order:
-        description: 'The order that contains this item'
-        type: \Order
-      taxes:
-        description: 'The taxes that affect this offer'
-        type: \ArrayCollection
-    required:
-      - offer
-      - price
-      - order
-  OrderItem-write:
-    properties:
-      name:
-        description: 'The name of the object'
-        type: string
-        example: 'my OrderItem'
-        maxLength: 255
-      description:
-        description: 'The description of the order item'
-        type: string
-        example: 'This is the best order item ever'
-        maxLength: 255
-      offer:
-        description: 'The offer this item represents'
-        type: string
-        example: 'http://example.org/offers/1'
-        format: url
-      quantity:
-        description: 'The quantity of the items that are ordered'
-        type: int
-        example: '1'
-      price:
-        description: |
-          The price of this orderItem
-          
-          @example 50.00
-        type: string
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      order:
-        description: 'The order that contains this item'
-        type: \Order
-      taxes:
-        description: 'The taxes that affect this offer'
-        type: \ArrayCollection
-    required:
-      - offer
-      - price
-      - order
   Tax-read:
     properties:
       id:
@@ -6666,6 +6828,180 @@ definitions:
     required:
       - name
       - price
+  OrderItem-read:
+    properties:
+      id:
+        description: ''
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        description: 'The name of the object'
+        type: string
+        example: 'my OrderItem'
+        maxLength: 255
+      description:
+        description: 'The description of the order item'
+        type: string
+        example: 'This is the best order item ever'
+        maxLength: 255
+      offer:
+        description: 'The offer this item represents'
+        type: string
+        example: 'http://example.org/offers/1'
+        format: url
+      quantity:
+        description: 'The quantity of the items that are ordered'
+        type: int
+        example: '1'
+      price:
+        description: |
+          The price of this orderItem
+          
+          @example 50.00
+        type: string
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      recurrence:
+        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      notice:
+        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      dateStart:
+        description: 'The moment this subscribtion begins (only used on subscribtions)'
+        type: \DateTime
+      dateEnd:
+        description: 'The moment this subscribtion end'
+        type: \DateTime
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was updated'
+        type: \DateTime
+      order:
+        description: 'The order that contains this item'
+        type: \Order
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
+    required:
+      - offer
+      - price
+      - order
+  OrderItem-write:
+    properties:
+      name:
+        description: 'The name of the object'
+        type: string
+        example: 'my OrderItem'
+        maxLength: 255
+      description:
+        description: 'The description of the order item'
+        type: string
+        example: 'This is the best order item ever'
+        maxLength: 255
+      offer:
+        description: 'The offer this item represents'
+        type: string
+        example: 'http://example.org/offers/1'
+        format: url
+      quantity:
+        description: 'The quantity of the items that are ordered'
+        type: int
+        example: '1'
+      price:
+        description: |
+          The price of this orderItem
+          
+          @example 50.00
+        type: string
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      recurrence:
+        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      notice:
+        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      dateStart:
+        description: 'The moment this subscribtion begins (only used on subscribtions)'
+        type: \DateTime
+      dateEnd:
+        description: 'The moment this subscribtion end'
+        type: \DateTime
+      order:
+        description: 'The order that contains this item'
+        type: \Order
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
+    required:
+      - offer
+      - price
+      - order
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-09-17 14:58:52'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-09-17 14:58:52'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
   AuditTrail-read:
     properties:
       id:
@@ -6770,12 +7106,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-15 11:47:40'
+        example: '2020-09-17 14:58:52'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-15 11:47:40'
+        example: '2020-09-17 14:58:52'
     required: []
   AuditTrail-write:
     properties:
@@ -6783,59 +7119,6 @@ definitions:
         description: 'A note conserning this log lin'
         type: string
         example: 'This log line looks suspicius'
-        maxLength: 2555
-    required: []
-  ChangeLog-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: string
-        maxLength: 255
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2020-08-15 11:47:40'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2020-08-15 11:47:40'
-    required: []
-  ChangeLog-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
         maxLength: 2555
     required: []
 tags:
@@ -6846,25 +7129,25 @@ tags:
       
       This entity represents an order for sales
   -
-    name: OrderItem
-    description: |
-      An entity representing an item of an order.
-      
-      This entity represents an item that is placed on the order
-  -
     name: Tax
     description: |
       An entity representing an tax.
       
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
   -
-    name: AuditTrail
+    name: OrderItem
+    description: |
+      An entity representing an item of an order.
+      
+      This entity represents an item that is placed on the order
+  -
+    name: ChangeLog
     description: |
       An resource representing a log line.
       
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
-    name: ChangeLog
+    name: AuditTrail
     description: |
       An resource representing a log line.
       
@@ -6875,15 +7158,15 @@ securityDefinitions:
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the AuditTrail resource'
+      write: 'write right to the AuditTrail resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the AuditTrail resource'
+      write: 'write right to the AuditTrail resource'
 host: irc.zaakonline.nl
 servers:
   -
