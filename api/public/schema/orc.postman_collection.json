@@ -1566,7 +1566,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"organization\": \"https://wrc.dev.zuid-drecht.nl/organizations/4d1eded3-fbdf-438f-9536-8747dd8ab591\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}",
+							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"organization\": \"https://dev.zuid-drecht.nl/api/v1/wrc/organizations/4d1eded3-fbdf-438f-9536-8747dd8ab591\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -4542,7 +4542,7 @@
 	],
 	"variable": [
 		{
-			"id": "90aa7d97-76c0-4be9-aafb-1e84d5bc5825",
+			"id": "0eb64a57-5886-4792-a34a-16d6f16dc5fc",
 			"key": "baseUrl",
 			"value": "localhost"
 		}
