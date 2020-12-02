@@ -3,10 +3,10 @@ entries:
   orc:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-12-02T13:32:35.9069616Z"
-    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
-      interface beschikbaar.&#039;'
-    digest: 1d2179e9bcf03131077fd3daa8391097db7e3ce65833c81a2837eaf8545cb0d8
+    created: "2020-12-02T13:47:53.3697731Z"
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
+      beschikbaar.
+    digest: dd6a4b17f071d3a93f3c75902929fc802c07bcea5ff0b831be64b1dc2ec14e32
     home: orc.zaakonline.nl
     icon: orc.zaakonline.nl
     name: orc
@@ -18,7 +18,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2020-12-02T13:32:35.9199383Z"
+    created: "2020-12-02T13:47:53.3979523Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -47,4 +47,4 @@ entries:
     urls:
     - charts/postgresql-10.1.1.tgz
     version: 10.1.1
-generated: "2020-12-02T13:32:35.8783097Z"
+generated: "2020-12-02T13:47:53.3472562Z"

@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
-    - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
+    - Datamodel: [postman](schema/orc.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
     
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
     
@@ -2242,13 +2242,13 @@ paths:
           schema:
             type: string
         -
-          name: id
+          name: order.customer
           in: query
           required: false
           schema:
             type: string
         -
-          name: 'id[]'
+          name: 'order.customer[]'
           in: query
           required: false
           schema:
@@ -2257,182 +2257,6 @@ paths:
               type: string
           style: form
           explode: true
-        -
-          name: name
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'name[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: description
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'description[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: offer
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'offer[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: quantity
-          in: query
-          required: false
-          schema:
-            type: integer
-        -
-          name: 'quantity[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: integer
-          style: form
-          explode: true
-        -
-          name: price
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'price[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: priceCurrency
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'priceCurrency[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: recurrence
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'recurrence[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: notice
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'notice[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: dateStart
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'dateStart[]'
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: dateEnd
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'dateEnd[]'
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: dateCreated
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'dateCreated[]'
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: dateModified
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'dateModified[]'
-          in: query
-          required: false
-          schema:
-            type: string
         -
           name: page
           in: query
@@ -6763,83 +6587,6 @@ definitions:
     required:
       - organization
       - name
-  Tax-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      name:
-        description: 'The name of this tax'
-        type: string
-        example: 'my offer'
-        maxLength: 255
-      description:
-        description: 'An short description of this tax'
-        type: string
-        example: 'This is the best product ever'
-        maxLength: 2550
-      price:
-        description: 'The price of this tax'
-        type: string
-        example: '50.00'
-      priceCurrency:
-        description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      percentage:
-        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-        type: int
-        example: '9'
-      dateCreated:
-        description: 'The moment this request was created'
-        type: \Datetime
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: \Datetime
-      orderItems:
-        description: 'The offers that use this tax'
-        type: \ArrayCollection
-      orders:
-        description: 'The offers that use this tax'
-        type: \ArrayCollection
-    required:
-      - name
-      - price
-  Tax-write:
-    properties:
-      name:
-        description: 'The name of this tax'
-        type: string
-        example: 'my offer'
-        maxLength: 255
-      description:
-        description: 'An short description of this tax'
-        type: string
-        example: 'This is the best product ever'
-        maxLength: 2550
-      price:
-        description: 'The price of this tax'
-        type: string
-        example: '50.00'
-      priceCurrency:
-        description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      percentage:
-        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-        type: int
-        example: '9'
-      orderItems:
-        description: 'The offers that use this tax'
-        type: \ArrayCollection
-      orders:
-        description: 'The offers that use this tax'
-        type: \ArrayCollection
-    required:
-      - name
-      - price
   OrderItem-read:
     properties:
       id:
@@ -6961,59 +6708,83 @@ definitions:
       - offer
       - price
       - order
-  ChangeLog-read:
+  Tax-read:
     properties:
       id:
         description: 'The UUID identifier of this object'
         type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
-      note:
-        description: 'A note conserning this log lin'
+      name:
+        description: 'The name of this tax'
         type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: string
+        example: 'my offer'
         maxLength: 255
+      description:
+        description: 'An short description of this tax'
+        type: string
+        example: 'This is the best product ever'
+        maxLength: 2550
+      price:
+        description: 'The price of this tax'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      percentage:
+        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+        type: int
+        example: '9'
       dateCreated:
         description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2020-09-17 14:58:52'
+        type: \Datetime
       dateModified:
         description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2020-09-17 14:58:52'
-    required: []
-  ChangeLog-write:
+        type: \Datetime
+      orderItems:
+        description: 'The offers that use this tax'
+        type: \ArrayCollection
+      orders:
+        description: 'The offers that use this tax'
+        type: \ArrayCollection
+    required:
+      - name
+      - price
+  Tax-write:
     properties:
-      note:
-        description: 'A note conserning this log lin'
+      name:
+        description: 'The name of this tax'
         type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-    required: []
+        example: 'my offer'
+        maxLength: 255
+      description:
+        description: 'An short description of this tax'
+        type: string
+        example: 'This is the best product ever'
+        maxLength: 2550
+      price:
+        description: 'The price of this tax'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      percentage:
+        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+        type: int
+        example: '9'
+      orderItems:
+        description: 'The offers that use this tax'
+        type: \ArrayCollection
+      orders:
+        description: 'The offers that use this tax'
+        type: \ArrayCollection
+    required:
+      - name
+      - price
   AuditTrail-read:
     properties:
       id:
@@ -7118,12 +6889,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-09-17 14:58:52'
+        example: '2020-12-02 13:48:59'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-09-17 14:58:52'
+        example: '2020-12-02 13:48:59'
     required: []
   AuditTrail-write:
     properties:
@@ -7131,6 +6902,59 @@ definitions:
         description: 'A note conserning this log lin'
         type: string
         example: 'This log line looks suspicius'
+        maxLength: 2555
+    required: []
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2020-12-02 13:48:59'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2020-12-02 13:48:59'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
         maxLength: 2555
     required: []
 tags:
@@ -7141,25 +6965,25 @@ tags:
       
       This entity represents an order for sales
   -
-    name: Tax
-    description: |
-      An entity representing an tax.
-      
-      This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
-  -
     name: OrderItem
     description: |
       An entity representing an item of an order.
       
       This entity represents an item that is placed on the order
   -
-    name: ChangeLog
+    name: Tax
+    description: |
+      An entity representing an tax.
+      
+      This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
+  -
+    name: AuditTrail
     description: |
       An resource representing a log line.
       
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
-    name: AuditTrail
+    name: ChangeLog
     description: |
       An resource representing a log line.
       
@@ -7170,15 +6994,15 @@ securityDefinitions:
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the AuditTrail resource'
-      write: 'write right to the AuditTrail resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the AuditTrail resource'
-      write: 'write right to the AuditTrail resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
 host: irc.zaakonline.nl
 servers:
   -
