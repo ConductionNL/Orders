@@ -15,7 +15,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "85a6917c-97ad-4bd2-b0bf-60287b3fa09e",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -350,7 +349,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "ce1c6f72-a177-439e-9d4b-9a2458b2f249",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -432,10 +430,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my offer\",\n\t\"description\": \"This is the best product ever\",\n\t\"price\": \"50.00\",\n\t\"priceCurrency\": \"EUR\",\n\t\"percentage\": 9\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"name\": \"my offer\",\n\t\"description\": \"This is the best product ever\",\n\t\"price\": \"50.00\",\n\t\"priceCurrency\": \"EUR\",\n\t\"percentage\": 9\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/taxes",
@@ -651,8 +646,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "taxes/{id}",
@@ -663,7 +657,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "6b98d94b-3ec3-4731-b9b7-676d00b85468",
 								"exec": [
 									"// example using pm.response.to.have",
 									"pm.test(\"response is ok\", function () {",
@@ -945,7 +938,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f3e97530-8892-4a8b-95d9-8cc4cd5f9d3c",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -1016,10 +1008,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my offer\",\n\t\"description\": \"This is the best product ever\",\n\t\"price\": \"50.00\",\n\t\"priceCurrency\": \"EUR\",\n\t\"percentage\": 9\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"name\": \"my offer\",\n\t\"description\": \"This is the best product ever\",\n\t\"price\": \"50.00\",\n\t\"priceCurrency\": \"EUR\",\n\t\"percentage\": 9\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/taxes/{{tax}}",
@@ -1254,8 +1243,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "orders",
@@ -1266,7 +1254,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "05707f8a-0934-48f7-b9cc-81abe8420322",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -1484,7 +1471,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "f2ada309-ac45-4e69-8599-573eff82cd73",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -1566,10 +1552,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"organization\": \"https://dev.zuid-drecht.nl/api/v1/wrc/organizations/4d1eded3-fbdf-438f-9536-8747dd8ab591\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"organization\": \"https://dev.zuid-drecht.nl/api/v1/wrc/organizations/4d1eded3-fbdf-438f-9536-8747dd8ab591\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/orders",
@@ -1860,8 +1843,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "orders/{id}",
@@ -1872,7 +1854,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "41ed6bfb-b3c3-440b-9012-c3a94109a8d7",
 								"exec": [
 									"// example using pm.response.to.have",
 									"pm.test(\"response is ok\", function () {",
@@ -2171,7 +2152,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "e36b8b36-b1d7-4c70-b538-1df43735a775",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -2242,10 +2222,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"targetOrganization\": \"002851234\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n\t\"name\": \"my Order\",\n\t\"description\": \"This is the best order ever\",\n\t\"reference\": \"6666-2019-0000000012\",\n\t\"targetOrganization\": \"002851234\",\n\t\"customer\": \"https://example.org/people/1\",\n\t\"remark\": \"string\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/orders/{{order}}",
@@ -2540,8 +2517,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "order items",
@@ -2552,7 +2528,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "fe602bb1-901b-4019-af77-fe2f6e09dd24",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -2746,7 +2721,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "de95e5b1-f7ea-478d-8c1b-a371db87866e",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -2828,10 +2802,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}\n",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}\n"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/order_items",
@@ -3122,8 +3093,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "order items/{id}",
@@ -3134,7 +3104,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "0838de54-f54e-4342-8509-ed91689af77c",
 								"exec": [
 									"// example using pm.response.to.have",
 									"pm.test(\"response is ok\", function () {",
@@ -3433,7 +3402,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "8dab98b1-0f1d-4c44-a658-dbc88bce76f7",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -3504,10 +3472,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}",
-							"options": {
-								"raw": {}
-							}
+							"raw": "{\n    \"order\": \"/orders/{{order}}\",\n    \"offer\": \"http://example.org/offers/14\",\n    \"quantity\": 4,\n    \"price\": \"230.00\",\n    \"name\": \"<stringvsdfxcv>\",\n    \"description\": \"<strigssdfdng>\",\n    \"product\": \"<strfsdsdffng>\",\n    \"priceCurrency\": \"EUR\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/order_items/{{order_item}}",
@@ -3802,8 +3767,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "cleanup",
@@ -3814,7 +3778,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "b33d1e90-c8d8-47a5-892a-d1d220ea39d0",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -4023,7 +3986,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "d7c76a02-2eb5-4e77-8327-b736ee751b91",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -4264,7 +4226,6 @@
 						{
 							"listen": "test",
 							"script": {
-								"id": "1bb62f7a-ba2f-49b8-a810-e0390f1fdf65",
 								"exec": [
 									"// example using pm.response.to.have\r",
 									"pm.test(\"response is ok\", function () {\r",
@@ -4499,8 +4460,7 @@
 						}
 					]
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"auth": {
@@ -4522,7 +4482,6 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "833b0ce1-1225-419a-8ba9-eae1f8358820",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -4532,7 +4491,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "62bb1098-ea95-4675-8f77-fbd271e1000b",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -4542,10 +4500,8 @@
 	],
 	"variable": [
 		{
-			"id": "e1245d45-2a24-47d2-a8fe-12d93e9af830",
 			"key": "baseUrl",
-			"value": "orc.dev.zuid-drecht.nl"
+			"value": "localhost"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
