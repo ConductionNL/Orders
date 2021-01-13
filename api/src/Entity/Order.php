@@ -71,7 +71,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "organization": "exact",
  *     "resources": "exact",
  *     "description": "partial",
- *     "reference": "exact"
+ *     "reference": "exact",
+ *     "customer": "exact"
  * })
  */
 class Order
@@ -161,7 +162,7 @@ class Order
      *
      * @Gedmo\Versioned
      * @Groups({"read"})
-     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
@@ -267,8 +268,6 @@ class Order
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
      *  @ORM\PostLoad
-     *
-     *
      */
     public function prePersist()
     {
@@ -354,7 +353,7 @@ class Order
 
     public function setInvoice(string $invoice): self
     {
-        $this->invoice = invoice;
+        $this->invoice = $invoice;
 
         return $this;
     }

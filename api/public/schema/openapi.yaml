@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
-    - Datamodel: [postman](/schema/orc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
+    - Datamodel: [postman](schema/orc.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
     
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
     
@@ -2092,6 +2092,42 @@ paths:
               - asc
               - desc
         -
+          name: 'order[recurrence]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[notice]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateStart]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateEnd]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
           name: 'order[dateCreated]'
           in: query
           required: false
@@ -2109,6 +2145,54 @@ paths:
             enum:
               - asc
               - desc
+        -
+          name: 'dateStart[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateStart[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateEnd[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: 'dateCreated[before]'
           in: query
@@ -2158,13 +2242,13 @@ paths:
           schema:
             type: string
         -
-          name: id
+          name: order.customer
           in: query
           required: false
           schema:
             type: string
         -
-          name: 'id[]'
+          name: 'order.customer[]'
           in: query
           required: false
           schema:
@@ -2173,126 +2257,6 @@ paths:
               type: string
           style: form
           explode: true
-        -
-          name: name
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'name[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: description
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'description[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: offer
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'offer[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: quantity
-          in: query
-          required: false
-          schema:
-            type: integer
-        -
-          name: 'quantity[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: integer
-          style: form
-          explode: true
-        -
-          name: price
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'price[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: priceCurrency
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'priceCurrency[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
-        -
-          name: dateCreated
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'dateCreated[]'
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: dateModified
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'dateModified[]'
-          in: query
-          required: false
-          schema:
-            type: string
         -
           name: page
           in: query
@@ -3179,6 +3143,15 @@ paths:
               - desc
         -
           name: 'order[organization]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[invoice]'
           in: query
           required: false
           schema:
@@ -5370,18 +5343,23 @@ components:
         route:
           description: 'The moment this request was created'
           type: string
+          nullable: true
         endpoint:
           description: 'The endpoint that the request was made to'
           type: string
+          nullable: true
         method:
           description: 'The method that was used'
           type: string
+          nullable: true
         accept:
           description: 'The contentType that was reqousted'
           type: string
+          nullable: true
         contentType:
           description: 'The contentType that was suplieds'
           type: string
+          nullable: true
         content:
           description: 'The moment this request was created'
           type: string
@@ -5389,6 +5367,7 @@ components:
         ip:
           description: 'The moment this request was created'
           type: string
+          nullable: true
         session:
           description: 'The moment this request was created'
           type: string
@@ -5500,18 +5479,23 @@ components:
         route:
           description: 'The moment this request was created'
           type: string
+          nullable: true
         endpoint:
           description: 'The endpoint that the request was made to'
           type: string
+          nullable: true
         method:
           description: 'The method that was used'
           type: string
+          nullable: true
         accept:
           description: 'The contentType that was reqousted'
           type: string
+          nullable: true
         contentType:
           description: 'The contentType that was suplieds'
           type: string
+          nullable: true
         content:
           description: 'The moment this request was created'
           type: string
@@ -5519,6 +5503,7 @@ components:
         ip:
           description: 'The moment this request was created'
           type: string
+          nullable: true
         session:
           description: 'The moment this request was created'
           type: string
@@ -5704,6 +5689,12 @@ components:
             url: 'http://schema.org/url'
           type: string
           nullable: true
+        invoice:
+          description: 'The invoice of this order'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         resources:
           description: 'The resource of the contact moment'
           type: array
@@ -5776,6 +5767,12 @@ components:
             url: 'http://schema.org/url'
           type: string
           nullable: true
+        invoice:
+          description: 'The invoice of this order'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         resources:
           description: 'The resource of the contact moment'
           type: array
@@ -5840,6 +5837,12 @@ components:
           format: uuid
         organization:
           description: 'A specific commonground organisation'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
+        invoice:
+          description: 'The invoice of this order'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
@@ -5921,6 +5924,12 @@ components:
           type: string
         organization:
           description: 'A specific commonground organisation'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
+        invoice:
+          description: 'The invoice of this order'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
@@ -6012,6 +6021,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax-read'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
         dateCreated:
           description: 'The moment this request was created by the submitter'
           type: string
@@ -6066,6 +6093,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax-write'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
       required:
         - order
         - offer
@@ -6125,6 +6170,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax:jsonld-read'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
         dateCreated:
           description: 'The moment this request was created by the submitter'
           type: string
@@ -6188,6 +6251,24 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tax:jsonld-write'
+        recurrence:
+          description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        notice:
+          description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+          type: string
+          nullable: true
+        dateStart:
+          description: 'The moment this subscribtion begins (only used on subscribtions)'
+          type: string
+          format: date-time
+          nullable: true
+        dateEnd:
+          description: 'The moment this subscribtion end'
+          type: string
+          format: date-time
+          nullable: true
       required:
         - order
         - offer
@@ -6402,6 +6483,11 @@ definitions:
         type: string
         example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
         format: url
+      invoice:
+        description: 'The invoice of this order'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
       resources:
         description: 'The resource of the contact moment'
         type: array
@@ -6455,6 +6541,11 @@ definitions:
     properties:
       organization:
         description: 'A specific commonground organisation'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
+      invoice:
+        description: 'The invoice of this order'
         type: string
         example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
         format: url
@@ -6532,6 +6623,20 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
+      recurrence:
+        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      notice:
+        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      dateStart:
+        description: 'The moment this subscribtion begins (only used on subscribtions)'
+        type: \DateTime
+      dateEnd:
+        description: 'The moment this subscribtion end'
+        type: \DateTime
       dateCreated:
         description: 'The moment this request was created by the submitter'
         type: \DateTime
@@ -6579,6 +6684,20 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
+      recurrence:
+        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      notice:
+        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      dateStart:
+        description: 'The moment this subscribtion begins (only used on subscribtions)'
+        type: \DateTime
+      dateEnd:
+        description: 'The moment this subscribtion end'
+        type: \DateTime
       order:
         description: 'The order that contains this item'
         type: \Order
@@ -6770,12 +6889,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-15 11:47:40'
+        example: '2020-12-02 13:48:59'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-15 11:47:40'
+        example: '2020-12-02 13:48:59'
     required: []
   AuditTrail-write:
     properties:
@@ -6823,12 +6942,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-15 11:47:40'
+        example: '2020-12-02 13:48:59'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-15 11:47:40'
+        example: '2020-12-02 13:48:59'
     required: []
   ChangeLog-write:
     properties:
