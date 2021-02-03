@@ -119,4 +119,4 @@ dependsOn:
 
 installations:
     - type: helm
-      url: "https://github.com/ConductionNL/orderregistratiecomponent/raw/master/api/helm/orc-0.1.0.tgz"
+      url: "https://raw.githubusercontent.com/ConductionNL/orderregistratiecomponent/master/api/helm/"
