@@ -5,12 +5,12 @@ info:
   description: |
     API Details
     - Component: 
-    - Reference: orc
+    - Reference: orderregistratiecomponent
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/orc-php) 
-    - Datamodel: [postman](schema/orc.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
+    - Docker Image: [online]() 
+    - Datamodel: [postman](schema/orderregistratiecomponent.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
     
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
     
@@ -6905,12 +6905,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-02-18 03:46:04'
+        example: '2021-02-18 23:34:25'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-02-18 03:46:04'
+        example: '2021-02-18 23:34:25'
     required: []
   AuditTrail-write:
     properties:
@@ -6958,12 +6958,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-02-18 03:46:04'
+        example: '2021-02-18 23:34:25'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-02-18 03:46:04'
+        example: '2021-02-18 23:34:25'
     required: []
   ChangeLog-write:
     properties:
@@ -7023,7 +7023,7 @@ host: irc.zaakonline.nl
 servers:
   -
     name: conduction.nl
-    url: orc.dev.conduction.nl
+    url: orderregistratiecomponent.dev.conduction.nl
 externalDocs:
   -
     description: 'OAS Documentatie'

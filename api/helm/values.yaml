@@ -4,15 +4,15 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: orc
-  name: orc
+  projectName: orderregistratiecomponent
+  name: orderregistratiecomponent
   version: V.0.1
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   repro: https://github.com/ConductionNL/orderregistratiecomponent
   demo: orc.zaakonline.nl
   domain: conduction.nl
-  subdomain: orc
-  subpath: orc
+  subdomain: orderregistratiecomponent
+  subpath: orderregistratiecomponent
   subpathRouting: true
   env: dev
   web: false
