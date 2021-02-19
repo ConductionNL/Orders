@@ -1,24 +1,37 @@
 apiVersion: v1
 entries:
-  orc:
+  orderregistratiecomponent:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-12-02T13:47:53.3697731Z"
+    created: "2021-02-18T23:35:13.4821689Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: dd6a4b17f071d3a93f3c75902929fc802c07bcea5ff0b831be64b1dc2ec14e32
-    home: orc.zaakonline.nl
-    icon: orc.zaakonline.nl
-    name: orc
+    digest: 7ef96542e4b1828dd1e3ebc49b9ee334d2bc995996186328c0f4db54ba8e88d3
+    home: https://www.conduction.nl
+    icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
+    keywords:
+    - commonground
+    - haven
+    - nlx
+    - component
+    maintainers:
+    - email: ruben@conduction.nl
+      name: Ruben van der Linde
+    - email: info@conduction.nl
+      name: Conduction
+    name: orderregistratiecomponent
+    sources:
+    - https://commonground.conduction.nl/
+    - https://www.commonground.nl/
     urls:
-    - orc-0.1.0.tgz
+    - orderregistratiecomponent-0.1.0.tgz
     version: 0.1.0
   postgresql:
   - annotations:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2020-12-02T13:47:53.3979523Z"
+    created: "2021-02-18T23:35:13.5032331Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -47,4 +60,4 @@ entries:
     urls:
     - charts/postgresql-10.1.1.tgz
     version: 10.1.1
-generated: "2020-12-02T13:47:53.3472562Z"
+generated: "2021-02-18T23:35:13.4690739Z"
