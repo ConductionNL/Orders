@@ -72,7 +72,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "resources": "exact",
  *     "description": "partial",
  *     "reference": "exact",
- *     "customer": "exact"
+ *     "customer": "exact",
+ *     "resource": "exact"
  * })
  */
 class Order
@@ -245,6 +246,20 @@ class Order
      * @ORM\Column(type="text", nullable=true)
      */
     private $remark;
+
+    /**
+     * @var string Uri of the resource linked to this order
+     *
+     * @Gedmo\Versioned
+     *
+     * @example https://example.com/organization
+     * @Groups({"read","write"})
+     * @Assert\Length(
+     *     max=255
+     * )
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private string $resource;
 
     /**
      * @var DateTime The moment this request was created by the submitter
@@ -554,6 +569,18 @@ class Order
     public function setRemark(?string $remark): self
     {
         $this->remark = $remark;
+
+        return $this;
+    }
+
+    public function getResource(): ?string
+    {
+        return $this->resource;
+    }
+
+    public function setResource(string $resource): self
+    {
+        $this->resource = $resource;
 
         return $this;
     }
