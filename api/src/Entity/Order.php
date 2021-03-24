@@ -257,9 +257,10 @@ class Order
      * @Assert\Length(
      *     max=255
      * )
+     * @Assert\Url()
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $resource;
+    private $resource;
 
     /**
      * @var DateTime The moment this request was created by the submitter
