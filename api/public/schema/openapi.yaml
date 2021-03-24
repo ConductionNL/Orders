@@ -3241,6 +3241,15 @@ paths:
               - asc
               - desc
         -
+          name: 'order[resource]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
           name: 'order[dateCreated]'
           in: query
           required: false
@@ -3384,6 +3393,22 @@ paths:
             type: string
         -
           name: 'customer[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: resource
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'resource[]'
           in: query
           required: false
           schema:
@@ -5757,6 +5782,12 @@ components:
           description: 'Remarks on this order'
           type: string
           nullable: true
+        resource:
+          description: 'Uri of the resource linked to this order'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         dateCreated:
           description: 'The moment this request was created by the submitter'
           type: string
@@ -5829,6 +5860,12 @@ components:
           type: string
         remark:
           description: 'Remarks on this order'
+          type: string
+          nullable: true
+        resource:
+          description: 'Uri of the resource linked to this order'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
           nullable: true
     'Order:jsonld-read':
@@ -5907,6 +5944,12 @@ components:
           type: string
         remark:
           description: 'Remarks on this order'
+          type: string
+          nullable: true
+        resource:
+          description: 'Uri of the resource linked to this order'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
           nullable: true
         dateCreated:
@@ -5990,6 +6033,12 @@ components:
           type: string
         remark:
           description: 'Remarks on this order'
+          type: string
+          nullable: true
+        resource:
+          description: 'Uri of the resource linked to this order'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
           nullable: true
     OrderItem-read:
@@ -6487,6 +6536,134 @@ components:
           items:
             $ref: '#/components/schemas/Order:jsonld-write'
 definitions:
+  Order-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      organization:
+        description: 'A specific commonground organisation'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
+      invoice:
+        description: 'The invoice of this order'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
+      resources:
+        description: 'The resource of the contact moment'
+        type: array
+      name:
+        description: 'The name of the order'
+        type: string
+        example: 'my Order'
+        maxLength: 255
+      description:
+        description: 'The description of the order'
+        type: string
+        example: 'This is the best order ever'
+        maxLength: 255
+      reference:
+        description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+        type: string
+        example: 6666-2019-0000000012
+        maxLength: 255
+      price:
+        description: 'The price of this product'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      customer:
+        description: 'The customer that placed this order'
+        type: string
+        example: 'https://example.org/people/1'
+        format: url
+      remark:
+        description: 'Remarks on this order'
+        type: string
+      resource:
+        description: 'Uri of the resource linked to this order'
+        type: string
+        example: 'https://example.com/organization'
+        maxLength: 255
+        format: url
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was modified by the submitter'
+        type: \DateTime
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
+      items:
+        description: 'The items in this order'
+        type: \ArrayCollection
+    required:
+      - organization
+      - name
+  Order-write:
+    properties:
+      organization:
+        description: 'A specific commonground organisation'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
+      invoice:
+        description: 'The invoice of this order'
+        type: string
+        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
+        format: url
+      resources:
+        description: 'The resource of the contact moment'
+        type: array
+      name:
+        description: 'The name of the order'
+        type: string
+        example: 'my Order'
+        maxLength: 255
+      description:
+        description: 'The description of the order'
+        type: string
+        example: 'This is the best order ever'
+        maxLength: 255
+      price:
+        description: 'The price of this product'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      customer:
+        description: 'The customer that placed this order'
+        type: string
+        example: 'https://example.org/people/1'
+        format: url
+      remark:
+        description: 'Remarks on this order'
+        type: string
+      resource:
+        description: 'Uri of the resource linked to this order'
+        type: string
+        example: 'https://example.com/organization'
+        maxLength: 255
+        format: url
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
+      items:
+        description: 'The items in this order'
+        type: \ArrayCollection
+    required:
+      - organization
+      - name
   OrderItem-read:
     properties:
       id:
@@ -6608,122 +6785,6 @@ definitions:
       - offer
       - price
       - order
-  Order-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      organization:
-        description: 'A specific commonground organisation'
-        type: string
-        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
-        format: url
-      invoice:
-        description: 'The invoice of this order'
-        type: string
-        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
-        format: url
-      resources:
-        description: 'The resource of the contact moment'
-        type: array
-      name:
-        description: 'The name of the order'
-        type: string
-        example: 'my Order'
-        maxLength: 255
-      description:
-        description: 'The description of the order'
-        type: string
-        example: 'This is the best order ever'
-        maxLength: 255
-      reference:
-        description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
-        type: string
-        example: 6666-2019-0000000012
-        maxLength: 255
-      price:
-        description: 'The price of this product'
-        type: string
-        example: '50.00'
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      customer:
-        description: 'The customer that placed this order'
-        type: string
-        example: 'https://example.org/people/1'
-        format: url
-      remark:
-        description: 'Remarks on this order'
-        type: string
-      dateCreated:
-        description: 'The moment this request was created by the submitter'
-        type: \DateTime
-      dateModified:
-        description: 'The moment this request was modified by the submitter'
-        type: \DateTime
-      taxes:
-        description: 'The taxes that affect this offer'
-        type: \ArrayCollection
-      items:
-        description: 'The items in this order'
-        type: \ArrayCollection
-    required:
-      - organization
-      - name
-  Order-write:
-    properties:
-      organization:
-        description: 'A specific commonground organisation'
-        type: string
-        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
-        format: url
-      invoice:
-        description: 'The invoice of this order'
-        type: string
-        example: 'https://wrc.zaakonline.nl/organisations/16353702-4614-42ff-92af-7dd11c8eef9f'
-        format: url
-      resources:
-        description: 'The resource of the contact moment'
-        type: array
-      name:
-        description: 'The name of the order'
-        type: string
-        example: 'my Order'
-        maxLength: 255
-      description:
-        description: 'The description of the order'
-        type: string
-        example: 'This is the best order ever'
-        maxLength: 255
-      price:
-        description: 'The price of this product'
-        type: string
-        example: '50.00'
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      customer:
-        description: 'The customer that placed this order'
-        type: string
-        example: 'https://example.org/people/1'
-        format: url
-      remark:
-        description: 'Remarks on this order'
-        type: string
-      taxes:
-        description: 'The taxes that affect this offer'
-        type: \ArrayCollection
-      items:
-        description: 'The items in this order'
-        type: \ArrayCollection
-    required:
-      - organization
-      - name
   Tax-read:
     properties:
       id:
@@ -6801,59 +6862,6 @@ definitions:
     required:
       - name
       - price
-  ChangeLog-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: string
-        maxLength: 255
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2021-03-22 11:05:55'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2021-03-22 11:05:55'
-    required: []
-  ChangeLog-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-    required: []
   AuditTrail-read:
     properties:
       id:
@@ -6958,12 +6966,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-03-22 11:05:55'
+        example: '2021-03-24 10:35:01'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-03-22 11:05:55'
+        example: '2021-03-24 10:35:01'
     required: []
   AuditTrail-write:
     properties:
@@ -6973,13 +6981,60 @@ definitions:
         example: 'This log line looks suspicius'
         maxLength: 2555
     required: []
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2021-03-24 10:35:01'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2021-03-24 10:35:01'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
 tags:
-  -
-    name: OrderItem
-    description: |
-      An entity representing an item of an order.
-      
-      This entity represents an item that is placed on the order
   -
     name: Order
     description: |
@@ -6987,19 +7042,25 @@ tags:
       
       This entity represents an order for sales
   -
+    name: OrderItem
+    description: |
+      An entity representing an item of an order.
+      
+      This entity represents an item that is placed on the order
+  -
     name: Tax
     description: |
       An entity representing an tax.
       
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
   -
-    name: ChangeLog
+    name: AuditTrail
     description: |
       An resource representing a log line.
       
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
-    name: AuditTrail
+    name: ChangeLog
     description: |
       An resource representing a log line.
       
@@ -7010,15 +7071,15 @@ securityDefinitions:
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the AuditTrail resource'
-      write: 'write right to the AuditTrail resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the AuditTrail resource'
-      write: 'write right to the AuditTrail resource'
+      read: 'read right to the ChangeLog resource'
+      write: 'write right to the ChangeLog resource'
 host: irc.zaakonline.nl
 servers:
   -
