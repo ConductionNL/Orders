@@ -73,7 +73,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "description": "partial",
  *     "reference": "exact",
  *     "customer": "exact",
- *     "resource": "exact"
+ *     "resource": "exact",
+ *     "remark": "exact"
  * })
  */
 class Order
