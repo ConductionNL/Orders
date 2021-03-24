@@ -123,13 +123,25 @@ class OrderItem
      * @example http://example.org/offers/1
      *
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255. nullable=true)
      * @Groups({"read","write"})
      * @Assert\Url
-     * @Assert\NotNull
      * @MaxDepth(1)
      */
     private $offer;
+
+    /**
+     * @var string The product this item represents
+     *
+     * @example http://example.org/offers/1
+     *
+     * @Gedmo\Versioned
+     * @ORM\Column(type="string", length=255. nullable=true)
+     * @Groups({"read","write"})
+     * @Assert\Url
+     * @MaxDepth(1)
+     */
+    private $product;
 
     /**
      * @var int The quantity of the items that are ordered
@@ -297,6 +309,18 @@ class OrderItem
     public function setOffer(string $offer): self
     {
         $this->offer = $offer;
+
+        return $this;
+    }
+
+    public function getProduct(): ?string
+    {
+        return $this->product;
+    }
+
+    public function setProduct(string $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
