@@ -123,7 +123,7 @@ class OrderItem
      * @example http://example.org/offers/1
      *
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=255. nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"read","write"})
      * @Assert\Url
      * @MaxDepth(1)
@@ -136,7 +136,7 @@ class OrderItem
      * @example http://example.org/offers/1
      *
      * @Gedmo\Versioned
-     * @ORM\Column(type="string", length=255. nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"read","write"})
      * @Assert\Url
      * @MaxDepth(1)
