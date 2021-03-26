@@ -221,7 +221,7 @@ class Order
      * @var ArrayCollection The items in this order
      *
      * @Groups({"read", "write"})
-     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\OrderItem", mappedBy="order", cascade={"persist"}, orphanRemoval=true)
      * @MaxDepth(1)
      */
     private $items;
