@@ -1,8 +1,16 @@
 # orc
+[![StyleCI](https://github.styleci.io/repos/206144416/shield?branch=master)](https://github.styleci.io/repos/206144416?branch=master)
+[![Docker Image CI](https://github.com/ConductionNL/orderregistratiecomponent/workflows/Docker%20Image%20CI/badge.svg?branch=master)](https://github.com/ConductionNL/orderregistratiecomponent/actions?query=workflow%3A"Docker+Image+CI")
+[![Artifacthub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/orderregistratiecomponent)](https://artifacthub.io/packages/helm/orderregistratiecomponent/orderregistratiecomponent)
+[![BCH compliance](https://bettercodehub.com/edge/badge/ConductionNL/orderregistratiecomponent?branch=master)](https://bettercodehub.com/)
 
 Description
 ----
-Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
+Het Order Registratie Component verzorgt de afhandeling van bestellingen met uitzondering van facturatie en betalingen. Het biedt in samenwerking met het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd aan een order, waarbij het Order Registratie Component de geldigheid van de aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.
+
+Omdat orders ook de status “basket” kunnen hebben, neemt het component hierbij essentiële validatie van de frontend over, waardoor ontwikkelaars worden ontlast en organisaties verzekerd worden van een propere berekening.
+
+In tandem met het VRC voorziet het order component ook in de directe afhandeling van een order. Voor een simpele bestelling kan er hierbij worden gedacht aan een orderpick proces, maar voor complexe bestellingen kunnen ook zaken of processen worden opgestart.
 
 Additional Information
 ----
