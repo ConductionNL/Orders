@@ -3,6 +3,7 @@
 [![Docker Image CI](https://github.com/ConductionNL/orderregistratiecomponent/workflows/Docker%20Image%20CI/badge.svg?branch=master)](https://github.com/ConductionNL/orderregistratiecomponent/actions?query=workflow%3A"Docker+Image+CI")
 [![Artifacthub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/orderregistratiecomponent)](https://artifacthub.io/packages/helm/orderregistratiecomponent/orderregistratiecomponent)
 [![BCH compliance](https://bettercodehub.com/edge/badge/ConductionNL/orderregistratiecomponent?branch=master)](https://bettercodehub.com/)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FConductionNL%2Forderregistratiecomponent.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FConductionNL%2Forderregistratiecomponent?ref=badge_shield)
 
 Description
 ----
@@ -85,3 +86,7 @@ Credits
 Information about the authors of this component can be found [here](AUTHORS.md)
 
 Copyright © [Utrecht](https://www.utrecht.nl/) 2019
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FConductionNL%2Forderregistratiecomponent.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FConductionNL%2Forderregistratiecomponent?ref=badge_large)
