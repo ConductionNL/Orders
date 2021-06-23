@@ -8,7 +8,7 @@ settings:
   name: orderregistratiecomponent
   version: V.0.1
   majorVersion: v1
-  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
+  description: 'Het Order Registratie component verzorgt de afhandeling van bestellingen met uitzondering van facturatie en betalingen. Het biedt in samenwerking met het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd aan een order, waarbij het Registratie Order Component de geldigheid van de aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.'
   repro: https://github.com/ConductionNL/orderregistratiecomponent
   demo: orc.zaakonline.nl
   domain: conduction.nl
@@ -40,7 +40,7 @@ settings:
   archiveEnabled: false
 
 security:
-  applicationKey: "7919a58b-3fd9-4931-ad70-2ccc1168ef23"
+  applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
 
 
 php:
