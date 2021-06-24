@@ -1,16 +1,52 @@
 apiVersion: v1
 entries:
   orderregistratiecomponent:
+  - annotations:
+      artifacthub.io/containsSecurityUpdates: "true"
+    apiVersion: v2
+    appVersion: V.0.1
+    created: "2021-06-24T08:52:25.8287428Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 10.1.1
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.7.7
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
+      beschikbaar.
+    digest: e733c80f9f7b716fd90a9508d71e256642f76cac1c71f8db74e4218cd41e9b6a
+    home: https://www.conduction.nl
+    icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
+    keywords:
+    - commonground
+    - haven
+    - nlx
+    - component
+    maintainers:
+    - email: ruben@conduction.nl
+      name: Ruben van der Linde
+    - email: info@conduction.nl
+      name: Conduction
+    name: orderregistratiecomponent
+    sources:
+    - https://commonground.conduction.nl/
+    - https://www.commonground.nl/
+    urls:
+    - orderregistratiecomponent-1.0.0.tgz
+    version: 1.0.0
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2021-06-23T09:26:46.7188928Z"
+    created: "2021-06-24T08:52:25.80515Z"
     description: Het Order Registratie component verzorgt de afhandeling van bestellingen
       met uitzondering van facturatie en betalingen. Het biedt in samenwerking met
       het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten
       en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd
       aan een order, waarbij het Registratie Order Component de geldigheid van de
       aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.
-    digest: 6df9d01344f175e3f34e5ddf391d73162dbea21e8f69f1ef9f20d925e1cfa731
+    digest: 5d2234865a4a3f1847dbe0a760c817e2c69b2ed98ac7f8ef41a4249266ed9c7b
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -35,7 +71,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-06-23T09:26:46.7230419Z"
+    created: "2021-06-24T08:52:25.8465992Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -64,4 +100,38 @@ entries:
     urls:
     - charts/postgresql-10.1.1.tgz
     version: 10.1.1
-generated: "2021-06-23T09:26:46.6946253Z"
+  redis:
+  - annotations:
+      category: Database
+    apiVersion: v2
+    appVersion: 6.0.11
+    created: "2021-06-24T08:52:25.8590097Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 1.x.x
+    description: Open source, advanced key-value store. It is often referred to as
+      a data structure server since keys can contain strings, hashes, lists, sets
+      and sorted sets.
+    digest: 2d70861d16fc410ed6d6c818b97f7b0d519031147e5c7b42c5691d4c38742c44
+    home: https://github.com/bitnami/charts/tree/master/bitnami/redis
+    icon: https://bitnami.com/assets/stacks/redis/img/redis-stack-220x234.png
+    keywords:
+    - redis
+    - keyvalue
+    - database
+    maintainers:
+    - email: containers@bitnami.com
+      name: Bitnami
+    - email: cedric@desaintmartin.fr
+      name: desaintmartin
+    name: redis
+    sources:
+    - https://github.com/bitnami/bitnami-docker-redis
+    - http://redis.io/
+    urls:
+    - charts/redis-12.7.7.tgz
+    version: 12.7.7
+generated: "2021-06-24T08:52:25.789656Z"
