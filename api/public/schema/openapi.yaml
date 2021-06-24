@@ -11,9 +11,8 @@ info:
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
     - Docker Image: [online]() 
     - Datamodel: [postman](schema/orderregistratiecomponent.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
-    
-    Het Order Registratie component verzorgt de afhandeling van bestellingen met uitzondering van facturatie en betalingen. Het biedt in samenwerking met het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd aan een order, waarbij het Registratie Order Component de geldigheid van de aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.         
-    
+
+    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
 paths:
   /audit_trails:
     get:
@@ -6103,9 +6102,9 @@ components:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6181,9 +6180,9 @@ components:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6264,9 +6263,9 @@ components:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6351,9 +6350,9 @@ components:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6617,9 +6616,9 @@ definitions:
         type: int
         example: '1'
       price:
-        description: |
+        description: |-
           The price of this orderItem
-          
+
           @example 50.00
         type: string
       priceCurrency:
@@ -6682,9 +6681,9 @@ definitions:
         type: int
         example: '1'
       price:
-        description: |
+        description: |-
           The price of this orderItem
-          
+
           @example 50.00
         type: string
       priceCurrency:
@@ -6957,12 +6956,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-06-23 09:22:07'
+        example: '2021-06-24 08:20:19'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-06-23 09:22:07'
+        example: '2021-06-24 08:20:19'
     required: []
   ChangeLog-write:
     properties:
@@ -7076,12 +7075,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-06-23 09:22:07'
+        example: '2021-06-24 08:20:19'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-06-23 09:22:07'
+        example: '2021-06-24 08:20:19'
     required: []
   AuditTrail-write:
     properties:
@@ -7094,33 +7093,33 @@ definitions:
 tags:
   -
     name: OrderItem
-    description: |
+    description: |-
       An entity representing an item of an order.
-      
+
       This entity represents an item that is placed on the order
   -
     name: Order
-    description: |
+    description: |-
       An entity representing an order.
-      
+
       This entity represents an order for sales
   -
     name: Tax
-    description: |
+    description: |-
       An entity representing an tax.
-      
+
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
   -
     name: ChangeLog
-    description: |
+    description: |-
       An resource representing a log line.
-      
+
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
     name: AuditTrail
-    description: |
+    description: |-
       An resource representing a log line.
-      
+
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
 securityDefinitions:
   JWT-Oauth:
