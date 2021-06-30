@@ -100,10 +100,7 @@ class OrderItem
      *
      * @Gedmo\Versioned
      * @Groups({"read","write"})
-     * @Assert\Length(
-     *     max=255
-     * )
-     * @ORM\Column(type="string", length=2550, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
