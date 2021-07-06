@@ -5,7 +5,7 @@ entries:
       artifacthub.io/containsSecurityUpdates: "true"
     apiVersion: v2
     appVersion: V.0.1
-    created: "2021-06-24T08:52:25.8287428Z"
+    created: "2021-07-06T20:17:17.0340854+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -15,9 +15,8 @@ entries:
       name: redis
       repository: https://charts.bitnami.com/bitnami
       version: 12.7.7
-    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
-      beschikbaar.
-    digest: e733c80f9f7b716fd90a9508d71e256642f76cac1c71f8db74e4218cd41e9b6a
+    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
+    digest: df547ab138381fd1a7c45e30c03b4512c8949a8a52cdfce5a4010efad1832bf8
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -39,13 +38,8 @@ entries:
     version: 1.0.0
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2021-06-24T08:52:25.80515Z"
-    description: Het Order Registratie component verzorgt de afhandeling van bestellingen
-      met uitzondering van facturatie en betalingen. Het biedt in samenwerking met
-      het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten
-      en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd
-      aan een order, waarbij het Registratie Order Component de geldigheid van de
-      aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.
+    created: "2021-07-06T20:17:17.025086+02:00"
+    description: Het Order Registratie component verzorgt de afhandeling van bestellingen met uitzondering van facturatie en betalingen. Het biedt in samenwerking met het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd aan een order, waarbij het Registratie Order Component de geldigheid van de aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.
     digest: 5d2234865a4a3f1847dbe0a760c817e2c69b2ed98ac7f8ef41a4249266ed9c7b
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
@@ -71,13 +65,12 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-06-24T08:52:25.8465992Z"
+    created: "2021-07-06T20:17:17.0370875+02:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
       version: 1.x.x
-    description: Chart for PostgreSQL, an object-relational database management system
-      (ORDBMS) with an emphasis on extensibility and on standards-compliance.
+    description: Chart for PostgreSQL, an object-relational database management system (ORDBMS) with an emphasis on extensibility and on standards-compliance.
     digest: eebe8f456cf98d5927a35666d1d899174dc4d3e09f26788033f761527bc90749
     home: https://github.com/bitnami/charts/tree/master/bitnami/postgresql
     icon: https://bitnami.com/assets/stacks/postgresql/img/postgresql-stack-110x117.png
@@ -105,16 +98,14 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 6.0.11
-    created: "2021-06-24T08:52:25.8590097Z"
+    created: "2021-07-06T20:17:17.042087+02:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
       tags:
       - bitnami-common
       version: 1.x.x
-    description: Open source, advanced key-value store. It is often referred to as
-      a data structure server since keys can contain strings, hashes, lists, sets
-      and sorted sets.
+    description: Open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets.
     digest: 2d70861d16fc410ed6d6c818b97f7b0d519031147e5c7b42c5691d4c38742c44
     home: https://github.com/bitnami/charts/tree/master/bitnami/redis
     icon: https://bitnami.com/assets/stacks/redis/img/redis-stack-220x234.png
@@ -134,4 +125,4 @@ entries:
     urls:
     - charts/redis-12.7.7.tgz
     version: 12.7.7
-generated: "2021-06-24T08:52:25.789656Z"
+generated: "2021-07-06T20:17:17.0200878+02:00"
