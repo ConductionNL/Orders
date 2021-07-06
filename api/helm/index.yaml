@@ -5,7 +5,7 @@ entries:
       artifacthub.io/containsSecurityUpdates: "true"
     apiVersion: v2
     appVersion: V.0.1
-    created: "2021-07-06T20:17:17.0340854+02:00"
+    created: "2021-07-06T21:01:30.648405+02:00"
     dependencies:
     - condition: postgresql.enabled
       name: postgresql
@@ -16,7 +16,7 @@ entries:
       repository: https://charts.bitnami.com/bitnami
       version: 12.7.7
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
-    digest: df547ab138381fd1a7c45e30c03b4512c8949a8a52cdfce5a4010efad1832bf8
+    digest: ea831491a29a21db2804adc3a6445b5d30cf6a3a24539612befdf5970daec523
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -38,7 +38,7 @@ entries:
     version: 1.0.0
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2021-07-06T20:17:17.025086+02:00"
+    created: "2021-07-06T21:01:30.640383+02:00"
     description: Het Order Registratie component verzorgt de afhandeling van bestellingen met uitzondering van facturatie en betalingen. Het biedt in samenwerking met het PDC een multi-tenant en omnichannel oplossing voor het verkopen van producten en diensten. Hierbij worden offers (te kopen resources vanuit het PC) toegevoegd aan een order, waarbij het Registratie Order Component de geldigheid van de aanbieding controleert en een eventuele prijs en betaling berekeningen uitvoert.
     digest: 5d2234865a4a3f1847dbe0a760c817e2c69b2ed98ac7f8ef41a4249266ed9c7b
     home: https://www.conduction.nl
@@ -65,7 +65,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-07-06T20:17:17.0370875+02:00"
+    created: "2021-07-06T21:01:30.6524061+02:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -98,7 +98,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 6.0.11
-    created: "2021-07-06T20:17:17.042087+02:00"
+    created: "2021-07-06T21:01:30.656405+02:00"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -125,4 +125,4 @@ entries:
     urls:
     - charts/redis-12.7.7.tgz
     version: 12.7.7
-generated: "2021-07-06T20:17:17.0200878+02:00"
+generated: "2021-07-06T21:01:30.6364069+02:00"
