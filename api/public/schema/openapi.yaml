@@ -11,9 +11,8 @@ info:
     - Repository: [online](https://github.com/ConductionNL/orderregistratiecomponent) / [zip](https://github.com/ConductionNL/orderregistratiecomponent/archive/master.zip)
     - Docker Image: [online]() 
     - Datamodel: [postman](schema/orderregistratiecomponent.postman_collection.json) / [oas](schema/openapi.yaml) / [pdf](schema/datamodel.pdf) / [modelio (zip)](schema/Datamodel_Modelio.zip) 
-    
+
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
-    
 paths:
   /audit_trails:
     get:
@@ -2065,6 +2064,15 @@ paths:
               - asc
               - desc
         -
+          name: 'order[product]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
           name: 'order[quantity]'
           in: query
           required: false
@@ -3409,6 +3417,22 @@ paths:
             type: string
         -
           name: 'resource[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: remark
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'remark[]'
           in: query
           required: false
           schema:
@@ -6067,13 +6091,20 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
+        product:
+          description: 'The product this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6116,7 +6147,6 @@ components:
           nullable: true
       required:
         - order
-        - offer
         - quantity
         - price
     OrderItem-write:
@@ -6139,13 +6169,20 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
+        product:
+          description: 'The product this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6178,7 +6215,6 @@ components:
           nullable: true
       required:
         - order
-        - offer
         - quantity
         - price
     'OrderItem:jsonld-read':
@@ -6216,13 +6252,20 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
+        product:
+          description: 'The product this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6265,7 +6308,6 @@ components:
           nullable: true
       required:
         - order
-        - offer
         - quantity
         - price
     'OrderItem:jsonld-write':
@@ -6297,13 +6339,20 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
+        product:
+          description: 'The product this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         quantity:
           description: 'The quantity of the items that are ordered'
           type: integer
         price:
-          description: |
+          description: |-
             The price of this orderItem
-            
+
             @example 50.00
           type: string
         priceCurrency:
@@ -6336,7 +6385,6 @@ components:
           nullable: true
       required:
         - order
-        - offer
         - quantity
         - price
     Tax-read:
@@ -6536,6 +6584,135 @@ components:
           items:
             $ref: '#/components/schemas/Order:jsonld-write'
 definitions:
+  OrderItem-read:
+    properties:
+      id:
+        description: ''
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        description: 'The name of the object'
+        type: string
+        example: 'my OrderItem'
+        maxLength: 255
+      description:
+        description: 'The description of the order item'
+        type: string
+        example: 'This is the best order item ever'
+        maxLength: 255
+      offer:
+        description: 'The offer this item represents'
+        type: string
+        example: 'http://example.org/offers/1'
+        format: url
+      product:
+        description: 'The product this item represents'
+        type: string
+        example: 'http://example.org/offers/1'
+        format: url
+      quantity:
+        description: 'The quantity of the items that are ordered'
+        type: int
+        example: '1'
+      price:
+        description: |-
+          The price of this orderItem
+
+          @example 50.00
+        type: string
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      recurrence:
+        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      notice:
+        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      dateStart:
+        description: 'The moment this subscribtion begins (only used on subscribtions)'
+        type: \DateTime
+      dateEnd:
+        description: 'The moment this subscribtion end'
+        type: \DateTime
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
+        description: 'The moment this request was updated'
+        type: \DateTime
+      order:
+        description: 'The order that contains this item'
+        type: \Order
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
+    required:
+      - price
+      - order
+  OrderItem-write:
+    properties:
+      name:
+        description: 'The name of the object'
+        type: string
+        example: 'my OrderItem'
+        maxLength: 255
+      description:
+        description: 'The description of the order item'
+        type: string
+        example: 'This is the best order item ever'
+        maxLength: 255
+      offer:
+        description: 'The offer this item represents'
+        type: string
+        example: 'http://example.org/offers/1'
+        format: url
+      product:
+        description: 'The product this item represents'
+        type: string
+        example: 'http://example.org/offers/1'
+        format: url
+      quantity:
+        description: 'The quantity of the items that are ordered'
+        type: int
+        example: '1'
+      price:
+        description: |-
+          The price of this orderItem
+
+          @example 50.00
+        type: string
+      priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      recurrence:
+        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      notice:
+        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
+        type: string
+        example: PT10M
+      dateStart:
+        description: 'The moment this subscribtion begins (only used on subscribtions)'
+        type: \DateTime
+      dateEnd:
+        description: 'The moment this subscribtion end'
+        type: \DateTime
+      order:
+        description: 'The order that contains this item'
+        type: \Order
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
+    required:
+      - price
+      - order
   Order-read:
     properties:
       id:
@@ -6664,127 +6841,6 @@ definitions:
     required:
       - organization
       - name
-  OrderItem-read:
-    properties:
-      id:
-        description: ''
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      name:
-        description: 'The name of the object'
-        type: string
-        example: 'my OrderItem'
-        maxLength: 255
-      description:
-        description: 'The description of the order item'
-        type: string
-        example: 'This is the best order item ever'
-        maxLength: 255
-      offer:
-        description: 'The offer this item represents'
-        type: string
-        example: 'http://example.org/offers/1'
-        format: url
-      quantity:
-        description: 'The quantity of the items that are ordered'
-        type: int
-        example: '1'
-      price:
-        description: |
-          The price of this orderItem
-          
-          @example 50.00
-        type: string
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      recurrence:
-        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
-        type: string
-        example: PT10M
-      notice:
-        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
-        type: string
-        example: PT10M
-      dateStart:
-        description: 'The moment this subscribtion begins (only used on subscribtions)'
-        type: \DateTime
-      dateEnd:
-        description: 'The moment this subscribtion end'
-        type: \DateTime
-      dateCreated:
-        description: 'The moment this request was created by the submitter'
-        type: \DateTime
-      dateModified:
-        description: 'The moment this request was updated'
-        type: \DateTime
-      order:
-        description: 'The order that contains this item'
-        type: \Order
-      taxes:
-        description: 'The taxes that affect this offer'
-        type: \ArrayCollection
-    required:
-      - offer
-      - price
-      - order
-  OrderItem-write:
-    properties:
-      name:
-        description: 'The name of the object'
-        type: string
-        example: 'my OrderItem'
-        maxLength: 255
-      description:
-        description: 'The description of the order item'
-        type: string
-        example: 'This is the best order item ever'
-        maxLength: 255
-      offer:
-        description: 'The offer this item represents'
-        type: string
-        example: 'http://example.org/offers/1'
-        format: url
-      quantity:
-        description: 'The quantity of the items that are ordered'
-        type: int
-        example: '1'
-      price:
-        description: |
-          The price of this orderItem
-          
-          @example 50.00
-        type: string
-      priceCurrency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      recurrence:
-        description: 'The of this offer, only used in combination with subscribtion type products, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
-        type: string
-        example: PT10M
-      notice:
-        description: 'The the notice period requered to end an subscribtion, entered according to the [ISO 8601-standard](https://en.wikipedia.org/wiki/ISO_8601#Durations)'
-        type: string
-        example: PT10M
-      dateStart:
-        description: 'The moment this subscribtion begins (only used on subscribtions)'
-        type: \DateTime
-      dateEnd:
-        description: 'The moment this subscribtion end'
-        type: \DateTime
-      order:
-        description: 'The order that contains this item'
-        type: \Order
-      taxes:
-        description: 'The taxes that affect this offer'
-        type: \ArrayCollection
-    required:
-      - offer
-      - price
-      - order
   Tax-read:
     properties:
       id:
@@ -6862,6 +6918,59 @@ definitions:
     required:
       - name
       - price
+  ChangeLog-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+      action:
+        description: ''
+        type: string
+      objectId:
+        description: ''
+        type: string
+      objectClass:
+        description: ''
+        type: string
+      version:
+        description: ''
+        type: int
+      data:
+        description: ''
+        type: array
+      username:
+        description: ''
+        type: string
+      session:
+        description: 'The moment this request was created'
+        type: string
+        maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: string
+        format: date-time
+        example: '2021-06-24 08:20:19'
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: string
+        format: date-time
+        example: '2021-06-24 08:20:19'
+    required: []
+  ChangeLog-write:
+    properties:
+      note:
+        description: 'A note conserning this log lin'
+        type: string
+        example: 'This log line is suspicius'
+        maxLength: 2555
+    required: []
   AuditTrail-read:
     properties:
       id:
@@ -6966,12 +7075,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2021-03-24 10:35:01'
+        example: '2021-06-24 08:20:19'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2021-03-24 10:35:01'
+        example: '2021-06-24 08:20:19'
     required: []
   AuditTrail-write:
     properties:
@@ -6981,89 +7090,36 @@ definitions:
         example: 'This log line looks suspicius'
         maxLength: 2555
     required: []
-  ChangeLog-read:
-    properties:
-      id:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-      action:
-        description: ''
-        type: string
-      objectId:
-        description: ''
-        type: string
-      objectClass:
-        description: ''
-        type: string
-      version:
-        description: ''
-        type: int
-      data:
-        description: ''
-        type: array
-      username:
-        description: ''
-        type: string
-      session:
-        description: 'The moment this request was created'
-        type: string
-        maxLength: 255
-      dateCreated:
-        description: 'The moment this request was created'
-        type: string
-        format: date-time
-        example: '2021-03-24 10:35:01'
-      dateModified:
-        description: 'The moment this request last Modified'
-        type: string
-        format: date-time
-        example: '2021-03-24 10:35:01'
-    required: []
-  ChangeLog-write:
-    properties:
-      note:
-        description: 'A note conserning this log lin'
-        type: string
-        example: 'This log line is suspicius'
-        maxLength: 2555
-    required: []
 tags:
   -
-    name: Order
-    description: |
-      An entity representing an order.
-      
-      This entity represents an order for sales
-  -
     name: OrderItem
-    description: |
+    description: |-
       An entity representing an item of an order.
-      
+
       This entity represents an item that is placed on the order
   -
+    name: Order
+    description: |-
+      An entity representing an order.
+
+      This entity represents an order for sales
+  -
     name: Tax
-    description: |
+    description: |-
       An entity representing an tax.
-      
+
       This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
   -
-    name: AuditTrail
-    description: |
+    name: ChangeLog
+    description: |-
       An resource representing a log line.
-      
+
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
-    name: ChangeLog
-    description: |
+    name: AuditTrail
+    description: |-
       An resource representing a log line.
-      
+
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
 securityDefinitions:
   JWT-Oauth:
@@ -7071,15 +7127,15 @@ securityDefinitions:
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the AuditTrail resource'
+      write: 'write right to the AuditTrail resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the AuditTrail resource'
+      write: 'write right to the AuditTrail resource'
 host: irc.zaakonline.nl
 servers:
   -
