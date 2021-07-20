@@ -74,7 +74,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "reference": "exact",
  *     "customer": "exact",
  *     "resource": "exact",
- *     "remark": "exact"
+ *     "remark": "exact",
+ *     "items.offer": "ipartial"
  * })
  */
 class Order
@@ -83,7 +84,6 @@ class Order
      * @var UuidInterface The UUID identifier of this object
      *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
-     *
      *
      * @Groups({"read"})
      * @Assert\Uuid
